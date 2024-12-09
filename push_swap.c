@@ -14,7 +14,36 @@
 #include <stdio.h>
 
 
-int main()
+int main(int argc, char **argv)
 {
-	printf("%zu", ft_strlen("bonjour"));
+	void *(nb) = NULL;
+	int i;
+	struct s_list *a;
+	
+	i = 1;
+	if (argc != 1)
+	{
+		while (argv[i])
+		{
+			// nb = ft_atoi(argv[i]);
+			a = ft_lstnew(argv[i]);
+			ft_lstadd_back(&a, nb);
+			i++;
+			printf("content = %s\n", (char *)a->content);
+			printf("next = %s", (char *)a->next);
+			free (a);
+		}
+		
+	}
+	return (0);
 }
+
+// #include <stdio.h>
+// int	main()
+// {
+// 	t_list	*a;
+// 	a = ft_lstnew("hello");
+// 	printf("content = %s\n", (char *)a->content);
+// 	printf("next = %s", (char *)a->next);
+// 	free (a);
+// }
