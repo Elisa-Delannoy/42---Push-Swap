@@ -14,34 +14,44 @@
 #include <stdio.h>
 
 
-int main(int argc, char **argv)
+t_list	*ft_addlst(char *lst, int i)
 {
+	t_list *a = NULL;
 	t_list *newa = NULL;
 	t_list *temp;
-	t_list *a = NULL;
-	int i;
 
+	if (i == 1)
+		a = ft_lstnew(lst);
+	else
+	{
+ 		newa = ft_lstnew(lst);
+		ft_lstadd_back(&a, newa);
+	}
+	while (a)
+	{
+		printf("%s\n", (char *)a->content);
+		temp = a->next;
+		if (a != NULL)
+			free(a);
+		a = temp;
+	}
+	return (a);
+}
+
+
+int main(int argc, char **argv)
+{
+	int i;
+	t_list *a;
+
+	i = 1;
 	if (argc > 1)
 	{
-		a = ft_lstnew(argv[1]);
-		i = 2;
 		while (argv[i])
 		{
-			newa = ft_lstnew(argv[i]);
-			// if (newa != NULL)
-			// 	free(newa);
-			ft_lstadd_back(&a, newa);
+			a = ft_addlst(argv[i], i);
 			i++;
 		}
-		while (a)
-		{
-			printf("%s\n", (char *)a->content);
-			temp = a->next;
-			if (a != NULL)
-				free(a);
-			a = temp;
-		}
-
 	}
 	return (0);
 }
