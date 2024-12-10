@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include <stdio.h>
-
+#include "printf/ft_printf.h"
 
 t_list	*ft_addlst(char *lst, int i)
 {
@@ -29,7 +28,7 @@ t_list	*ft_addlst(char *lst, int i)
 	}
 	while (a)
 	{
-		printf("%s\n", (char *)a->content);
+		ft_printf("%s\n", (char *)a->content);
 		temp = a->next;
 		if (a != NULL)
 			free(a);
