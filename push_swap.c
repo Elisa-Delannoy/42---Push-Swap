@@ -19,7 +19,7 @@ int	ft_error(int *nbstock, char *nbcheck, int i)
 	if (i == 1)
 	{
 		if (nbstock == NULL)
-		return (0); 
+			return (0);
 	}
 	else if (i == 2)
 	{
@@ -35,12 +35,12 @@ int	ft_checkerror(int argc, char **argv)
 {
 	int		i;
 	int		nb;
-	char	*nbcheck = NULL;
+	char	*nbcheck;
 	int		*nbstock;
 
 	i = 0;
 	nbstock = malloc((argc - 1) * sizeof(int));
-	ft_error(nbstock, nbcheck, 1);
+	ft_error(nbstock, "tofonction", 1);
 	while (++i < argc)
 	{
 		nb = ft_atoi(argv[i]);
@@ -62,15 +62,17 @@ int	ft_checkerror(int argc, char **argv)
 
 t_list	*ft_addlst(char *lst, int i)
 {
-	t_list *a = NULL;
-	t_list *newa = NULL;
-	t_list *temp;
-	
+	t_list	*a;
+	t_list	*newa;
+	t_list	*temp;
+
+	a = NULL;
+	newa = NULL;
 	if (i == 1)
 		a = ft_lstnew(lst);
 	else
 	{
- 		newa = ft_lstnew(lst);
+		newa = ft_lstnew(lst);
 		ft_lstadd_back(&a, newa);
 	}
 	while (a)
@@ -84,11 +86,10 @@ t_list	*ft_addlst(char *lst, int i)
 	return (a);
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int i;
-	t_list *a;
+	int		i;
+	t_list	*a;
 
 	i = 1;
 	if (argc > 1)
