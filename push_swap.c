@@ -16,34 +16,32 @@
 
 int main(int argc, char **argv)
 {
-	void *(nb) = NULL;
+	t_list *newa = NULL;
+	t_list *temp;
+	t_list *a = NULL;
 	int i;
-	struct s_list *a;
-	
-	i = 1;
-	if (argc != 1)
+
+	if (argc > 1)
 	{
+		a = ft_lstnew(argv[1]);
+		i = 2;
 		while (argv[i])
 		{
-			// nb = ft_atoi(argv[i]);
-			a = ft_lstnew(argv[i]);
-			ft_lstadd_back(&a, nb);
+			newa = ft_lstnew(argv[i]);
+			// if (newa != NULL)
+			// 	free(newa);
+			ft_lstadd_back(&a, newa);
 			i++;
-			printf("content = %s\n", (char *)a->content);
-			printf("next = %s", (char *)a->next);
-			free (a);
 		}
-		
+		while (a)
+		{
+			printf("%s\n", (char *)a->content);
+			temp = a->next;
+			if (a != NULL)
+				free(a);
+			a = temp;
+		}
+
 	}
 	return (0);
 }
-
-// #include <stdio.h>
-// int	main()
-// {
-// 	t_list	*a;
-// 	a = ft_lstnew("hello");
-// 	printf("content = %s\n", (char *)a->content);
-// 	printf("next = %s", (char *)a->next);
-// 	free (a);
-// }
