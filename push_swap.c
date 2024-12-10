@@ -14,23 +14,37 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	ft_error(int argc, char **argv)
+void	ft_error()
+{
+	ft_printf("Error\n");
+	exit(1);
+}
+
+int	ft_checkerror(int argc, char **argv)
 {
 	int		i;
 	int		nb;
 	char	*nbcheck;
+	int		*nbstock;
+	int		j;
 
-	i = 1;
-	while (i < argc)
+	i = 0;
+	nbstock = malloc((argc - 1) * sizeof(int *));
+	if (nbstock == NULL)
+		return (0);
+	while (++i < argc)
 	{
 		nb = ft_atoi(argv[i]);
 		nbcheck = ft_itoa(nb);
 		if (ft_strcmp(nbcheck, argv[i]) != 0)
+			ft_error();
+		nbstock[i - 1] = nb;
+		j = i - 2;
+		while (j >= 0)
 		{
-			ft_printf("Error\n");
-			exit(1);
+			if (nbstock[i - 1] - nbstock[j--] == 0)
+				ft_error();
 		}
-		i++;
 	}
 	return (nb);
 }
@@ -68,7 +82,7 @@ int main(int argc, char **argv)
 	i = 1;
 	if (argc > 1)
 	{
-		ft_error(argc, argv);
+		ft_checkerror(argc, argv);
 		while (argv[i])
 		{
 			a = ft_addlst(argv[i], i);
