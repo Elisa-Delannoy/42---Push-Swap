@@ -14,39 +14,50 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-void	ft_error()
+int	ft_error(int *nbstock, char *nbcheck, int i)
 {
-	ft_printf("Error\n");
-	exit(1);
+	if (i == 1)
+	{
+		if (nbstock == NULL)
+		return (0); 
+	}
+	else if (i == 2)
+	{
+		ft_printf("Error\n");
+		free (nbcheck);
+		free (nbstock);
+		exit(1);
+	}
+	return (0);
 }
 
 int	ft_checkerror(int argc, char **argv)
 {
 	int		i;
 	int		nb;
-	char	*nbcheck;
+	char	*nbcheck = NULL;
 	int		*nbstock;
-	int		j;
 
 	i = 0;
-	nbstock = malloc((argc - 1) * sizeof(int *));
-	if (nbstock == NULL)
-		return (0);
+	nbstock = malloc((argc - 1) * sizeof(int));
+	ft_error(nbstock, nbcheck, 1);
 	while (++i < argc)
 	{
 		nb = ft_atoi(argv[i]);
 		nbcheck = ft_itoa(nb);
 		if (ft_strcmp(nbcheck, argv[i]) != 0)
-			ft_error();
+			ft_error(nbstock, nbcheck, 2);
+		free (nbcheck);
 		nbstock[i - 1] = nb;
-		j = i - 2;
-		while (j >= 0)
+		nb = i - 2;
+		while (nb >= 0)
 		{
-			if (nbstock[i - 1] - nbstock[j--] == 0)
-				ft_error();
+			if (nbstock[i - 1] - nbstock[nb--] == 0)
+				ft_error(nbstock, nbcheck, 2);
 		}
 	}
-	return (nb);
+	free (nbstock);
+	return (0);
 }
 
 t_list	*ft_addlst(char *lst, int i)
