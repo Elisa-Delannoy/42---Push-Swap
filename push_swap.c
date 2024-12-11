@@ -63,75 +63,65 @@ int	ft_checkerror(int argc, char **argv)
 	return (0);
 }
 
-// int	ft_checkerror(int argc, char **argv)
-// {
-// 	int		i;
-// 	int		nb;
-// 	char	*nbcheck;
-// 	int		*nbstock;
-
-// 	i = 0;
-// 	nbstock = malloc((argc - 1) * sizeof(int));
-// 	ft_error(nbstock, "tofonction", 1);
-// 	while (++i < argc)
-// 	{
-// 		nb = ft_atoi(argv[i]);
-// 		nbcheck = ft_itoa(nb);
-// 		if (ft_strcmp(nbcheck, argv[i]) != 0)
-// 			ft_error(nbstock, nbcheck, 2);
-// 		free (nbcheck);
-// 		nbstock[i - 1] = nb;
-// 		nb = i - 2;
-// 		while (nb >= 0)
-// 		{
-// 			if (nbstock[i - 1] - nbstock[nb--] == 0)
-// 				ft_error(nbstock, nbcheck, 2);
-// 		}
-// 	}
-// 	free (nbstock);
-// 	return (0);
-// }
-
-t_list	*ft_addlst(char *lst, int i)
+t_list	*ft_addlst(char *lst, t_list **a)
 {
-	t_list	*a;
 	t_list	*newa;
-	t_list	*temp;
 
-	a = NULL;
 	newa = NULL;
-	if (i == 1)
-		a = ft_lstnew(lst);
+	if (*a == NULL)
+		*a = ft_lstnew(lst);
 	else
 	{
 		newa = ft_lstnew(lst);
-		ft_lstadd_back(&a, newa);
+		ft_lstadd_back(a, newa);
 	}
-	while (a)
+	return (*a);
+}
+
+void	ft_print_and_free(t_list **a)
+{
+	t_list	*temp;
+
+	while (*a)
 	{
-		ft_printf("%s\n", (char *)a->content);
-		temp = a->next;
-		if (a != NULL)
-			free(a);
-		a = temp;
+		ft_printf("content a = %s\n", (char *)(*a)->content);
+		temp = (*a)->next;
+		free(*a);
+		*a = temp;
 	}
-	return (a);
 }
 
 int	main(int argc, char **argv)
 {
 	int		i;
 	t_list	*a;
+	t_list *temp =NULL;
+	t_list *temp2 =NULL;
 
 	i = 1;
+
 	if (argc > 1)
 	{
 		ft_checkerror(argc, argv);
+		a = NULL;
 		while (argv[i])
 		{
-			a = ft_addlst(argv[i], i);
+			ft_addlst(argv[i], &a);
 			i++;
 		}
+		
+		// ft_printf("apres boucle%s\n", (char *)a->content);
+		temp = a;
+		temp2 = (a)->next;
+		temp->next=temp2->next;
+		temp2->next = temp;
+		a = temp2;
+		// ft_printf("apres swap %s\n", (char *)a->content);
+
+		ft_print_and_free(&a);
 	}
+	;
+
+	
 	return (0);
 }
