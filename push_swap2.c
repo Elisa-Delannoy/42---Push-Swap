@@ -9,3 +9,12 @@
 /*   Updated: 2024/12/10 18:25:53 by edelanno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft/libft.h"
+#include "printf/ft_printf.h"
+#include "push_swap.h"
+
+int	ft_rules()
+{
+	sa =
+}

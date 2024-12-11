@@ -14,20 +14,25 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	ft_error(int *nbstock, char *nbcheck, int i)
+int	ft_error(int *nbstock)
 {
-	if (i == 1)
-	{
-		if (nbstock == NULL)
-			return (0);
-	}
-	else if (i == 2)
-	{
-		ft_printf("Error\n");
-		free (nbcheck);
+	ft_printf("Error\n");
+	if (nbstock != NULL)
 		free (nbstock);
-		exit(1);
+	exit(1);
+	return (0);
+}
+int	ft_checknb(int nb, char *argv)
+{
+	char	*nbcheck;
+	
+	nbcheck = ft_itoa(nb);
+	if (ft_strcmp(nbcheck, argv) != 0)
+	{
+		free (nbcheck);
+		return (1);
 	}
+	free (nbcheck);
 	return (0);
 }
 
@@ -35,30 +40,57 @@ int	ft_checkerror(int argc, char **argv)
 {
 	int		i;
 	int		nb;
-	char	*nbcheck;
 	int		*nbstock;
 
 	i = 0;
 	nbstock = malloc((argc - 1) * sizeof(int));
-	ft_error(nbstock, "tofonction", 1);
+	if (nbstock == NULL)
+		return (0);
 	while (++i < argc)
 	{
 		nb = ft_atoi(argv[i]);
-		nbcheck = ft_itoa(nb);
-		if (ft_strcmp(nbcheck, argv[i]) != 0)
-			ft_error(nbstock, nbcheck, 2);
-		free (nbcheck);
+		if (ft_checknb(nb, argv[i]) == 1)
+			ft_error(nbstock);
 		nbstock[i - 1] = nb;
 		nb = i - 2;
 		while (nb >= 0)
 		{
 			if (nbstock[i - 1] - nbstock[nb--] == 0)
-				ft_error(nbstock, nbcheck, 2);
+				ft_error(nbstock);
 		}
 	}
 	free (nbstock);
 	return (0);
 }
+
+// int	ft_checkerror(int argc, char **argv)
+// {
+// 	int		i;
+// 	int		nb;
+// 	char	*nbcheck;
+// 	int		*nbstock;
+
+// 	i = 0;
+// 	nbstock = malloc((argc - 1) * sizeof(int));
+// 	ft_error(nbstock, "tofonction", 1);
+// 	while (++i < argc)
+// 	{
+// 		nb = ft_atoi(argv[i]);
+// 		nbcheck = ft_itoa(nb);
+// 		if (ft_strcmp(nbcheck, argv[i]) != 0)
+// 			ft_error(nbstock, nbcheck, 2);
+// 		free (nbcheck);
+// 		nbstock[i - 1] = nb;
+// 		nb = i - 2;
+// 		while (nb >= 0)
+// 		{
+// 			if (nbstock[i - 1] - nbstock[nb--] == 0)
+// 				ft_error(nbstock, nbcheck, 2);
+// 		}
+// 	}
+// 	free (nbstock);
+// 	return (0);
+// }
 
 t_list	*ft_addlst(char *lst, int i)
 {
