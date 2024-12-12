@@ -42,8 +42,14 @@ int	ft_swap_a(t_list **a)
 
 int	ft_push_a(t_list **a, t_list **b)
 {
+	t_list	*temp;
+
 	if (!*b)
 		return (1);
-	(*b)->next = *a;
+	temp = *b;
+	*b = (*b)->next;
+	temp->next = *a;
+	*a = temp;
+
 	return (0);
 }

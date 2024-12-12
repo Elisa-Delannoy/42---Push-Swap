@@ -59,31 +59,24 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 				ft_error(nbstock);
 		}
 	}
-	i = 0;
-	// while (nbstock[i])
-	// {	
-	// 	ft_printf("nbstock = %d\n", nbstock[i]);
-	// 	i++;
-	// }
-	// free (nbstock);
 	return (nbstock);
 }
 
 t_list	*ft_addlst(int nb, t_list **a)
 {
 	t_list	*newa;
-	int		*content;
+	int		*n;
 
-	content = malloc(sizeof(int));
-    if (!content)
+	n = malloc(sizeof(int));
+    if (!n)
 		return (NULL);
-	*content = nb;
+	*n = nb;
 	newa = NULL;
 	if (*a == NULL)
-		*a = ft_lstnew(content);
+		*a = ft_lstnew(n);
 	else
 	{
-		newa = ft_lstnew(content);
+		newa = ft_lstnew(n);
 		ft_lstadd_back(a, newa);
 	}
 	return (*a);
@@ -106,36 +99,34 @@ int	main(int argc, char **argv)
 {
 	int		i;
 	t_list	*a;
-	// t_list	*b;
-	int		*nb = NULL;
+	t_list	*b;
+	int		*nbstock;
 
-	i = 1;
 	if (argc > 1)
 	{
-		nb = ft_checkerror_and_stock(argc, argv);
+		nbstock = NULL;
+		nbstock = ft_checkerror_and_stock(argc, argv);
 		i = 0;
-		// while (nb[i])
-		// {	
-		// 	ft_printf("nbi = %d\n", nb[i]);
-		// 	i++;
-		// }
 		a = NULL;
-		while (nb[i])
+		while (i < (argc - 1))
 		{
-			ft_printf("nbi = %d\n", nb[i]);
-			ft_addlst(nb[i], &a);
+			// ft_printf("nbi = %d\n", nbstock[i]);
+			ft_addlst(nbstock[i], &a);
 			i++;
 		}
-		// b = ft_addlst();
-		// ft_push_a(&a, &b);
+		b = NULL;
+		ft_addlst(14, &b);
+		ft_addlst(20, &b);
+		ft_addlst(30, &b);
+		ft_push_a(&a, &b);
 		// ft_printf("apres boucle%s\n", (char *)a->content);
 
 		// ft_printf("apres swap %s\n", (char *)a->content);
 
+		ft_print_and_free(&b);
+		ft_printf("afficher a\n");
 		ft_print_and_free(&a);
-	}
-	;
-
-	
+		free (nbstock);
+	}	
 	return (0);
 }
