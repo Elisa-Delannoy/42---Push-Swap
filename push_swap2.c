@@ -64,3 +64,34 @@ int	ft_rotate_a(t_list **a)
 	temp->next = NULL;
 	return (0);
 }
+
+t_list	*ft_lstbeforelast(t_list *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next->next)
+		lst = lst->next;
+	return (lst);
+}
+
+int	ft_reverse_a(t_list **a)
+{
+	t_list	*temp;
+	t_list	*last;
+
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = ft_lstbeforelast(*a);
+	last = ft_lstlast(*a);
+	last->next = *a;
+	*a = last;
+	temp->next = NULL;
+	return (0);
+}
+
+
+
+
+// temp = lst;
+// lst->next = lst;
+// lst->previous = temp;

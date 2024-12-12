@@ -26,6 +26,8 @@ int		ft_error(int *nbstock);
 int		ft_swap_a(t_list **a);
 int		ft_push_a(t_list **a, t_list **b);
 int		ft_rotate_a(t_list **a);
+int		ft_reverse_a(t_list **a);
+t_list	*ft_lstbeforelast(t_list *lst);
 
 
 #endif
