@@ -61,5 +61,6 @@ int	ft_rotate_a(t_list **a)
 	temp = *a;
 	*a = (*a)->next;
 	ft_lstadd_back(a, temp);
+	temp->next = NULL;
 	return (0);
 }
