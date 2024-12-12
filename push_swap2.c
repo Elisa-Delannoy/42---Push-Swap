@@ -38,8 +38,6 @@ int	ft_swap_a(t_list **a)
 	return (1);
 }
 
-// )
-
 int	ft_push_a(t_list **a, t_list **b)
 {
 	t_list	*temp;
@@ -51,5 +49,17 @@ int	ft_push_a(t_list **a, t_list **b)
 	temp->next = *a;
 	*a = temp;
 
+	return (0);
+}
+
+int	ft_rotate_a(t_list **a)
+{
+	t_list	*temp;
+
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = *a;
+	*a = (*a)->next;
+	ft_lstadd_back(a, temp);
 	return (0);
 }

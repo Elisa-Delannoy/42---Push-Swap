@@ -62,7 +62,7 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 	return (nbstock);
 }
 
-t_list	*ft_addlst(int nb, t_list **a)
+int	*ft_addlst(int nb, t_list **a)
 {
 	t_list	*newa;
 	int		*n;
@@ -79,7 +79,7 @@ t_list	*ft_addlst(int nb, t_list **a)
 		newa = ft_lstnew(n);
 		ft_lstadd_back(a, newa);
 	}
-	return (*a);
+	return (n);
 }
 
 void	ft_print_and_free(t_list **a)
@@ -90,6 +90,7 @@ void	ft_print_and_free(t_list **a)
 	{
 		ft_printf("content a = %d\n", *((int *)(*a)->content));
 		temp = (*a)->next;
+		free((*a)->content);
 		free(*a);
 		*a = temp;
 	}
@@ -99,7 +100,7 @@ int	main(int argc, char **argv)
 {
 	int		i;
 	t_list	*a;
-	t_list	*b;
+	// t_list	*b;
 	int		*nbstock;
 
 	if (argc > 1)
@@ -114,16 +115,16 @@ int	main(int argc, char **argv)
 			ft_addlst(nbstock[i], &a);
 			i++;
 		}
-		b = NULL;
-		ft_addlst(14, &b);
-		ft_addlst(20, &b);
-		ft_addlst(30, &b);
-		ft_push_a(&a, &b);
+		// b = NULL;
+		// ft_addlst(14, &b);
+		// ft_addlst(20, &b);
+		// ft_addlst(30, &b);
+		ft_swap_a(&a);
 		// ft_printf("apres boucle%s\n", (char *)a->content);
 
 		// ft_printf("apres swap %s\n", (char *)a->content);
 
-		ft_print_and_free(&b);
+		// ft_print_and_free(&b);
 		ft_printf("afficher a\n");
 		ft_print_and_free(&a);
 		free (nbstock);
