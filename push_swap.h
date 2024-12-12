@@ -15,4 +15,16 @@
 
 # include <limits.h>
 
+int		main(int argc, char **argv);
+
+void	ft_print_and_free(t_list **a);
+t_list	*ft_addlst(int nb, t_list **a);
+int		ft_checkerror_andstock(int argc, char **argv);
+int		ft_checknb(int nb, char *argv);
+int		ft_error(int *nbstock);
+
+int		ft_swap_a(t_list **a);
+int		ft_push_a(t_list **a, t_list **b);
+
+
 #endif

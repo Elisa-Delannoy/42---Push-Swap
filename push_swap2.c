@@ -29,14 +29,21 @@ int	ft_swap_a(t_list **a)
 	t_list	*temp2;
 	
 	if (!*a || (*a)->next == NULL)
-		return (0);
+		return (1);
 	temp = *a;
 	temp2 = (*a)->next;
 	temp->next=temp2->next;
 	temp2->next = temp;
 	*a = temp2;
+	return (1);
 }
 
-
-
 // )
+
+int	ft_push_a(t_list **a, t_list **b)
+{
+	if (!*b)
+		return (1);
+	(*b)->next = *a;
+	return (0);
+}
