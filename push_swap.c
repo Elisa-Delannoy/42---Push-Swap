@@ -100,7 +100,7 @@ int	main(int argc, char **argv)
 {
 	int		i;
 	t_list	*a;
-	// t_list	*b;
+	t_list	*b;
 	int		*nbstock;
 
 	if (argc > 1)
@@ -115,18 +115,22 @@ int	main(int argc, char **argv)
 			ft_addlst(nbstock[i], &a);
 			i++;
 		}
-		// b = NULL;
-		// ft_addlst(14, &b);
-		// ft_addlst(20, &b);
-		// ft_addlst(30, &b);
-		ft_reverse_a(&a);
-		// ft_printf("apres boucle%s\n", (char *)a->content);
+		b = NULL;
 
-		// ft_printf("apres swap %s\n", (char *)a->content);
-
-		// ft_print_and_free(&b);
+		ft_push_a(&b, &a);
+		ft_push_a(&b, &a);
+		ft_push_a(&b, &a);
+		ft_swap_a(&a);
+		ft_reverse_a(&b);
+		ft_swap_a(&b);
+		ft_push_a(&a, &b);
+		ft_push_a(&a, &b);
+		ft_push_a(&a, &b);
+		ft_print_and_free(&b);
 		ft_printf("afficher a\n");
 		ft_print_and_free(&a);
+		ft_printf("afficher a\n");
+		ft_print_and_free(&b);
 		free (nbstock);
 	}	
 	return (0);
