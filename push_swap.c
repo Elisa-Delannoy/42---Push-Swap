@@ -62,13 +62,13 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 	return (nbstock);
 }
 
-int	*ft_addlst(int nb, t_list **a)
+t_list	*ft_addlst(int nb, t_list **a)
 {
 	t_list	*newa;
 	int		*n;
 
 	n = malloc(sizeof(int));
-    if (!n)
+	if (!n)
 		return (NULL);
 	*n = nb;
 	newa = NULL;
@@ -79,7 +79,7 @@ int	*ft_addlst(int nb, t_list **a)
 		newa = ft_lstnew(n);
 		ft_lstadd_back(a, newa);
 	}
-	return (n);
+	return (newa);
 }
 
 void	ft_print_and_free(t_list **a)
@@ -95,6 +95,26 @@ void	ft_print_and_free(t_list **a)
 		*a = temp;
 	}
 }
+
+// void	testft(t_list **a, t_list **b)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (i < 4)
+// 	{
+// 		// if ((*a)->content > (*a)->next->content)
+// 		ft_printf("(*a)->content = %d", *((int *)(*a)->content));
+// 		ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
+// 		// ft_printf("ok\n");
+// 		if (*(int *)(*a)->content < *(int *)(*a)->next->content)
+// 			pa(b, a);
+// 		else
+// 			ra(a);
+// 		i++;
+// 	}
+// }
+
 
 int	main(int argc, char **argv)
 {
@@ -117,19 +137,19 @@ int	main(int argc, char **argv)
 		}
 		b = NULL;
 
-		ft_push_a(&b, &a);
-		ft_push_a(&b, &a);
-		ft_push_a(&b, &a);
-		ft_swap_a(&a);
-		ft_reverse_a(&b);
-		ft_swap_a(&b);
-		ft_push_a(&a, &b);
-		ft_push_a(&a, &b);
-		ft_push_a(&a, &b);
-		ft_print_and_free(&b);
+		pb(&a, &b);
+		pb(&a, &b);
+		pb(&a, &b);
+		sa(&a);
+		sb(&b);
+		rb(&b);
+		pa(&a, &b);
+		pa(&a, &b);
+		pa(&a, &b);
 		ft_printf("afficher a\n");
+		// testft(&a, &b);
 		ft_print_and_free(&a);
-		ft_printf("afficher a\n");
+		ft_printf("afficher b\n");
 		ft_print_and_free(&b);
 		free (nbstock);
 	}	

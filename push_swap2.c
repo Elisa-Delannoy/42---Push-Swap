@@ -23,7 +23,7 @@
 // }
 
 
-int	ft_swap_a(t_list **a)
+int	sa(t_list **a)
 {
 	t_list	*temp;
 	t_list	*temp2;
@@ -35,10 +35,49 @@ int	ft_swap_a(t_list **a)
 	temp->next=temp2->next;
 	temp2->next = temp;
 	*a = temp2;
-	return (1);
+	return (0);
 }
 
-int	ft_push_a(t_list **a, t_list **b)
+int	sb(t_list **a)
+{
+	t_list	*temp;
+	t_list	*temp2;
+	
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = *a;
+	temp2 = (*a)->next;
+	temp->next=temp2->next;
+	temp2->next = temp;
+	*a = temp2;
+	return (0);
+}
+
+int	ss(t_list **a, t_list **b)
+{
+	t_list	*temp;
+	t_list	*temp2;
+	t_list	*temp3;
+	t_list	*temp4;
+	
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = *a;
+	temp2 = (*a)->next;
+	temp->next=temp2->next;
+	temp2->next = temp;
+	*a = temp2;
+	if (!*b || (*b)->next == NULL)
+		return (1);
+	temp3 = *b;
+	temp4 = (*b)->next;
+	temp3->next=temp4->next;
+	temp4->next = temp3;
+	*b = temp4;
+	return (0);
+}
+
+int	pa(t_list **a, t_list **b)
 {
 	t_list	*temp;
 
@@ -48,11 +87,23 @@ int	ft_push_a(t_list **a, t_list **b)
 	*b = (*b)->next;
 	temp->next = *a;
 	*a = temp;
-
 	return (0);
 }
 
-int	ft_rotate_a(t_list **a)
+int	pb(t_list **a, t_list **b)
+{
+	t_list	*temp;
+
+	if (!*a)
+		return (1);
+	temp = *a;
+	*a = (*a)->next;
+	temp->next = *b;
+	*b = temp;
+	return (0);
+}
+
+int	ra(t_list **a)
 {
 	t_list	*temp;
 
@@ -65,6 +116,39 @@ int	ft_rotate_a(t_list **a)
 	return (0);
 }
 
+int	rb(t_list **a)
+{
+	t_list	*temp;
+
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = *a;
+	*a = (*a)->next;
+	ft_lstadd_back(a, temp);
+	temp->next = NULL;
+	return (0);
+}
+
+int	rr(t_list **a, t_list **b)
+{
+	t_list	*temp;
+	t_list	*temp1;
+
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = *a;
+	*a = (*a)->next;
+	ft_lstadd_back(a, temp);
+	temp->next = NULL;
+	if (!*b || (*b)->next == NULL)
+		return (1);
+	temp1 = *b;
+	*b = (*b)->next;
+	ft_lstadd_back(b, temp1);
+	temp1->next = NULL;
+	return (0);
+}
+
 t_list	*ft_lstbeforelast(t_list *lst)
 {
 	if (lst == NULL)
@@ -74,7 +158,7 @@ t_list	*ft_lstbeforelast(t_list *lst)
 	return (lst);
 }
 
-int	ft_reverse_a(t_list **a)
+int	rra(t_list **a)
 {
 	t_list	*temp;
 	t_list	*last;
@@ -89,9 +173,41 @@ int	ft_reverse_a(t_list **a)
 	return (0);
 }
 
+int	rrb(t_list **b)
+{
+	t_list	*temp1;
+	t_list	*last1;
 
+	if (!*b || (*b)->next == NULL)
+		return (1);
+	temp1 = ft_lstbeforelast(*b);
+	last1 = ft_lstlast(*b);
+	last1->next = *b;
+	*b = last1;
+	temp1->next = NULL;
+	return (0);
+}
 
+int	rrr(t_list **a, t_list **b)
+{
+	t_list	*temp;
+	t_list	*last;
+	t_list	*temp1;
+	t_list	*last1;
 
-// temp = lst;
-// lst->next = lst;
-// lst->previous = temp;
+	if (!*a || (*a)->next == NULL)
+		return (1);
+	temp = ft_lstbeforelast(*a);
+	last = ft_lstlast(*a);
+	last->next = *a;
+	*a = last;
+	temp->next = NULL;
+	if (!*b || (*b)->next == NULL)
+		return (1);
+	temp1 = ft_lstbeforelast(*b);
+	last1 = ft_lstlast(*b);
+	last1->next = *b;
+	*b = last1;
+	temp1->next = NULL;
+	return (0);
+}

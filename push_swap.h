@@ -18,15 +18,22 @@
 int		main(int argc, char **argv);
 
 void	ft_print_and_free(t_list **a);
-int		*ft_addlst(int nb, t_list **a);
+t_list	*ft_addlst(int nb, t_list **a);
 int		ft_checkerror_andstock(int argc, char **argv);
 int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);
 
-int		ft_swap_a(t_list **a);
-int		ft_push_a(t_list **a, t_list **b);
-int		ft_rotate_a(t_list **a);
-int		ft_reverse_a(t_list **a);
+int		sa(t_list **a);
+int		pa(t_list **a, t_list **b);
+int		ra(t_list **a);
+int		rra(t_list **a);
+int		sb(t_list **a);
+int		pb(t_list **a, t_list **b);
+int		rb(t_list **a);
+int		rrb(t_list **a);
+int		ss(t_list **a, t_list **b);
+int		rr(t_list **a, t_list **b);
+int		rrr(t_list **a, t_list **b);
 t_list	*ft_lstbeforelast(t_list *lst);
 
 
