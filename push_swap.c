@@ -117,38 +117,73 @@ while (i < ft_lstsize(*a);)
 void	testft(t_list **a, t_list **b)
 {
 	int i;
+	int first;
+	int second;
+	int third;
 
 	i = ft_lstsize(*a);
 	while (i > 1)
 	{
+		first = *(int *)(*a)->content;
+		second = *(int *)(*a)->next->content;
+		third = *(int *)(*a)->next->next->content;
 		// if ((*a)->content > (*a)->next->content)
 		// ft_printf("(*a)->content = %d", *((int *)(*a)->next->next->content));
 		// ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
 		// ft_printf("ok\n");
-		
-		if (*(int *)(*a)->content < *(int *)(*a)->next->content)
+		if (first < second)
 		{
-			if (*(int *)(*a)->next->content > *(int *)(*a)->next->next->content)
+			ra(a);
+			if (second > third)
 			{
-				if (*(int *)(*a)->content < *(int *)(*a)->next->next->content)
-				{
+				sa(a);
+				if (first < third)
 					ra(a);
-					sa(a);
-					ra(a);
-				}
-				else if (*(int *)(*a)->content > *(int *)(*a)->next->next->content)
-				{
-					ra(a);
-					sa(a);
+				else if (first > third)
 					pb(a, b);
-				}
 			}
+			else if (second < third)
+				ra(a);
 		}
+		else if (first > second)
+		ft_printf("first fi %d\n", first);
 		ft_printf("(i = %d\n", i);
 		i--;
 	}
-	
 }
+
+// void	testft(t_list **a, t_list **b)
+// {
+	// i = ft_lstsize(*a);
+	// while (i > 5)
+	// {
+	// 	// if ((*a)->content > (*a)->next->content)
+	// 	// ft_printf("(*a)->content = %d", *((int *)(*a)->next->next->content));
+	// 	// ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
+	// 	// ft_printf("ok\n");
+		
+	// 	if (*(int *)(*a)->content < *(int *)(*a)->next->content)
+	// 	{
+	// 		if (*(int *)(*a)->next->content > *(int *)(*a)->next->next->content)
+			
+	// 		{
+	// 			if (*(int *)(*a)->content < *(int *)(*a)->next->next->content)
+	// 			{
+	// 				ra(a);
+	// 				sa(a);
+	// 				ra(a);
+	// 			}
+	// 			else if (*(int *)(*a)->content > *(int *)(*a)->next->next->content)
+	// 			{
+	// 				ra(a);
+	// 				sa(a);
+	// 				pb(a, b);
+	// 			}
+	// 		}
+	// 	}
+	// 	ft_printf("(i = %d\n", i);
+	// 	i--;
+	// }
 
 
 int	main(int argc, char **argv)
