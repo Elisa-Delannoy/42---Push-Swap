@@ -96,24 +96,59 @@ void	ft_print_and_free(t_list **a)
 	}
 }
 
-// void	testft(t_list **a, t_list **b)
-// {
-// 	int i;
 
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		// if ((*a)->content > (*a)->next->content)
-// 		ft_printf("(*a)->content = %d", *((int *)(*a)->content));
-// 		ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
-// 		// ft_printf("ok\n");
-// 		if (*(int *)(*a)->content < *(int *)(*a)->next->content)
-// 			pa(b, a);
-// 		else
-// 			ra(a);
-// 		i++;
-// 	}
-// }
+/*faire une fonction check si toute la liste est triee dans le sens decroissant :
+voir combien de nobre successif > pour faie cette fonction
+i = ft_lstsize(*a);
+while (a->content > a->next->content)
+{
+	i--;
+}
+while (i < ft_lstsize(*a);)
+{
+	sa
+	ra
+}
+ voir ce qu il faut faire avec les autres i 
+
+ ensuite quand la liste a fait un tour v2rifier que cela a ete mis en ordre croissant 
+
+*/
+void	testft(t_list **a, t_list **b)
+{
+	int i;
+
+	i = ft_lstsize(*a);
+	while (i > 1)
+	{
+		// if ((*a)->content > (*a)->next->content)
+		// ft_printf("(*a)->content = %d", *((int *)(*a)->next->next->content));
+		// ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
+		// ft_printf("ok\n");
+		
+		if (*(int *)(*a)->content < *(int *)(*a)->next->content)
+		{
+			if (*(int *)(*a)->next->content > *(int *)(*a)->next->next->content)
+			{
+				if (*(int *)(*a)->content < *(int *)(*a)->next->next->content)
+				{
+					ra(a);
+					sa(a);
+					ra(a);
+				}
+				else if (*(int *)(*a)->content > *(int *)(*a)->next->next->content)
+				{
+					ra(a);
+					sa(a);
+					pb(a, b);
+				}
+			}
+		}
+		ft_printf("(i = %d\n", i);
+		i--;
+	}
+	
+}
 
 
 int	main(int argc, char **argv)
@@ -137,17 +172,17 @@ int	main(int argc, char **argv)
 		}
 		b = NULL;
 
-		pb(&a, &b);
-		pb(&a, &b);
-		pb(&a, &b);
-		sa(&a);
-		sb(&b);
-		rb(&b);
-		pa(&a, &b);
-		pa(&a, &b);
-		pa(&a, &b);
+		// pb(&a, &b);
+		// pb(&a, &b);
+		// pb(&a, &b);
+		// sa(&a);
+		// sb(&b);
+		// rb(&b);
+		// pa(&a, &b);
+		// pa(&a, &b);
+		// pa(&a, &b);
 		ft_printf("afficher a\n");
-		// testft(&a, &b);
+		testft(&a, &b);
 		ft_print_and_free(&a);
 		ft_printf("afficher b\n");
 		ft_print_and_free(&b);
