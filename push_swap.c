@@ -26,7 +26,7 @@ int	ft_error(int *nbstock)
 int	ft_checknb(int nb, char *argv)
 {
 	char	*nbcheck;
-	
+
 	nbcheck = ft_itoa(nb);
 	if (ft_strcmp(nbcheck, argv) != 0)
 	{
@@ -35,35 +35,6 @@ int	ft_checknb(int nb, char *argv)
 	}
 	free (nbcheck);
 	return (0);
-}
-
-int ft_sort_for_mediane(int *nbstock, int argc, int newargc)
-{
-	int	j;
-	int i;
-	int temp;
-	int mediane;
-
-	j = 1;
-	while (j < (argc - 1))
-	{
-		i = j - 1;
-		while (i >= 0)
-		{
-			if (nbstock[j] < nbstock[i] /*&& (i == 0 || nbstock[j] >= nbstock[i - 1])*/)
-			{
-				temp = nbstock[i];
-				nbstock[i] = nbstock[j];
-				nbstock[j] = temp;
-				j--;
-			}
-			i--;
-		}
-		i = j - 1;
-		j++;
-	}
-	mediane = nbstock[(newargc - 1) / 2];
-	return (mediane);
 }
 
 // int	ft_mediane(int *nbstock, int argc)
@@ -138,7 +109,6 @@ void	ft_print_and_free(t_list **a)
 	}
 }
 
-
 /*faire une fonction check si toute la liste est triee dans le sens decroissant :
 voir combien de nobre successif > pour faie cette fonction
 i = ft_lstsize(*a);
@@ -152,11 +122,39 @@ while (i < ft_lstsize(*a);)
 	ra
 }
  voir ce qu il faut faire avec les autres i 
-
  ensuite quand la liste a fait un tour v2rifier que cela a ete mis en ordre croissant 
-
 */
-void	testft(t_list **a, t_list **b, int *nbstock, int argc)
+
+int	ft_sort_for_mediane(int *nbstock, int argc, int newargc)
+{
+	int	j;
+	int	i;
+	int	temp;
+	int	mediane;
+
+	j = 1;
+	while (j < (argc - 1))
+	{
+		i = j - 1;
+		while (i >= 0)
+		{
+			if (nbstock[j] < nbstock[i] /*&& (i == 0 || nbstock[j] >= nbstock[i - 1])*/)
+			{
+				temp = nbstock[i];
+				nbstock[i] = nbstock[j];
+				nbstock[j] = temp;
+				j--;
+			}
+			i--;
+		}
+		i = j - 1;
+		j++;
+	}
+	mediane = nbstock[(newargc - 1) / 2];
+	return (mediane);
+}
+
+void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 {
 	// int i;
 	int	first;
@@ -167,19 +165,13 @@ void	testft(t_list **a, t_list **b, int *nbstock, int argc)
 	
 	count = 0;
 	// i = ft_lstsize(*a);
-
-
-
 	while (count < argc - 3)
 	{
 		mediane = ft_sort_for_mediane(nbstock, argc, argc + count);
 		first = *(int *)(*a)->content;
 		second = *(int *)(*a)->next->content;
 		third = *(int *)(*a)->next->next->content;
-		ft_printf("count = %d, mediane = %d, first =%d, second =%d, third =%d\n", count, mediane, first, second, third);
-		
-
-
+		// ft_printf("count = %d, mediane = %d, first =%d, second =%d, third =%d\n", count, mediane, first, second, third);
 		// if ((*a)->content > (*a)->next->content)
 		// ft_printf("(*a)->content = %d", *((int *)(*a)->next->next->content));
 		// ft_printf("(*a)->next->content) = %d\n", *((int *)(*a)->next->content));
@@ -214,7 +206,7 @@ void	testft(t_list **a, t_list **b, int *nbstock, int argc)
 				pb(a, b);
 			}
 		}
-		else 
+		else
 		{
 			sa(a);
 			pb(a, b);
@@ -226,19 +218,18 @@ void	testft(t_list **a, t_list **b, int *nbstock, int argc)
 	}
 	first = *(int *)(*a)->content;
 	second = *(int *)(*a)->next->content;
-	ft_printf("first = %d\n", first);
-	ft_printf("second = %d\n", second);
-	ft_printf("count = %d\n", count);
+	// ft_printf("first = %d\n", first);
+	// ft_printf("second = %d\n", second);
+	// ft_printf("count = %d\n", count);
 	// ft_printf("(*a)->content = %d\n", third);
 	// ra(a);
-	
 	ra(a);
 	if (count == argc - 3 && first < second)
 		ra(a);
 	else if (count == argc - 3 && first > second)
-		pb(a, b);	
-
+		pb(a, b);
 }
+
 	// if (first > second)
 	// 	ra(a);
 	// else if (first < second)
@@ -257,8 +248,7 @@ void	testft(t_list **a, t_list **b, int *nbstock, int argc)
 		
 	// 	if (*(int *)(*a)->content < *(int *)(*a)->next->content)
 	// 	{
-	// 		if (*(int *)(*a)->next->content > *(int *)(*a)->next->next->content)
-			
+	// 		if (*(int *)(*a)->next->content > *(int *)(*a)->next->next->content)		
 	// 		{
 	// 			if (*(int *)(*a)->content < *(int *)(*a)->next->next->content)
 	// 			{
@@ -278,8 +268,7 @@ void	testft(t_list **a, t_list **b, int *nbstock, int argc)
 	// 	i--;
 	// }
 
-
-int ft_max(int *nbstock, int argc)
+int	ft_max(int *nbstock, int argc)
 {
 	int	max;
 	int	i;
@@ -295,7 +284,7 @@ int ft_max(int *nbstock, int argc)
 	return (max);
 }
 
-int ft_min(int *nbstock, int argc)
+int	ft_min(int *nbstock, int argc)
 {
 	int	min;
 	int	i;
@@ -309,6 +298,46 @@ int ft_min(int *nbstock, int argc)
 		i++;
 	}
 	return (min);
+}
+
+int	ft_mediane_a(t_list **a)
+{
+	int		indice;
+	int		mediane;
+	int		count;
+	t_list	*temp;
+
+	indice = ft_lstsize(*a) / 2;
+	// ft_printf("indice = %d\n", indice);
+	count = 0;
+	temp = *a;
+	while (count < indice)
+	{
+		temp = (temp)->next;
+		count++;
+	}
+	mediane = *(int *)(temp)->content;
+	// ft_printf("count = %d\n", count);
+	// ft_printf("mediane = %d\n", mediane);
+	return (mediane);
+}
+
+void	ft_push_swap(t_list **a, t_list **b, int *nbstock, int argc)
+{
+	// int		mediane_lst;
+	int		mediane_a;
+	int		first_a;
+	int		first_b;
+	t_list	*last;
+
+	// mediane_lst = ft_sort_for_mediane(nbstock, argc, argc);
+	last = ft_lstlast(*b);
+	first_a = *(int *)(*a)->content;
+	first_b = *(int *)(*b)->content;
+	while (b)
+	{
+	mediane_a = ft_mediane_a(a);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -331,14 +360,12 @@ int	main(int argc, char **argv)
 			ft_addlst(nbstock[i], &a);
 			i++;
 		}
-		ft_max(nbstock, argc);
-		ft_min(nbstock, argc);
-		// ft_printf("mediane =%d\n", ft_sort_for_mediane(nbstock, argc));
-		
-		ft_printf("max =%d\n", ft_max(nbstock, argc));
-		ft_printf("min =%d\n", ft_min(nbstock, argc));
+		// ft_max(nbstock, argc);
+		// ft_min(nbstock, argc);
+		// ft_printf("mediane =%d\n", ft_mediane_a(&a));
+		// ft_printf("max =%d\n", ft_max(nbstock, argc));
+		// ft_printf("min =%d\n", ft_min(nbstock, argc));
 		b = NULL;
-
 		// pb(&a, &b);
 		// pb(&a, &b);
 		// pb(&a, &b);
@@ -349,11 +376,12 @@ int	main(int argc, char **argv)
 		// pa(&a, &b);
 		// pa(&a, &b);
 		ft_printf("afficher a\n");
-		testft(&a, &b, nbstock, argc);
+		ft_create_b(&a, &b, nbstock, argc);
+		ft_push_swap(&a, &b, nbstock, argc);
 		ft_print_and_free(&a);
 		ft_printf("afficher b\n");
 		ft_print_and_free(&b);
 		free (nbstock);
-	}	
+	}
 	return (0);
 }

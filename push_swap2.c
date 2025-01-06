@@ -14,7 +14,6 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-
 // int	ft_rules(t_list a)
 // {
 // 	t_list	b;
@@ -22,17 +21,16 @@
 // 	sa =
 // }
 
-
 int	sa(t_list **a)
 {
 	t_list	*temp;
 	t_list	*temp2;
-	
+
 	if (!*a || (*a)->next == NULL)
 		return (1);
 	temp = *a;
 	temp2 = (*a)->next;
-	temp->next=temp2->next;
+	temp->next = temp2->next;
 	temp2->next = temp;
 	*a = temp2;
 	return (0);
@@ -42,12 +40,12 @@ int	sb(t_list **a)
 {
 	t_list	*temp;
 	t_list	*temp2;
-	
+
 	if (!*a || (*a)->next == NULL)
 		return (1);
 	temp = *a;
 	temp2 = (*a)->next;
-	temp->next=temp2->next;
+	temp->next = temp2->next;
 	temp2->next = temp;
 	*a = temp2;
 	return (0);
@@ -59,19 +57,19 @@ int	ss(t_list **a, t_list **b)
 	t_list	*temp2;
 	t_list	*temp3;
 	t_list	*temp4;
-	
+
 	if (!*a || (*a)->next == NULL)
 		return (1);
 	temp = *a;
 	temp2 = (*a)->next;
-	temp->next=temp2->next;
+	temp->next = temp2->next;
 	temp2->next = temp;
 	*a = temp2;
 	if (!*b || (*b)->next == NULL)
 		return (1);
 	temp3 = *b;
 	temp4 = (*b)->next;
-	temp3->next=temp4->next;
+	temp3->next = temp4->next;
 	temp4->next = temp3;
 	*b = temp4;
 	return (0);

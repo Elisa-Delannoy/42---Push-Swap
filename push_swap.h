@@ -16,7 +16,6 @@
 # include <limits.h>
 
 int		main(int argc, char **argv);
-
 void	ft_print_and_free(t_list **a);
 t_list	*ft_addlst(int nb, t_list **a);
 int		ft_checkerror_andstock(int argc, char **argv);
