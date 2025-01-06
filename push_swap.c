@@ -37,11 +37,12 @@ int	ft_checknb(int nb, char *argv)
 	return (0);
 }
 
-void ft_mediane(int *nbstock, int argc)
+int ft_sort_and_mediane(int *nbstock, int argc)
 {
 	int	j;
 	int i;
 	int temp;
+	int mediane;
 
 	j = 1;
 	while (j < (argc - 1))
@@ -61,8 +62,21 @@ void ft_mediane(int *nbstock, int argc)
 		i = j - 1;
 		j++;
 	}
-
+	mediane = nbstock[(argc - 1) / 2];
+	return (mediane);
 }
+
+// int	ft_mediane(int *nbstock, int argc)
+// {
+// 	int	mediane;
+
+// 	ft_sort(nbstock,argc);
+// 	// if ((argc - 1) % 2 == 0)
+// 		// mediane = nbstock[(argc - 1) / 2 + 1];
+// 	// else 
+// 		mediane = nbstock[(argc - 1) / 2];
+// 	return (mediane);
+// }
 
 int	*ft_checkerror_and_stock(int argc, char **argv)
 {
@@ -259,11 +273,7 @@ int	main(int argc, char **argv)
 		nbstock = ft_checkerror_and_stock(argc, argv);
 		i = 0;
 		a = NULL;
-		ft_max(nbstock, argc);
-		ft_min(nbstock, argc);
-		ft_mediane(nbstock, argc);
-		ft_printf("max =%d\n", ft_max(nbstock, argc));
-		ft_printf("min =%d\n", ft_min(nbstock, argc));
+		ft_printf("mediane = %d\n", ft_sort_and_mediane(nbstock, argc));
 		while (i < (argc - 1))
 		{
 			// ft_printf("nbi = %d\n", nbstock[i]);
@@ -271,6 +281,12 @@ int	main(int argc, char **argv)
 			ft_addlst(nbstock[i], &a);
 			i++;
 		}
+		ft_max(nbstock, argc);
+		ft_min(nbstock, argc);
+		
+		
+		ft_printf("max =%d\n", ft_max(nbstock, argc));
+		ft_printf("min =%d\n", ft_min(nbstock, argc));
 		b = NULL;
 
 		// pb(&a, &b);
