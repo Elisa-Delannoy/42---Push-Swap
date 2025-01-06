@@ -37,6 +37,33 @@ int	ft_checknb(int nb, char *argv)
 	return (0);
 }
 
+void ft_mediane(int *nbstock, int argc)
+{
+	int	j;
+	int i;
+	int temp;
+
+	j = 1;
+	while (j < (argc - 1))
+	{
+		i = j - 1;
+		while (i >= 0)
+		{
+			if (nbstock[j] < nbstock[i] /*&& (i == 0 || nbstock[j] >= nbstock[i - 1])*/)
+			{
+				temp = nbstock[i];
+				nbstock[i] = nbstock[j];
+				nbstock[j] = temp;
+				j--;
+			}
+			i--;
+		}
+		i = j - 1;
+		j++;
+	}
+
+}
+
 int	*ft_checkerror_and_stock(int argc, char **argv)
 {
 	int		i;
@@ -189,8 +216,8 @@ void	testft(t_list **a, t_list **b)
 
 int ft_max(int *nbstock, int argc)
 {
-	int max;
-	int i;
+	int	max;
+	int	i;
 
 	max = nbstock[0];
 	i = 1;
@@ -206,7 +233,7 @@ int ft_max(int *nbstock, int argc)
 int ft_min(int *nbstock, int argc)
 {
 	int	min;
-	int i;
+	int	i;
 
 	min = nbstock[0];
 	i = 1;
@@ -234,13 +261,13 @@ int	main(int argc, char **argv)
 		a = NULL;
 		ft_max(nbstock, argc);
 		ft_min(nbstock, argc);
+		ft_mediane(nbstock, argc);
 		ft_printf("max =%d\n", ft_max(nbstock, argc));
 		ft_printf("min =%d\n", ft_min(nbstock, argc));
 		while (i < (argc - 1))
 		{
 			// ft_printf("nbi = %d\n", nbstock[i]);
-			
-			
+			ft_printf("nbstock i = %d\n", nbstock[i]);
 			ft_addlst(nbstock[i], &a);
 			i++;
 		}
