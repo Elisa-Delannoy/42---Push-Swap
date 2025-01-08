@@ -32,12 +32,11 @@ while (i < ft_lstsize(*a);)
  ensuite quand la liste a fait un tour v2rifier que cela a ete mis en ordre croissant 
 */
 
-int	ft_sort_for_mediane(int *nbstock, int argc, int newargc)
+void	ft_sort_tab(int *nbstock, int argc)
 {
 	int	j;
 	int	i;
 	int	temp;
-	int	mediane;
 
 	j = 1;
 	while (j < (argc - 1))
@@ -57,137 +56,206 @@ int	ft_sort_for_mediane(int *nbstock, int argc, int newargc)
 		i = j - 1;
 		j++;
 	}
-	mediane = nbstock[(newargc - 2) / 2];
+}
+
+int	ft_mediane (int *nbstock, int nb)
+{
+	int mediane;
+
+	ft_sort_tab(nbstock, nb);
+	mediane = nbstock[(nb - 2) / 2];
 	return (mediane);
 }
 
-int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
+int	ft_sort_3(t_list **a)
 {
 	int	first;
 	int	second;
 	int	third;
-	int	count;
-	int	mediane;
-	
-	count = 0;
-	while (count < argc - 3)
-	// while (count < 16)
-	{
-		mediane = ft_sort_for_mediane(nbstock, argc, argc + count);
-		// ft_printf("mediane_actu =%d\n", mediane);
-		// ft_printf("mediane lst =%d\n", ft_sort_for_mediane(nbstock, argc, argc));
-		first = *(int *)(*a)->content;
-		second = *(int *)(*a)->next->content;
-		third = *(int *)(*a)->next->next->content;
-		// ft_printf("first = %d\n", first);
-		// ft_printf("second = %d\n", second);
-		// ft_printf("third = %d\n", third);
-		if (first > second && first <= mediane && count == 0)
-		{
-			sa(a);  
-			first = *(int *)(*a)->content;
-			second = *(int *)(*a)->next->content;
-		}
-		if (first < second && first <= mediane)
-		{
-			if (second > third)
-			{
-				if (first < third && third <= mediane)
-				{
-					ra(a);
-					sa(a);
-				}
-				else if (second < ft_sort_for_mediane(nbstock, argc, argc))
-				{
-					sa(a);
-					pb(a, b);
-					rb(b);
-				}
-				else if (second >= ft_sort_for_mediane(nbstock, argc, argc))
-				{
-					sa(a);
-					pb(a, b);
-				}
-				else if (third < ft_sort_for_mediane(nbstock, argc, argc))
-				{
-					sa(a);
-					pb(a, b);
-					rb(b);
-				}
-				else if (third >= ft_sort_for_mediane(nbstock, argc, argc))
-				{
-					sa(a);
-					pb(a, b);
-				}				
-			}
-			else if (second < third && second <= mediane)
-				ra(a);
-			else if (second < third && second >= mediane)
-			{
-				sa(a);
-				pb(a, b);
-				if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
-					rb(b);
-			}
-			count++;
-		}
-		else if (first > second || first > mediane)
-		{
-			// sa(a);
-			pb(a, b);
-			if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
-				rb(b);
-			count ++;
-		}
-	}
 
 	first = *(int *)(*a)->content;
 	second = *(int *)(*a)->next->content;
 	third = *(int *)(*a)->next->next->content;
 
-	if (first < second && second > third)
+
+	ft_printf("first = %d\n", first);
+	ft_printf("second = %d\n", second);
+	ft_printf("third = %d\n", third);
+
+	// if (first < second && second < third)
+	// 	return(0);
+	if (first < second)
 	{
-		ra(a);
-		ra(a);
+		if (second > third && first < third)
+		{
+			sa(a);
+			ra(a);
+		}
+		if (second > third && first > third)
+			rra(a);
+	
 	}
-	else if (first > second && first < third)
+	else if (first > second && second < third)
 		sa(a);
-	else if (first > second && first > third)
+	else if (first > second && second > third)
 	{
 		sa(a);
-		ra(a);
+		rra(a);
 	}
-	
-	// ra(a);
-	
-	// if (count == argc - 3 && first < second)
-	// 	ra(a);
-	// else if (count == argc - 3 && first > second && second > third)
-	// 	pb(a, b);
+
+		first = *(int *)(*a)->content;
+	second = *(int *)(*a)->next->content;
+	third = *(int *)(*a)->next->next->content;
+
+
+	ft_printf("first = %d\n", first);
+	ft_printf("second = %d\n", second);
+	ft_printf("third = %d\n", third);
 	return (0);
 }
 
-int	ft_mediane_a(t_list **a)
-{
-	int		indice;
-	int		mediane;
-	int		count;
-	t_list	*temp;
+// int	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
+// {
 
-	indice = ft_lstsize(*a) / 2;
-	// ft_printf("indice = %d\n", indice);
-	count = 0;
-	temp = *a;
-	while (count <= indice)
-	{
-		temp = (temp)->next;
-		count++;
-	}
-	mediane = *(int *)(temp)->content;
-	// ft_printf("count = %d\n", count);
-	// ft_printf("mediane = %d\n", mediane);
-	return (mediane);
-}
+// }
+
+// int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
+// {
+// 	int	first;
+// 	int	second;
+// 	int	third;
+// 	int	count;
+// 	int	mediane;
+	
+// 	count = 0;
+// 	// while (count < argc - 3)
+// 	while (count < 9)
+// 	{
+// 		mediane = ft_mediane(nbstock, argc + count);
+// 		// ft_printf("mediane_actu =%d\n", mediane);
+// 		// ft_printf("mediane lst =%d\n", ft_sort_for_mediane(nbstock, argc, argc));
+// 		first = *(int *)(*a)->content;
+// 		second = *(int *)(*a)->next->content;
+// 		third = *(int *)(*a)->next->next->content;
+
+
+
+
+
+// 		// ft_printf("first = %d\n", first);
+// 		// ft_printf("second = %d\n", second);
+// 		// ft_printf("third = %d\n", third);
+// 		if (first > second && first <= mediane && count == 0)
+// 		{
+// 			sa(a);  
+
+
+// 		first = *(int *)(*a)->content;
+// 		second = *(int *)(*a)->next->content;
+// 		third = *(int *)(*a)->next->next->content;
+
+// 		}
+// 		if (first < second && first <= mediane)
+// 		{
+// 			if (second > third)
+// 			{
+// 				if (first < third && third <= mediane)
+// 				{
+// 					// ra(a);
+// 					sa(a);
+// 					count--;
+// 				}
+// 				else if (second < ft_sort_for_mediane(nbstock, argc, argc))
+// 				{
+// 					sa(a);
+// 					pb(a, b);
+// 					rb(b);
+// 				}
+// 				else if (second >= ft_sort_for_mediane(nbstock, argc, argc))
+// 				{
+// 					sa(a);
+// 					pb(a, b);
+// 				}
+// 				else if (third < ft_sort_for_mediane(nbstock, argc, argc))
+// 				{
+// 					sa(a);
+// 					pb(a, b);
+// 					rb(b);
+// 				}
+// 				else if (third >= ft_sort_for_mediane(nbstock, argc, argc))
+// 				{
+// 					sa(a);
+// 					pb(a, b);
+// 				}				
+// 			}
+// 			else if (second < third && second <= mediane)
+// 				ra(a);
+// 			else if (second < third && second >= mediane)
+// 			{
+// 				sa(a);
+// 				pb(a, b);
+// 				if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
+// 					rb(b);
+// 			}
+// 			count++;
+// 		}
+// 		else if (first > second || first > mediane)
+// 		{
+// 			// sa(a);
+// 			pb(a, b);
+// 			if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
+// 				rb(b);
+// 			count ++;
+// 		}
+// 	}
+
+// 	// first = *(int *)(*a)->content;
+// 	// second = *(int *)(*a)->next->content;
+// 	// third = *(int *)(*a)->next->next->content;
+
+// 	if (first < second && second > third)
+// 	{
+// 		ra(a);
+// 		ra(a);
+// 	}
+// 	else if (first > second && first < third)
+// 		sa(a);
+// 	else if (first > second && first > third)
+// 	{
+// 		sa(a);
+// 		ra(a);
+// 	}
+	
+// 	// ra(a);
+	
+// 	// if (count == argc - 3 && first < second)
+// 	// 	ra(a);
+// 	// else if (count == argc - 3 && first > second && second > third)
+// 	// 	pb(a, b);
+// 	return (0);
+// }
+
+// int	ft_mediane_a(t_list **a)
+// {
+// 	int		indice;
+// 	int		mediane;
+// 	int		count;
+// 	t_list	*temp;
+
+// 	indice = ft_lstsize(*a) / 2;
+// 	// ft_printf("indice = %d\n", indice);
+// 	count = 0;
+// 	temp = *a;
+// 	while (count <= indice)
+// 	{
+// 		temp = (temp)->next;
+// 		count++;
+// 	}
+// 	mediane = *(int *)(temp)->content;
+// 	// ft_printf("count = %d\n", count);
+// 	// ft_printf("mediane = %d\n", mediane);
+// 	return (mediane);
+// }
 
 int	ft_abs_value(int value)
 {
@@ -196,84 +264,84 @@ int	ft_abs_value(int value)
 	return (value);
 }
 
-void	ft_push_swap(t_list **a, t_list **b)
-{
-	// int		mediane_lst; /*a supp*/
-	int		mediane_a;
-	// int		first_a;
-	// int		first_b;
-	// int		last;
-	t_list	*temp;
-	int		value;
-	int		count;
-	// mediane_lst = ft_sort_for_mediane(nbstock, argc, argc);
-	// last = *(int *)ft_lstlast(*b);
-	// first_a = *(int *)(*a)->content;
-	// first_b = *(int *)(*b)->content;
-	count=0;
-	while (count < 1)
-	{
-		count = 0;
-		temp = *b;
-		mediane_a = ft_mediane_a(a);
-		value = *(int *)temp->content;
-		ft_printf("value = %d\n", value);
-		// ft_printf("second value = %d\n", *(int *)temp->next->content);
-		while (temp->next)
-		{
-		// 	ft_printf("value = %d\n", value);
-		// ft_printf("second value = %d\n", *(int *)temp->next->content);
-			if ((ft_abs_value(value - mediane_a)) > ft_abs_value((*(int *)temp->next->content - mediane_a)))
-				value = *(int *)temp->next->content;
-			temp = temp->next;	
-		}
-		ft_printf("value mediane= %d\n", value);
-		temp = *b;
-		// ft_printf("value = %d\n", value);
-		while (*(int *)temp->content !=  value)
-		{
-			count++;
-			temp = temp->next;
-		}
-		ft_printf("count %d\n", count);
-		// ft_printf("count = %d\n", count);
-		ft_printf("size = %d\n", ft_lstsize(*b) / 2);
-		if (count > 0 && count <= ft_lstsize(*b) / 2)
-		{
-			while (count > 0)
-			{
-				rb(b);
-				count--;
-			}
-		}
-		else if (count > ft_lstsize(*b) / 2)
-		{
-			while (count < ft_lstsize(*b))
-			{
-				rrb(b);
-				count++;
-			}
-		}
-		temp = *a;
-		count = 0;
-		// ft_printf("temp %d\n", *(int *)temp->content);
-		// ft_printf("temp 2 %d\n", *(int *)temp->next->content);
-		ft_printf("value %d\n", value);
-		while (value > *(int *)temp->next->content && temp->next->next)
-		{
-			ft_printf("temp %d\n", *(int *)temp->content);
-		ft_printf("temp 2 %d\n", *(int *)temp->next->content);
-			rra(a);
-			temp = temp->next;
-			count++;
-		}
-		// pa(a, b);
-		ft_printf("second value apres push %d\n", *(int *)temp->content);
-		ft_printf("second value apres push %d\n", *(int *)temp->content);
-		// if (value > *(int *)temp->next->content)
-		// 	sa(a);
-	}	
-}
+// void	ft_push_swap(t_list **a, t_list **b)
+// {
+// 	// int		mediane_lst; /*a supp*/
+// 	int		mediane_a;
+// 	// int		first_a;
+// 	// int		first_b;
+// 	// int		last;
+// 	t_list	*temp;
+// 	int		value;
+// 	int		count;
+// 	// mediane_lst = ft_sort_for_mediane(nbstock, argc, argc);
+// 	// last = *(int *)ft_lstlast(*b);
+// 	// first_a = *(int *)(*a)->content;
+// 	// first_b = *(int *)(*b)->content;
+// 	count=0;
+// 	while (count < 1)
+// 	{
+// 		count = 0;
+// 		temp = *b;
+// 		mediane_a = ft_mediane_a(a);
+// 		value = *(int *)temp->content;
+// 		ft_printf("value = %d\n", value);
+// 		// ft_printf("second value = %d\n", *(int *)temp->next->content);
+// 		while (temp->next)
+// 		{
+// 		// 	ft_printf("value = %d\n", value);
+// 		// ft_printf("second value = %d\n", *(int *)temp->next->content);
+// 			if ((ft_abs_value(value - mediane_a)) > ft_abs_value((*(int *)temp->next->content - mediane_a)))
+// 				value = *(int *)temp->next->content;
+// 			temp = temp->next;	
+// 		}
+// 		ft_printf("value mediane= %d\n", value);
+// 		temp = *b;
+// 		// ft_printf("value = %d\n", value);
+// 		while (*(int *)temp->content !=  value)
+// 		{
+// 			count++;
+// 			temp = temp->next;
+// 		}
+// 		ft_printf("count %d\n", count);
+// 		// ft_printf("count = %d\n", count);
+// 		ft_printf("size = %d\n", ft_lstsize(*b) / 2);
+// 		if (count > 0 && count <= ft_lstsize(*b) / 2)
+// 		{
+// 			while (count > 0)
+// 			{
+// 				rb(b);
+// 				count--;
+// 			}
+// 		}
+// 		else if (count > ft_lstsize(*b) / 2)
+// 		{
+// 			while (count < ft_lstsize(*b))
+// 			{
+// 				rrb(b);
+// 				count++;
+// 			}
+// 		}
+// 		temp = *a;
+// 		count = 0;
+// 		// ft_printf("temp %d\n", *(int *)temp->content);
+// 		// ft_printf("temp 2 %d\n", *(int *)temp->next->content);
+// 		ft_printf("value %d\n", value);
+// 		while (value > *(int *)temp->next->content && temp->next->next)
+// 		{
+// 			ft_printf("temp %d\n", *(int *)temp->content);
+// 		ft_printf("temp 2 %d\n", *(int *)temp->next->content);
+// 			rra(a);
+// 			temp = temp->next;
+// 			count++;
+// 		}
+// 		// pa(a, b);
+// 		ft_printf("second value apres push %d\n", *(int *)temp->content);
+// 		ft_printf("second value apres push %d\n", *(int *)temp->content);
+// 		// if (value > *(int *)temp->next->content)
+// 		// 	sa(a);
+// 	}	
+// }
 		// while (count > 0 && count < ft_lstsize(*b))
 		// {
 		// 	if (count <= ft_lstsize(*b) / 2)
@@ -316,7 +384,10 @@ int	main(int argc, char **argv)
 		}
 		b = NULL;
 		ft_printf("afficher a\n");
-		ft_create_b(&a, &b, nbstock, argc);
+		ft_printf("mediane = %d\n", ft_mediane(nbstock, argc));
+		ft_sort_3(&a);
+
+		// ft_create_b(&a, &b, nbstock, argc);
 		// ft_push_swap(&a, &b);
 		ft_print_and_free(&a);
 		ft_printf("afficher b\n");
