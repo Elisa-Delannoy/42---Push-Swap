@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -56,7 +57,7 @@ int	ft_sort_for_mediane(int *nbstock, int argc, int newargc)
 		i = j - 1;
 		j++;
 	}
-	mediane = nbstock[(newargc - 1) / 2];
+	mediane = nbstock[(newargc - 2) / 2];
 	return (mediane);
 }
 
@@ -81,9 +82,12 @@ int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 		// ft_printf("first = %d\n", first);
 		// ft_printf("second = %d\n", second);
 		// ft_printf("third = %d\n", third);
-		
 		if (first > second && first <= mediane && count == 0)
-			sa(a);
+		{
+			sa(a);  
+			first = *(int *)(*a)->content;
+			second = *(int *)(*a)->next->content;
+		}
 		if (first < second && first <= mediane)
 		{
 			if (second > third)
@@ -122,28 +126,44 @@ int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 			{
 				sa(a);
 				pb(a, b);
-				if (second < ft_sort_for_mediane(nbstock, argc, argc))
+				if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
 					rb(b);
 			}
 			count++;
 		}
 		else if (first > second || first > mediane)
 		{
-			sa(a);
+			// sa(a);
 			pb(a, b);
-			if (second < ft_sort_for_mediane(nbstock, argc, argc))
+			if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
 				rb(b);
 			count ++;
 		}
 	}
+
 	first = *(int *)(*a)->content;
 	second = *(int *)(*a)->next->content;
 	third = *(int *)(*a)->next->next->content;
-	ra(a);
-	if (count == argc - 3 && first < second)
+
+	if (first < second && second > third)
+	{
 		ra(a);
-	else if (count == argc - 3 && first > second && second > third)
-		pb(a, b);
+		ra(a);
+	}
+	else if (first > second && first < third)
+		sa(a);
+	else if (first > second && first > third)
+	{
+		sa(a);
+		ra(a);
+	}
+	
+	// ra(a);
+	
+	// if (count == argc - 3 && first < second)
+	// 	ra(a);
+	// else if (count == argc - 3 && first > second && second > third)
+	// 	pb(a, b);
 	return (0);
 }
 
@@ -297,7 +317,7 @@ int	main(int argc, char **argv)
 		b = NULL;
 		ft_printf("afficher a\n");
 		ft_create_b(&a, &b, nbstock, argc);
-		ft_push_swap(&a, &b);
+		// ft_push_swap(&a, &b);
 		ft_print_and_free(&a);
 		ft_printf("afficher b\n");
 		ft_print_and_free(&b);
