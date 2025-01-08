@@ -58,7 +58,7 @@ void	ft_sort_tab(int *nbstock, int argc)
 	}
 }
 
-int	ft_mediane (int *nbstock, int nb)
+int	ft_mediane(int *nbstock, int nb)
 {
 	int mediane;
 
@@ -67,7 +67,7 @@ int	ft_mediane (int *nbstock, int nb)
 	return (mediane);
 }
 
-int	ft_sort_3(t_list **a)
+void	ft_sort_3(t_list **a, int argc)
 {
 	int	first;
 	int	second;
@@ -77,47 +77,39 @@ int	ft_sort_3(t_list **a)
 	second = *(int *)(*a)->next->content;
 	third = *(int *)(*a)->next->next->content;
 
-
-	ft_printf("first = %d\n", first);
-	ft_printf("second = %d\n", second);
-	ft_printf("third = %d\n", third);
-
-	// if (first < second && second < third)
-	// 	return(0);
-	if (first < second)
+	if (first < second && second > third && first < third && argc == 4)
 	{
-		if (second > third && first < third)
-		{
-			sa(a);
-			ra(a);
-		}
-		if (second > third && first > third)
-			rra(a);
-	
-	}
-	else if (first > second && second < third)
 		sa(a);
-	else if (first > second && second > third)
+		ra(a);
+	}
+	else if (first < second && second > third && first > third && argc == 4)
+		rra(a);
+	else if (first > second && second < third && first < third && argc == 4)
+		sa(a);
+	else if (first > second && second < third && first > third && argc == 4)
+		ra(a);
+	else if (first > second && second > third && argc == 4)
 	{
 		sa(a);
 		rra(a);
 	}
-
-		first = *(int *)(*a)->content;
-	second = *(int *)(*a)->next->content;
-	third = *(int *)(*a)->next->next->content;
-
-
-	ft_printf("first = %d\n", first);
-	ft_printf("second = %d\n", second);
-	ft_printf("third = %d\n", third);
-	return (0);
 }
 
-// int	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
-// {
+int	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
+{
 
-// }
+}
+
+void	ft_sort_3begin_a(t_list **a, t_list **b, int *nbstock, int argc)
+{
+	while (*(int *)(*a)->content > ft_mediane(nbstock, argc))
+		pb(a, b);
+	while (*(int *)(*a)->next->content  > ft_mediane(nbstock, argc) && 
+		*(int *)(*a)->next->next->content > ft_mediane(nbstock, argc))
+		pb(a, b);
+	if (*(int *)(*a)->content < *(int *)(*a)->next->content)
+		sa(a);
+}
 
 // int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 // {
@@ -385,7 +377,9 @@ int	main(int argc, char **argv)
 		b = NULL;
 		ft_printf("afficher a\n");
 		ft_printf("mediane = %d\n", ft_mediane(nbstock, argc));
-		ft_sort_3(&a);
+		// if (argc == 4)
+			ft_sort_3(&a, argc);
+		ft_sort_3begin_a(&a, &b, nbstock, argc);
 
 		// ft_create_b(&a, &b, nbstock, argc);
 		// ft_push_swap(&a, &b);
