@@ -247,35 +247,93 @@ void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 	}
 }
 
-
-
-int	ft_abs_value(int value)
+int	ft_max(int *nbstock, int argc)
 {
-	if (value < 0)
-		value = -value;
-	return (value);
+	int	max;
+	int	i;
+
+	max = nbstock[0];
+	i = 1;
+	while (i < (argc - 1))
+	{
+		if (nbstock[i] > max)
+			max = nbstock[i];
+		i++;
+	}
+	return (max);
 }
+
+int	ft_min(int *nbstock, int argc)
+{
+	int	min;
+	int	i;
+
+	min = nbstock[0];
+	i = 1;
+	while (i < (argc - 1))
+	{
+		if (nbstock[i] < min)
+			min = nbstock[i];
+		i++;
+	}
+	return (min);
+}
+
+
+// int	ft_abs_value(int value)
+// {
+// 	if (value < 0)
+// 		value = -value;
+// 	return (value);
+// }
+
+int	ft_best_way(t_list **b, int	nb)
+{
+	t_list	*temp;
+	int		count;
+	int		size;
+
+	temp = *b;
+	count = 0;
+	while (temp && *(int *)(temp)->content != nb)
+	{
+		temp = temp->next;
+		count++;
+	}
+	if (ft_lstsize(*b) % 2 != 0)
+		size = ft_lstsize(*b) + 1;
+	else
+		size = ft_lstsize(*b);
+	if (count < size / 2)
+		return (2);
+	else
+		return (3);
+}
+
 
 // void	ft_push_swap(t_list **a, t_list **b)
 // {
-// 	// int		mediane_lst; /*a supp*/
-// 	int		mediane_a;
-// 	// int		first_a;
-// 	// int		first_b;
-// 	// int		last;
+
+// 	int		last;
 // 	t_list	*temp;
 // 	int		value;
 // 	int		count;
-// 	// mediane_lst = ft_sort_for_mediane(nbstock, argc, argc);
-// 	// last = *(int *)ft_lstlast(*b);
-// 	// first_a = *(int *)(*a)->content;
-// 	// first_b = *(int *)(*b)->content;
-// 	count=0;
-// 	while (count < 1)
+
+// 	last = *(int *)ft_lstlast(*b);
+// 	*(int *)(*a)->content;
+	
+// 	while (*(int *)(*b)->content != )
 // 	{
+// 		if (*(int *)(*b)->content  )
+
+
+
+
+
+
 // 		count = 0;
 // 		temp = *b;
-// 		mediane_a = ft_mediane_a(a);
+	
 // 		value = *(int *)temp->content;
 // 		ft_printf("value = %d\n", value);
 // 		// ft_printf("second value = %d\n", *(int *)temp->next->content);
@@ -334,24 +392,24 @@ int	ft_abs_value(int value)
 // 		// 	sa(a);
 // 	}	
 // }
-		// while (count > 0 && count < ft_lstsize(*b))
-		// {
-		// 	if (count <= ft_lstsize(*b) / 2)
-		// 	{
-		// 		rb(b);
-		// 		count--;
-		// 	}
-		// 	else if (count > ft_lstsize(*b) / 2)
-		// 	{
-		// 		rrb(b);
-		// 		count++;
-		// 	}
-		// 	pa(a, b);
-		// }
+// 		while (count > 0 && count < ft_lstsize(*b))
+// 		{
+// 			if (count <= ft_lstsize(*b) / 2)
+// 			{
+// 				rb(b);
+// 				count--;
+// 			}
+// 			else if (count > ft_lstsize(*b) / 2)
+// 			{
+// 				rrb(b);
+// 				count++;
+// 			}
+// 			pa(a, b);
+// 		}
 
 
 
-		// pa(a, b);
+// 		pa(a, b);
 // }
 
 int	main(int argc, char **argv)
@@ -380,7 +438,8 @@ int	main(int argc, char **argv)
 		// ft_printf("med =%d\n", ft_mediane(nbstock, argc, 0));
 		// ft_sort_3begin_a(&a, &b, nbstock, argc);
 
-		ft_create_b(&a, &b, nbstock, argc);
+		// ft_create_b(&a, &b, nbstock, argc);
+		ft_printf("best way max %d", ft_best_way(&a, -6));
 		// ft_push_swap(&a, &b);
 		ft_print_and_free(&a);
 		// ft_lstclear(&a, free);
@@ -392,37 +451,7 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-// int	ft_max(int *nbstock, int argc)
-// {
-// 	int	max;
-// 	int	i;
 
-// 	max = nbstock[0];
-// 	i = 1;
-// 	while (i < (argc - 1))
-// 	{
-// 		if (nbstock[i] > max)
-// 			max = nbstock[i];
-// 		i++;
-// 	}
-// 	return (max);
-// }
-
-// int	ft_min(int *nbstock, int argc)
-// {
-// 	int	min;
-// 	int	i;
-
-// 	min = nbstock[0];
-// 	i = 1;
-// 	while (i < (argc - 1))
-// 	{
-// 		if (nbstock[i] < min)
-// 			min = nbstock[i];
-// 		i++;
-// 	}
-// 	return (min);
-// }
 
 
 // void	testft(t_list **a, t_list **b)
