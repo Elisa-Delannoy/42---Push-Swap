@@ -54,24 +54,17 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 }
 
 
-t_list	*ft_addlst(int nb, t_list **a)
+void	ft_addlst(int nb, t_list **a)
 {
 	t_list	*newa;
 	int		*n;
 
 	n = malloc(sizeof(int));
 	if (!n)
-		return (NULL);
+		return ;
 	*n = nb;
-	newa = NULL;
-	if (*a == NULL)
-		*a = ft_lstnew(n);
-	else
-	{
-		newa = ft_lstnew(n);
-		ft_lstadd_back(a, newa);
-	}
-	return (newa);
+	newa = ft_lstnew(n);
+	ft_lstadd_back(a, newa);
 }
 
 void	ft_print_and_free(t_list **a)

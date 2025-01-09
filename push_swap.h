@@ -17,7 +17,7 @@
 
 int		main(int argc, char **argv);
 void	ft_print_and_free(t_list **a);
-t_list	*ft_addlst(int nb, t_list **a);
+void	ft_addlst(int nb, t_list **a);
 int		*ft_checkerror_and_stock(int argc, char **argv);
 int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);

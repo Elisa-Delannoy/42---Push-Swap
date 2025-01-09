@@ -41,29 +41,24 @@ void	ft_sort_tab(int *nbstock, int argc)
 	j = 1;
 	while (j < (argc - 1))
 	{
-		i = j - 1;
-		while (i >= 0)
+		i = j;
+		while (i > 0 && nbstock[i] < nbstock[i - 1])
 		{
-			if (nbstock[j] < nbstock[i] /*&& (i == 0 || nbstock[j] >= nbstock[i - 1])*/)
-			{
-				temp = nbstock[i];
-				nbstock[i] = nbstock[j];
-				nbstock[j] = temp;
-				j--;
-			}
+			temp = nbstock[i - 1];
+			nbstock[i - 1] = nbstock[i];
+			nbstock[i] = temp;
 			i--;
 		}
-		i = j - 1;
 		j++;
 	}
 }
 
-int	ft_mediane(int *nbstock, int nb)
+int	ft_mediane(int *nbstock, int argc, int count)
 {
 	int mediane;
 
-	ft_sort_tab(nbstock, nb);
-	mediane = nbstock[(nb - 2) / 2];
+	ft_sort_tab(nbstock, argc);
+	mediane = nbstock[((argc + count) - 1) / 2];
 	return (mediane);
 }
 
@@ -129,7 +124,7 @@ void	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
 	int	mediane;
 	int	size;
 
-	mediane = ft_mediane(nbstock, argc);
+	mediane = ft_mediane(nbstock, argc, 0);
 	size = ft_lstsize(*b);
 	pb (a, b);
 	if (size == 3)
@@ -142,19 +137,16 @@ void	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
 
 void	ft_sort_3begin_a(t_list **a, t_list **b, int *nbstock, int argc)
 {
-	int	size = ft_lstsize(*a);
-
-
-	while (size > 3 && *(int *)(*a)->content > ft_mediane(nbstock, argc))
+	while (ft_lstsize(*a) > 3 && *(int *)(*a)->content > ft_mediane(nbstock, argc, 0))
 		ft_presort_b(a, b, nbstock, argc);
-	while (size > 3 && *(int *)(*a)->next->content  > ft_mediane(nbstock, argc) && 
-		*(int *)(*a)->next->next->content > ft_mediane(nbstock, argc))
+	while (ft_lstsize(*a) > 3 && *(int *)(*a)->next->content > ft_mediane(nbstock, argc, 0) && 
+		*(int *)(*a)->next->next->content > ft_mediane(nbstock, argc, 0))
 		ft_presort_b(a, b, nbstock, argc);
 	if ((*a)->next && *(int *)(*a)->content > *(int *)(*a)->next->content)
 		sa(a);
 }
 
-int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
+void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 {
 	int	first;
 	int	second;
@@ -167,7 +159,7 @@ int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 
 	count = 0;
 	while (ft_lstsize(*a) > 3 && count < all_lst)
-	// while (count < 9)
+	// while (count < 12)
 	{
 		first = *(int *)(*a)->content;
 		second = *(int *)(*a)->next->content;
@@ -175,24 +167,23 @@ int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 		// ft_printf("first = %d\n", first);
 		// ft_printf("second = %d\n", second);
 		// ft_printf("third = %d\n", third);
-	 ;
 		// ft_printf("mediane_actu =%d\n", mediane);
 		// ft_printf("mediane lst =%d\n", ft_sort_for_mediane(nbstock, argc, argc));t;
 
-	if (first < second)
-	{
-		if (second > third)
-		{	
-			if (first < third && second <= ft_mediane(nbstock, argc + count))
-			{
-				ra(a);
-				sa(a);
-			}
-			else
-			{
-				sa(a);
-				ft_presort_b(a, b, nbstock, argc);
-			}
+		if (first < second)
+		{
+			if (second > third)
+			{	
+				if (first < third && second <= ft_mediane(nbstock, argc, count))
+				{
+					ra(a);
+					sa(a);
+				}
+				else
+				{
+					sa(a);
+					ft_presort_b(a, b, nbstock, argc);
+				}
 			
 			
 			// else if (first < third && third > ft_mediane(nbstock, argc + count) || first > third)
@@ -207,26 +198,20 @@ int	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 			// 	sa(a);
 			// 	ft_presort_b(a, b, nbstock, argc);
 			// }
+			}
+			else if (second < third && second <= ft_mediane(nbstock, argc, count))
+				ra(a);
+			else if (second < third && second > ft_mediane(nbstock, argc, count))
+			{
+				sa(a);
+				ft_presort_b(a, b, nbstock, argc);
+			}
 		}
-		else if (second < third && second <= ft_mediane(nbstock, argc + count))
-			ra(a);
-		else if (second < third && second > ft_mediane(nbstock, argc + count))
-		{
-			sa(a);
-			ft_presort_b(a, b, nbstock, argc)
-		}
-		}
-			count++;
-		}
-		else if (first > second || first > mediane)
-		{
-			// sa(a);
-			pb(a, b);
-			if (second < ft_sort_for_mediane(nbstock, argc, argc) && (*b)->next)
-				rb(b);
-			count ++;
-		}
+		else if (first > second)
+			ft_presort_b(a, b, nbstock, argc);
+		count++;
 	}
+}
 
 // 	// first = *(int *)(*a)->content;
 // 	// second = *(int *)(*a)->next->content;
@@ -377,24 +362,29 @@ int	main(int argc, char **argv)
 		while (i < (argc - 1))
 		{
 			// ft_printf("nbi = %d\n", nbstock[i]);
-			// ft_printf("nbstock i = %d\n", nbstock[i]);
+			
 			ft_addlst(nbstock[i], &a);
+			// ft_sort_tab(nbstock, argc);
 			i++;
 		}
 		b = NULL;
+		
+		// ft_printf("nbstock i = %d\n", nbstock[i]);
 		ft_printf("afficher a\n");
-		ft_printf("mediane = %d\n", ft_mediane(nbstock, argc));
-		ft_presort_b(&a, &b, nbstock, argc);
+		// ft_printf("mediane = %d\n", ft_mediane(nbstock, argc));
+		// ft_presort_b(&a, &b, nbstock, argc);
 		
 		// if (argc == 4)
 		// 	ft_sort_3(&a, argc);
-		ft_sort_3begin_a(&a, &b, nbstock, argc);
+		//ft_sort_3begin_a(&a, &b, nbstock, argc);
 
-		// ft_create_b(&a, &b, nbstock, argc);
+		ft_create_b(&a, &b, nbstock, argc);
 		// ft_push_swap(&a, &b);
 		ft_print_and_free(&a);
+		// ft_lstclear(&a, free);
 		ft_printf("afficher b\n");
 		ft_print_and_free(&b);
+		// ft_lstclear(&b, free);
 		free (nbstock);
 	}
 	return (0);
