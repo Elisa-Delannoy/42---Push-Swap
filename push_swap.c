@@ -281,23 +281,37 @@ void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 		first = *(int *)(*a)->content;
 		second = *(int *)(*a)->next->content;
 		third = *(int *)(*a)->next->next->content;
-
+	
 		ft_printf("first apres sort a = %d\n", first);
 		ft_printf("second = %d\n", second);
 		ft_printf("third = %d\n", third);
 
-		if (first < second)
-		{
-			ra(a);
-			ra(a);
-		}
-		else if (first > second && second < third)
-			ra(a);
-		else if (first > second && second > third)
-		{
-			ra(a);
-			pb(a ,b);
-		}
+			if (first < second)
+			{
+				ra(a);
+				ra(a);
+			}
+			else if (third  != ft_max(nbstock, argc))
+			{
+				if (first > second && second < third)
+					ra(a);
+				else if (first > second && second > third)
+				{
+					ra(a);
+					pb(a ,b);
+				}
+			}
+			else if (third == ft_max(nbstock, argc))
+			{
+				if (first > second && second < *(int *)(*a)->next->next->next->content)
+					ra(a);
+				else if (first > second && second > *(int *)(*a)->next->next->next->content)
+				{
+					ra(a);
+					pb(a ,b);
+				}
+
+			}
 	}
 }
 
@@ -334,7 +348,7 @@ void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 // 		return (3);
 // }
 
-int	ft_best_way(t_list **a, int	nb)
+int	ft_count_way(t_list **a, int nb)
 {
 	t_list	*temp;
 	int		count;
@@ -347,6 +361,15 @@ int	ft_best_way(t_list **a, int	nb)
 		temp = temp->next;
 		count++;
 	}
+	return (count);
+}
+
+int	ft_best_way(t_list **a, int	nb)
+{
+	int	size;
+	int	count;
+
+	count = ft_count_way(a, nb);
 	if (ft_lstsize(*a) % 2 != 0)
 		size = ft_lstsize(*a) + 1;
 	else
@@ -355,6 +378,30 @@ int	ft_best_way(t_list **a, int	nb)
 		return (2);
 	else
 		return (3);
+}
+
+void	ft_sort_min_max(t_list **a, t_list **b, int *nbstock, int *argc)
+{
+	int	way_max;
+	int	way_min;
+	int	size;
+
+	way_max = ft_count_way(a, ft_max(nbstock, argc));
+	way_min = ft_bcount_way(a, ft_min(nbstock, argc));
+	size = ft_lstsize(*a);
+	if (best_way_max > best_way_max && )
+	{
+		while (*(int *)(*b)->content != ft_min(nbstock, argc))
+		{
+			if (ft_best_way(b, ft_min(nbstock, argc)) == 2)
+				rb(b);
+			else
+				rrb(b);
+		}
+		pb(a, b)
+
+	}
+		
 }
 
 // void	ft_search_and_push_a(t_list **a, t_list **b, int *nbstock, int *argc)
