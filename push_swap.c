@@ -427,14 +427,17 @@ int	ft_last(t_list **a)
 int	ft_is_increasing(t_list **a)
 {
 	t_list	*temp;
+	int		count;
 
+	count = 1;
 	temp = *a; 
 	while (temp->next)
 	{
 		// ft_printf("temp %d\n",(int *)(temp)->content );
 		// ft_printf("temp_>next %d\n",(int *)temp->next->content );
 		if (*(int *)temp->content > *(int *)temp->next->content)
-			return (1);
+			return (count);
+		count++;
 		temp = temp->next;
 	}
 	return (0);
@@ -471,23 +474,23 @@ PUIS TRIER B ET SI MIN METTRE FAIRE RB POUR LE METTRE A LA FIN OU ALORS QUAND MA
 	best_way_max = ft_best_way(a, ft_count_way(a, ft_max(nbstock, argc)));
 	best_way_min = ft_best_way(a, ft_count_way(a, ft_min(nbstock, argc)));
 
-	if (ft_is_increasing(a) == 1)
+	if (ft_is_increasing(a) !=0 )
 	{
 		if (best_way_max == 2 && best_way_min == 2)
 		{
-			while (*(int *)(*a)->content != ft_min(nbstock, argc) || *(int *)(*a)->content  != ft_max(nbstock, argc))
+			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content  != ft_max(nbstock, argc))
 				ra(a);
 			pb(a, b);
-			while (*(int *)(*a)->content != ft_min(nbstock, argc) || *(int *)(*a)->content  != ft_max(nbstock, argc))
+			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content  != ft_max(nbstock, argc))
 				ra(a);
 			pb(a, b);
 		}
 		else if (best_way_max == 2 && best_way_min == 3)
 		{
-			while (*(int *)(*a)->content != ft_min(nbstock, argc) || *(int *)(*a)->content  != ft_max(nbstock, argc))
+			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content  != ft_max(nbstock, argc))
 				rra(a);
 			pb(a, b);
-			while (*(int *)(*a)->content != ft_min(nbstock, argc) || *(int *)(*a)->content  != ft_max(nbstock, argc))
+			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content  != ft_max(nbstock, argc))
 				rra(a);
 			pb(a, b);
 		}
@@ -521,17 +524,16 @@ PUIS TRIER B ET SI MIN METTRE FAIRE RB POUR LE METTRE A LA FIN OU ALORS QUAND MA
 			// pb (a, b);
 		}	
 	}
-	count = 0;
-	while (ft_is_increasing(a) == 1)		
-		count++;
+	count = ft_is_increasing(a);
+
 	if (ft_best_way(a, count) == 2)
 	{
-		while (ft_is_increasing(a) == 1)		
+		while (ft_is_increasing(a) != 0)		
 			ra(a);
 	}
 	else if (ft_best_way(a, count) == 3)
 	{
-		while (ft_is_increasing(a) == 1)		
+		while (ft_is_increasing(a) != 0)		
 			rra(a);
 	}
 	if (*(int *)(*b)->content < *(int *)(*b)->next->content)
