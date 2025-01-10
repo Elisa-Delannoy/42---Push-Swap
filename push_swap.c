@@ -132,12 +132,18 @@ void	ft_presort_b(t_list **a, t_list **b, int *nbstock, int argc)
 		sb(b);
 	else if (ft_lstsize(*b) == 3)
 		ft_sort_3_for_b(b);
-	else if (ft_lstsize(*b) > 2 && *(int *)(*b)->content > mediane)
+	else if (ft_lstsize(*b) > 3 && *(int *)(*b)->content > mediane && *(int *)(*b)->content > *(int *)(*b)->next->content)
 		rb(b);
-	if ((*b)->next && (*(int *)(*b)->content > *(int *)(*b)->next->content))
+	if ((*b)->next && (*b)->next->next && ((*(int *)(*b)->content > *(int *)(*b)->next->content 
+		&& *(int *)(*b)->content < *(int *)(*b)->next->next->content ))) /*DEMANDER POURQUOI METTRE WHILE B NEXT AVANT NEXT NEXT CAR SI NEXT NEXT N EXISTE PAS ON  NE DOIT PAS RENTRER DANS LA BOUCLE*/
 		sb(b);
+	else if ((*b)->next && (*b)->next->next && (*(int *)(*b)->content > *(int *)(*b)->next->content))
+	{
+		if((*(int *)(*b)->content - *(int *)(*b)->next->content > *(int *)(*b)->content - *(int *)(*b)->next->next->content) && 
+			( *(int *)(*b)->next->content - *(int *)(*b)->next->next->content > *(int *)(*b)->content - *(int *)(*b)->next->next->content))
+			sb(b);
+	}
 }
-
 int	ft_max(int *nbstock, int argc)
 {
 	int	max;
@@ -285,9 +291,9 @@ void	ft_create_b(t_list **a, t_list **b, int *nbstock, int argc)
 		second = *(int *)(*a)->next->content;
 		third = *(int *)(*a)->next->next->content;
 	
-		// ft_printf("first apres sort a = %d\n", first);
-		// ft_printf("second = %d\n", second);
-		// ft_printf("third = %d\n", third);
+		ft_printf("first apres sort a = %d\n", first);
+		ft_printf("second = %d\n", second);
+		ft_printf("third = %d\n", third);
 
 			if (first < second)
 			{
@@ -494,7 +500,7 @@ PUIS TRIER B ET SI MIN METTRE FAIRE RB POUR LE METTRE A LA FIN OU ALORS QUAND MA
 				ra(a);
 			pb(a, b);
 		}
-		else if (best_way_max == 2 && best_way_min == 3)
+		else if (best_way_max == 3 && best_way_min == 3)
 		{
 			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content  != ft_max(nbstock, argc))
 				rra(a);
@@ -503,34 +509,41 @@ PUIS TRIER B ET SI MIN METTRE FAIRE RB POUR LE METTRE A LA FIN OU ALORS QUAND MA
 				rra(a);
 			pb(a, b);
 		}
-
 		else
 		{
-			if (best_way_min == 2)
+			while (*(int *)(*a)->content != ft_min(nbstock, argc) && *(int *)(*a)->content != ft_max(nbstock, argc))
+				ra(a);
+			pb(a, b);
+			if (*(int *)(*b)->content == ft_min(nbstock, argc))
 			{
-				while (*(int *)(*a)->content != ft_min(nbstock, argc))
-					ra(a);
-				pb(a, b);
+				if (ft_best_way(a, ft_count_way(a, ft_max(nbstock, argc))) == 2)
+				{
+					while (*(int *)(*a)->content  != ft_max(nbstock, argc))
+						ra(a);
+					pb(a, b);
+				}
+				else
+				{
+					while (*(int *)(*a)->content  != ft_max(nbstock, argc))
+						rra(a);
+					pb(a, b);
+				}
 			}
-			else if (best_way_min == 3)
+			else if (*(int *)(*b)->content == ft_max(nbstock, argc))
 			{
-				while (*(int *)(*a)->content != ft_min(nbstock, argc))
-					rra(a);
-				pb(a, b);
+				if (ft_best_way(a, ft_count_way(a, ft_min(nbstock, argc))) == 2)
+				{
+					while (*(int *)(*a)->content  != ft_min(nbstock, argc))
+						ra(a);
+					pb(a, b);
+				}
+				else
+				{
+					while (*(int *)(*a)->content  != ft_min(nbstock, argc))
+						rra(a);
+					pb(a, b);
+				}
 			}
-			if (ft_best_way(a, ft_count_way(a, ft_max(nbstock, argc))) == 2)
-			{
-				while (*(int *)(*a)->content  != ft_max(nbstock, argc))
-					ra(a);
-				pb(a, b);
-			}
-			else if (ft_best_way(a, ft_count_way(a, ft_max(nbstock, argc))) == 3)
-			{
-				while (*(int *)(*a)->content != ft_max(nbstock, argc))
-					rra(a);
-				pb(a, b);
-			}
-			// pb (a, b);
 		}	
 	}
 	count = ft_is_increasing(a);
@@ -545,11 +558,18 @@ PUIS TRIER B ET SI MIN METTRE FAIRE RB POUR LE METTRE A LA FIN OU ALORS QUAND MA
 		while (ft_is_increasing(a) != 0)		
 			rra(a);
 	}
-	if (*(int *)(*b)->content < *(int *)(*b)->next->content)
-		sb(b);
-	pa (a, b);
-	ra (a);
-	pa (a, b);
+	pa(a, b);
+	if (*(int *)(*a)->content == ft_max(nbstock, argc))
+	{
+		ra(a);
+		pa(a, b);
+	}
+	else
+	{
+		pa (a, b);
+		ra(a);
+	}
+
 
 
 	// if (*(int *)ft_lstlast(*a)->content != ft_max(nbstock, argc))
