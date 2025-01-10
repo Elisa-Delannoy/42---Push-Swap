@@ -73,7 +73,7 @@ void	ft_print_and_free(t_list **a)
 
 	while (*a)
 	{
-		ft_printf("content a = %d\n", *((int *)(*a)->content));
+		// ft_printf("content a = %d\n", *((int *)(*a)->content));
 		temp = (*a)->next;
 		free((*a)->content);
 		free(*a);
