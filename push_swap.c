@@ -876,6 +876,34 @@ int	ft_simu_rb_rrb(t_list** b, int indice)
 	return ((*(int *)temp->content));
 }
 
+int	ft_count_way_end(t_list **a, int nb)
+{
+	t_list	*temp;
+	int		count;
+
+	temp = *a;
+	count = 1;
+
+	if (*(int *)temp->content > nb && *(int *)ft_lstlast(temp)->content > nb)
+		return (0);
+	else
+	{
+		while ((temp->next) && !(*(int *)(temp)->content < nb && *(int *)(temp)->next->content > nb))
+	// while ((temp->next) && !(*(int *)(temp)->content > nb && *(int *)ft_lstlast(temp)->content < nb ))
+	{
+		
+	// 	ft_printf("new\n");
+			
+	// 		ft_printf("nb b %d\n",nb);
+	// ft_printf("temp_>next %d\n",*(int *)temp->next->content );
+	// ft_printf("count count = %d\n", count);
+		temp = temp->next;
+		count++;
+	}
+	}
+	// ft_printf("count %d\n",count );
+	return (count);
+}
 int	ft_check_ra(t_list **a, t_list** b, int indice)
 {
 	int		count_ra;
@@ -892,7 +920,7 @@ int	ft_check_ra(t_list **a, t_list** b, int indice)
 	{
 		while (!(content_b > *(int *)temp->next->content && content_b < *(int *)temp->content))
 		{
-			// ft_printf("lqst temp  dans check ra   %d\n",  *(int *)ft_lstlast(temp)->content);
+			ft_printf("lqst temp  dans check ra   %d\n",  *(int *)ft_lstlast(temp)->content);
 			count_ra++;
 			temp = temp->next;
 		}
