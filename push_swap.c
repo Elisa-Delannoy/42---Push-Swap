@@ -827,6 +827,101 @@ int	ft_select_b_to_push(t_list **a, t_list **b, int indice, int count) /*METTRE 
 	// ft_printf("end %d\n", temp_indice);
 	return (temp_indice);
 }
+
+int	ft_check_rb(t_list** b, int count, int indice)
+{
+	int		count_rb;
+	
+	count_rb = 0;
+	while (count > 0)
+	{
+		if (indice < ft_lstsize(*b) / 2)
+			count_rb++;
+		else
+			return(0);
+		count--;
+	}
+	return (count_rb);
+}
+
+int	ft_check_rrb(t_list** b, int count, int indice)
+{
+	int		count_rrb;
+
+	count_rrb = 0;
+	while (count > 0)
+	{
+		if (indice < ft_lstsize(*b) / 2)
+			return (0);
+		else
+			count_rrb++;
+		count--;
+	}
+	return (count_rrb);
+}
+
+
+int	ft_simu_rb_rrb(t_list** b, int indice)
+{
+	t_list	*temp;
+
+	temp = *b;
+	ft_printf("indce %d\n",  indice);
+	while (indice > 0)
+	{
+		temp = temp->next;
+		indice--;
+	}
+	ft_printf("temp  apres simu   %d\n", (*(int *)temp->content));
+	return ((*(int *)temp->content));
+}
+
+int	ft_check_ra(t_list **a, t_list** b, int indice)
+{
+	int		count_ra;
+	t_list	*temp;
+	int		content_b;
+
+	temp = *a;
+	content_b = ft_simu_rb_rrb(b, indice);
+	count_ra = 0;
+	
+	ft_printf("temp b  dans check ra   %d\n",  content_b);
+	ft_printf("temp a  dans check ra   %d\n",  *(int *)temp->content);
+	if (ft_best_way(a, ft_count_way_for_a(a, content_b)) == 2)
+	{
+		while (!(content_b > *(int *)temp->next->content && content_b < *(int *)temp->content))
+		{
+			// ft_printf("lqst temp  dans check ra   %d\n",  *(int *)ft_lstlast(temp)->content);
+			count_ra++;
+			temp = temp->next;
+		}
+	}
+	return (count_ra);
+}
+
+int	ft_check_rra(t_list **a, t_list** b, int indice)
+{
+	int		count_rra;
+	t_list	*temp;
+	int		content_b;
+
+	temp = *a;
+	content_b = ft_simu_rb_rrb(b, indice);
+	count_rra = 0;
+	
+	ft_printf("temp  dans check rra   %d\n",  content_b);
+	if (ft_best_way(a, ft_count_way_for_a(a, content_b)) == 3)
+	{
+		while (!(content_b > *(int *)temp->next->content && content_b < *(int *)temp->content))
+		{
+			count_rra++;
+			temp = temp->next;
+		}
+	}
+	return (count_rra);
+}
+
 void	ft_push_end_b(t_list **a, t_list** b)
 {
 	int		indice;
@@ -843,7 +938,12 @@ void	ft_push_end_b(t_list **a, t_list** b)
 		else
 			count = indice;
 
-	// ft_printf("indice %d\n", indice);
+	ft_printf("rrb %d\n", ft_check_rrb(b, count, indice));
+	ft_printf("rb %d\n", ft_check_rb(b, count, indice));
+	ft_printf("rra %d\n", ft_check_rra(a, b, indice));
+	ft_printf("ra %d\n", ft_check_ra(a, b, indice));
+
+
 	while (count > 0)
 	{
 		if (indice < ft_lstsize(*b) / 2)
