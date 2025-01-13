@@ -37,4 +37,11 @@ int		rrr(t_list **a, t_list **b);
 t_list	*ft_lstbeforelast(t_list *lst);
 
 
+typedef struct s_rac
+{
+	int	first;
+	int	second;
+	int	third;
+}t_rac;
+
 #endif
