@@ -34,7 +34,7 @@ typedef struct s_var
 	int		scd_b;
 	int		thrd_b;
 	int		med;
-	int		count;
+	int		c;
 }	t_var;
 
 int		main(int argc, char **argv);
@@ -45,17 +45,17 @@ int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);
 
 
-int		sa(t_list **a);
-int		pa(t_list **a, t_list **b);
-int		ra(t_list **a);
-int		rra(t_list **a);
-int		sb(t_list **a);
-int		pb(t_list **a, t_list **b);
-int		rb(t_list **a);
-int		rrb(t_list **a);
-int		ss(t_list **a, t_list **b);
-int		rr(t_list **a, t_list **b);
-int		rrr(t_list **a, t_list **b);
+int		sa(t_list *a);
+int		pa(t_list *a, t_list *b);
+int		ra(t_list *a);
+int		rra(t_list *a);
+int		sb(t_list *a);
+int		pb(t_list *a, t_list *b);
+int		rb(t_list *a);
+int		rrb(t_list *a);
+int		ss(t_list *a, t_list *b);
+int		rr(t_list *a, t_list *b);
+int		rrr(t_list *a, t_list *b);
 t_list	*ft_lstbeforelast(t_list *lst);
 
 #endif
