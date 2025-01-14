@@ -33,6 +33,8 @@ typedef struct s_var
 	int		frst_b;
 	int		scd_b;
 	int		thrd_b;
+	int		med;
+	int		count;
 }	t_var;
 
 int		main(int argc, char **argv);
