@@ -15,6 +15,26 @@
 
 # include <limits.h>
 
+typedef struct s_var
+{
+	t_list	*a;
+	t_list	*b;
+	int		argc;
+	int		*nbstock;
+	int		min;
+	int		max;
+	int		sz_a;
+	int		sz_b;
+	int		last_a;
+	int		frst_a;
+	int		scd_a;
+	int		thrd_a;
+	int		last_b;
+	int		frst_b;
+	int		scd_b;
+	int		thrd_b;
+}	t_var;
+
 int		main(int argc, char **argv);
 void	ft_print_and_free(t_list **a);
 void	ft_addlst(int nb, t_list **a);
@@ -35,13 +55,5 @@ int		ss(t_list **a, t_list **b);
 int		rr(t_list **a, t_list **b);
 int		rrr(t_list **a, t_list **b);
 t_list	*ft_lstbeforelast(t_list *lst);
-
-
-typedef struct s_rac
-{
-	int	first;
-	int	second;
-	int	third;
-}t_rac;
 
 #endif
