@@ -41,7 +41,10 @@ int	ft_mediane(t_var *var, int count)
 	int mediane;
 
 	ft_sort_tab(var);
-	mediane = var->nbstock[((var->argc + count) - 1) / 2];
+	if ((var->argc + count - 1)/ 2 > var->argc - 1)
+		mediane = var->nbstock[((var->argc - 2))]; 
+	else
+		mediane = var->nbstock[((var->argc + count) - 1) / 2];
 	// ft_printf("mediane ds mediane= %d\n", mediane);
 	return (mediane);
 }
@@ -103,22 +106,27 @@ void	ft_sort_3_for_b(t_list *b)
 
 void	ft_init_values_lst(t_var *var)
 {
-	if (ft_lstsize(var->a) > 3)
+	if (var->a)
 	{
-	var->last_a = *(int *)ft_lstlast(var->a)->content;
-	var->frst_a = *(int *)var->a->content;
-	var->frst_a = *(int *)var->a->next->content;
-	var->scd_a = *(int *)var->a->next->next->content;
+		var->last_a = *(int *)ft_lstlast(var->a)->content;
+		var->frst_a = *(int *)var->a->content;
 	}
-	if (ft_lstsize(var->b) > 3)
+	if (var->a && var->a->next)
+		var->scd_a = *(int *)var->a->next->content;
+	if (var->a && var->a->next && var->a->next->next)
+		var->scd_a = *(int *)var->a->next->next->content;
+	if (var->b && var->b->next && var->b->next->next)
 	{
-	var->last_b = *(int *)ft_lstlast(var->b)->content;
-	var->frst_b = *(int *)var->b->content;
-	var->scd_b = *(int *)var->b->next->content;
-	var->thrd_b = *(int *)var->b->next->next->content;
+		var->last_b = *(int *)ft_lstlast(var->b)->content;
+		var->frst_b = *(int *)var->b->content;
 	}
-	return;
+	if (var->b && var->b->next && var->b->next->next)
+		var->scd_b = *(int *)var->b->next->content;
+	if (var->b && var->b->next && var->b->next->next)
+		var->thrd_b = *(int *)var->b->next->next->content;
 }
+
+
 void	ft_presort_b(t_var *var)
 {
 	int	med;
@@ -215,7 +223,10 @@ void	ft_chose_mediane(t_var *var)
 void	ft_sort_3begin_a(t_var *var)
 {
 	ft_init_values_lst(var);
+	ft_printf("frst = %d\n", var->frst_a);
 	ft_chose_mediane(var);
+	ft_printf("scd = %d\n", var->scd_a);
+	ft_printf("med = %d\n", var->med);
 	var->c = 0;
 	while (ft_lstsize(var->a) > 3 && var->frst_a > var->med)
 	{
@@ -224,7 +235,10 @@ void	ft_sort_3begin_a(t_var *var)
 		else
 			ft_presort_b(var);
 	}
+	ft_printf("frst avant = %d\n", var->frst_a);
 	ra(var->a);
+	ft_init_values_lst(var);
+	ft_printf("frst apres= %d\n", var->frst_a);
 	while (ft_lstsize(var->a) > 3 && var->frst_a > var->med)
 	{
 		if (var->frst_a == ft_max(var))
@@ -1058,7 +1072,8 @@ t_var	*ft_init_var(int argc, char **argv)
 	var->a = NULL;
 	while (i < (argc - 1))
 	{
-		ft_addlst(var->nbstock[i], &(var->a));;
+		ft_addlst(var->nbstock[i], &(var->a));
+		ft_printf("nbstock %d\n", var->nbstock[i]);
 		i++;
 	}
 	var->min = ft_min(var);
@@ -1075,6 +1090,11 @@ int	main(int argc, char **argv)
 	if (argc > 1)
 	{
 		var = ft_init_var(argc, argv);
+		ft_printf("test min %d\n", var->min);
+		ft_printf("test min %d\n", ft_min(var));
+		ft_sort_tab(var);
+		ft_printf("test min %d\n", var->min);
+		ft_printf("test min %d\n", ft_min(var));
 		// if (argc == 4)
 		// 	ft_sort_3(&(var->a), argc);
 		if (argc > 6) /*a voir pr nb arg*/
