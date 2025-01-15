@@ -43,19 +43,20 @@ void	ft_addlst(int nb, t_list **a);
 int		*ft_checkerror_and_stock(int argc, char **argv);
 int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);
+void	ft_init_values_lst(t_var *var);
 
 
-int		sa(t_list *a);
-int		pa(t_list *a, t_list *b);
-int		ra(t_list *a);
-int		rra(t_list *a);
-int		sb(t_list *a);
-int		pb(t_list *a, t_list *b);
-int		rb(t_list *a);
-int		rrb(t_list *a);
-int		ss(t_list *a, t_list *b);
-int		rr(t_list *a, t_list *b);
-int		rrr(t_list *a, t_list *b);
+int		sa(t_var *var);
+int		pa(t_var *var);
+int		ra(t_var *var);
+int		rra(t_var *var);
+int		sb(t_var *var);
+int		pb(t_var *var);
+int		rb(t_var *var);
+int		rrb(t_var *var);
+int		ss(t_var *var);
+int		rr(t_var *var);
+int		rrr(t_var *var);
 t_list	*ft_lstbeforelast(t_list *lst);
 
 #endif
