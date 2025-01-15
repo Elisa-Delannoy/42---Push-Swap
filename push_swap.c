@@ -537,273 +537,270 @@ int	ft_select_better_b_to_push(t_var *var, int indice, int count) /*METTRE 0  PR
 	return (temp_indice);
 }
 
-
-
-
-// int	ft_check_rb(t_list** b, int count, int indice)
-// {
-// 	int		count_rb;
+int	ft_check_rb(t_var *var, int count, int indice)
+{
+	int		count_rb;
 	
-// 	count_rb = 0;
-// 	while (count > 0)
-// 	{
-// 		if (indice < ft_lstsizevar->b / 2)
-// 			count_rb++;
-// 		else
-// 			return(0);
-// 		count--;
-// 	}
-// 	return (count_rb);
-// }
+	count_rb = 0;
+	while (count > 0)
+	{
+		if (indice < ft_lstsize(var->b) / 2)
+			count_rb++;
+		else
+			return(0);
+		count--;
+	}
+	return (count_rb);
+}
 
-// int	ft_check_rrb(t_list** b, int count, int indice)
-// {
-// 	int		count_rrb;
+int	ft_check_rrb(t_var *var, int count, int indice)
+{
+	int		count_rrb;
 
-// 	count_rrb = 0;
-// 	while (count > 0)
-// 	{
-// 		if (indice < ft_lstsizevar->b / 2)
-// 			return (0);
-// 		else
-// 			count_rrb++;
-// 		count--;
-// 	}
-// 	return (count_rrb);
-// }
+	count_rrb = 0;
+	while (count > 0)
+	{
+		if (indice < ft_lstsize(var->b) / 2)
+			return (0);
+		else
+			count_rrb++;
+		count--;
+	}
+	return (count_rrb);
+}
 
 
-// int	ft_simu_rb_rrb(t_list** b, int indice)
-// {
-// 	t_list	*temp;
+int	ft_simu_rb_rrb(t_var *var, int indice)
+{
+	t_list	*temp;
 
-// 	temp = *b;
-// 	ft_printf("indce %d\n",  indice);
-// 	while (indice > 0)
-// 	{
-// 		temp = temp->next;
-// 		indice--;
-// 	}
-// 	// ft_printf("temp  apres simu   %d\n", (*(int *)temp->content));
-// 	return ((*(int *)temp->content));
-// }
+	temp = var->b;
+	ft_printf("indce %d\n",  indice);
+	while (indice > 0)
+	{
+		temp = temp->next;
+		indice--;
+	}
+	// ft_printf("temp  apres simu   %d\n", (*(int *)temp->content));
+	return ((*(int *)temp->content));
+}
 
-// int	ft_count_way_end(t_list **a, int nb)
-// {
-// 	t_list	*temp;
-// 	int		count;
+int	ft_count_way_end(t_var *var, int nb)
+{
+	t_list	*temp;
+	int		count;
 
-// 	temp = *a;
-// 	count = 0;
+	temp = var->a;
+	count = 0;
 
-// 	if (*(int *)temp->content > nb && *(int *)ft_lstlast(temp)->content < nb)
-// 		return (0);
-// 	else
-// 	{
-// 		while ((temp->next) && !(*(int *)(temp)->content < nb && *(int *)(temp)->next->content > nb))
-// 	{
+	if (*(int *)temp->content > nb && *(int *)ft_lstlast(temp)->content < nb)
+		return (0);
+	else
+	{
+		while ((temp->next) && !(*(int *)(temp)->content < nb && *(int *)(temp)->next->content > nb))
+	{
 		
-// 	// 	ft_printf("new\n");
+	// 	ft_printf("new\n");
 			
-// 	// 		ft_printf("nb b %d\n",nb);
-// 	// ft_printf("temp_>next %d\n",*(int *)temp->next->content );
-// 	// ft_printf("count count = %d\n", count);
-// 		temp = temp->next;
-// 		count++;
-// 	}
-// 	}
-// 	// ft_printf("count %d\n",count );
-// 	return (count);
-// }
+	// 		ft_printf("nb b %d\n",nb);
+	// ft_printf("temp_>next %d\n",*(int *)temp->next->content );
+	// ft_printf("count count = %d\n", count);
+		temp = temp->next;
+		count++;
+	}
+	}
+	// ft_printf("count %d\n",count );
+	return (count);
+}
 
-// int	ft_check_ra(t_list **a, t_list** b, int indice)
-// {
-// 	int		count_ra;
-// 	t_list	*temp;
-// 	int		content_b;
+int	ft_check_ra(t_var *var, int indice)
+{
+	int		count_ra;
+	t_list	*temp;
+	int		content_b;
 
-// 	temp = *a;
-// 	content_b = ft_simu_rb_rrb(b, indice);
-// 	count_ra = 1;
+	temp = var->a;
+	content_b = ft_simu_rb_rrb(var, indice);
+	count_ra = 1;
 	
-// 	// ft_printf("temp b  dans check ra   %d\n",  content_b);
-// 	// ft_printf("temp a  dans check ra   %d\n",  *(int *)temp->content);
-// 	if (*(int *)temp->content > content_b && *(int *)ft_lstlast(temp)->content < content_b)
-// 		return (0);
-// 	if (ft_best_way(a, ft_count_way_end(a, content_b)) == 2)
-// 	{
+	// ft_printf("temp b  dans check ra   %d\n",  content_b);
+	// ft_printf("temp a  dans check ra   %d\n",  *(int *)temp->content);
+	if (*(int *)temp->content > content_b && *(int *)ft_lstlast(temp)->content < content_b)
+		return (0);
+	if (ft_best_way(var, ft_count_way_end(var, content_b)) == 2)
+	{
 			
 
-// 		while (!(content_b < *(int *)temp->next->content && content_b > *(int *)temp->content))
-// 		{
-// 			// ft_printf("temp ra   %d\n",  *(int *)temp->content);
-// 			// ft_printf("temp b  dans check ra   %d\n",  content_b);
-// 			// ft_printf("lqst temp  dans check ra   %d\n",  *(int *)ft_lstlast(temp)->content);
-// 			count_ra++;
-// 			temp = temp->next;
-// 		}
-// 	}
-// 	return (count_ra);
-// }
+		while (!(content_b < *(int *)temp->next->content && content_b > *(int *)temp->content))
+		{
+			// ft_printf("temp ra   %d\n",  *(int *)temp->content);
+			// ft_printf("temp b  dans check ra   %d\n",  content_b);
+			// ft_printf("lqst temp  dans check ra   %d\n",  *(int *)ft_lstlast(temp)->content);
+			count_ra++;
+			temp = temp->next;
+		}
+	}
+	return (count_ra);
+}
 
-// int	ft_check_rra(t_list **a, t_list** b, int indice)
-// {
-// 	int		count_rra;
-// 	t_list	*temp;
-// 	int		content_b;
+int	ft_check_rra(t_var *var, int indice)
+{
+	int		count_rra;
+	t_list	*temp;
+	int		content_b;
 
-// 	temp = *a;
-// 	content_b = ft_simu_rb_rrb(b, indice);
-// 	count_rra = 0;
+	temp = var->a;
+	content_b = ft_simu_rb_rrb(var, indice);
+	count_rra = 0;
 	
-// 	// ft_printf("temp b  dans  check rra   %d\n",  *(int *)temp->content);
-// 	if (*(int *)temp->content > content_b && *(int *)ft_lstlast(temp)->content < content_b)
-// 		return (0);
-// 	if (ft_best_way(a, ft_count_way_end(a, content_b)) == 3)
-// 	{
-// 		while (!(content_b > *(int *)temp->next->content && content_b < *(int *)temp->content))
-// 		{
-// 			count_rra++;
-// 			temp = temp->next;
-// 		}
-// 	}
-// 	return (count_rra);
-// }
-// */
+	// ft_printf("temp b  dans  check rra   %d\n",  *(int *)temp->content);
+	if (*(int *)temp->content > content_b && *(int *)ft_lstlast(temp)->content < content_b)
+		return (0);
+	if (ft_best_way(var, ft_count_way_end(var, content_b)) == 3)
+	{
+		while (!(content_b > *(int *)temp->next->content && content_b < *(int *)temp->content))
+		{
+			count_rra++;
+			temp = temp->next;
+		}
+	}
+	return (count_rra);
+}
+*/
 
 
 
-// int ft_rrr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	int	rrb;
-// 	int	rra;
-// 	int countrrr;
+int ft_rrr(t_var *var, int count, int indice)
+{
+	int	rrb;
+	int	rra;
+	int countrrr;
 
-// 	rrb = ft_check_rrb(b, count, indice);
-// 	rra = ft_check_rra(a, b, indice);
-// 	countrrr = 0;
+	rrb = ft_check_rrb(var, count, indice);
+	rra = ft_check_rra(var, indice);
+	countrrr = 0;
 
-// 	if (rrb > 0 && rra > 0)
-// 	{
-// 		while (rra > 0 && rrb > 0)
-// 		{
-// 			rrr(a, b);
-// 			rra--;
-// 			rrb--;
-// 			countrrr++;
-// 		}
-// 	}
-// 	return (count);
-// }
+	if (rrb > 0 && rra > 0)
+	{
+		while (rra > 0 && rrb > 0)
+		{
+			rrr(var);
+			rra--;
+			rrb--;
+			countrrr++;
+		}
+	}
+	return (count);
+}
 
 
-// int ft_rr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	int	rb;
-// 	int	ra;
-// 	int countrr;
+int ft_rr(t_var *var, int count, int indice)
+{
+	int	rb;
+	int	ra;
+	int countrr;
 
-// 	countrr = 0;
-// 	rb = ft_check_rb(b, count, indice);
-// 	ra = ft_check_ra(a, b, indice);
+	countrr = 0;
+	rb = ft_check_rb(var, count, indice);
+	ra = ft_check_ra(var, indice);
 
-// 	if (rb > 0 && ra > 0)
-// 	{
-// 		while (ra > 0 && rb > 0)
-// 		{
-// 			rr(a, b);
-// 			ra--;
-// 			rb--;
-// 			countrr++;
-// 		}
-// 	}
-// 	return (countrr);
-// }
+	if (rb > 0 && ra > 0)
+	{
+		while (ra > 0 && rb > 0)
+		{
+			rr(a, b);
+			ra--;
+			rb--;
+			countrr++;
+		}
+	}
+	return (countrr);
+}
 
-// int	ft_check_after_rr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	int	count_rr;
-// 	// int	count_topush;
+int	ft_check_after_rr(t_var *var, int count, int indice)
+{
+	int	count_rr;
+	// int	count_topush;
 
-// 	count_rr = ft_rr(a, b, count, indice);
-// 	// count_topush = 0;
+	count_rr = ft_rr(var, count, indice);
+	// count_topush = 0;
 
-// 	if (count_rr > 0)
-// 		return (indice - count_rr);
-// 	else
-// 		return (0);
+	if (count_rr > 0)
+		return (indice - count_rr);
+	else
+		return (0);
 
-// }
+}
 
-// int	ft_check_after_rrr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	int	count_rrr;
-// 	// int	count;
+int	ft_check_after_rrr(t_var *var, int count, int indice)
+{
+	int	count_rrr;
+	// int	count;
 
-// 	count_rrr = ft_rrr(a, b, count, indice);
-// 	// count = 0;
+	count_rrr = ft_rrr(var, count, indice);
+	// count = 0;
 
-// 	if (count_rrr > 0)
-// 		return (indice - count_rrr);
-// 	return (0);
+	if (count_rrr > 0)
+		return (indice - count_rrr);
+	return (0);
 
-// }
+}
 
-// void	ft_push_after_rr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	int count_rr;
-// 	int count_ra;
-// 	int	count_rb;
+void	ft_push_after_rr(t_var *var, int count, int indice)
+{
+	int count_rr;
+	int count_ra;
+	int	count_rb;
 
-// 	count_rr = ft_check_after_rr(a, b, count, indice);
-// 	count_rb = ft_check_rb(b, count, indice);
-// 	count_ra = ft_check_ra(a, b, indice);
+	count_rr = ft_check_after_rr(var, count, indice);
+	count_rb = ft_check_rb(var, count, indice);
+	count_ra = ft_check_ra(var, indice);
 
-// 	if (count_rr == 0)
-// 		return;
-// 	if (indice - count_rb > 0)
-// 	{	
-// 		while (count > indice - count_rb)
-// 		{
-// 			rb(var);
-// 			count--;
-// 		}
-// 	}
-// 	if (indice - count_ra > 0)
-// 	{
-// 		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
-// 			ra(var);
-// 		pa(a, b);
-// 	}
-// }
+	if (count_rr == 0)
+		return;
+	if (indice - count_rb > 0)
+	{	
+		while (count > indice - count_rb)
+		{
+			rb(var);
+			count--;
+		}
+	}
+	if (indice - count_ra > 0)
+	{
+		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
+			ra(var);
+		pa(a, b);
+	}
+}
 
-// void	ft_push_after_rrr(t_list **a, t_list **b, int count, int indice)
-// {
-// 	// int count;
-// 	int count_rra;
-// 	int	count_rrb;
+void	ft_push_after_rrr(t_var *var, int count, int indice)
+{
+	// int count;
+	int count_rra;
+	int	count_rrb;
 
-// 	// count = ft_check_after_rrr(a, b, count, indice);
-// 	count_rrb = ft_check_rrb(b, count, indice);
-// 	count_rra = ft_check_rra(a, b, indice);
+	// count = ft_check_after_rrr(a, b, count, indice);
+	count_rrb = ft_check_rrb(var, count, indice);
+	count_rra = ft_check_rra(var, indice);
 
-// 	if (ft_check_after_rrr(a, b, count, indice) == 0)
-// 		return;
-// 	if (indice - count_rrb > 0)
-// 	{	
-// 		while (count > indice - count_rrb)
-// 		{
-// 			rrb(var);
-// 			count--;
-// 		}
-// 	}
-// 	if (indice - count_rra > 0)
-// 	{
-// 		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
-// 			rra(var);
-// 		pa(a, b);
-// 	}
-// }
+	if (ft_check_after_rrr(var, count, indice) == 0)
+		return;
+	if (indice - count_rrb > 0)
+	{	
+		while (count > indice - count_rrb)
+		{
+			rrb(var);
+			count--;
+		}
+	}
+	if (indice - count_rra > 0)
+	{
+		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
+			rra(var);
+		pa(a, b);
+	}
+}
 
 
 void	ft_push_end_b(t_var *var)
