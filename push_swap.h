@@ -19,6 +19,7 @@ typedef struct s_var
 {
 	t_list	*a;
 	t_list	*b;
+	t_list	*temp;
 	int		argc;
 	int		*nbstock;
 	int		min;
@@ -35,6 +36,9 @@ typedef struct s_var
 	int		thrd_b;
 	int		med;
 	int		c;
+	int		count_a;
+	int		count_b;
+
 }	t_var;
 
 int		main(int argc, char **argv);
@@ -44,6 +48,7 @@ int		*ft_checkerror_and_stock(int argc, char **argv);
 int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);
 void	ft_init_values_lst(t_var *var);
+t_list	*ft_last(t_list *lst);
 
 
 int		sa(t_var *var);

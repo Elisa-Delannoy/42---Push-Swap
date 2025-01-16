@@ -21,6 +21,21 @@
 // 	sa =
 // }
 
+void	ft_add_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+	t_list	*temp;
+
+	temp = *lst;
+	if (temp == NULL)
+		temp = new;
+	else
+	{
+		last = ft_last(temp);
+		last->next = new;
+	}
+}
+
 int	sa(t_var *var)
 {
 	t_list	*temp;
@@ -119,7 +134,7 @@ int	ra(t_var *var)
 		return (1);
 	temp = var->a;
 	var->a = var->a->next;
-	ft_lstadd_back(&(var->a), temp);
+	ft_add_back(&(var->a), temp);
 	temp->next = NULL;
 	ft_init_values_lst(var);
 	ft_printf("ra\n");
@@ -134,7 +149,7 @@ int	rb(t_var *var)
 		return (1);
 	temp = var->b;
 	var->b = (var->b)->next;
-	ft_lstadd_back(&(var->b), temp);
+	ft_add_back(&(var->b), temp);
 	temp->next = NULL;
 	ft_init_values_lst(var);
 	ft_printf("rb\n");
@@ -150,13 +165,13 @@ int	rr(t_var *var)
 		return (1);
 	temp = var->a;
 	var->a = var->a->next;
-	ft_lstadd_back(&(var->a), temp);
+	ft_add_back(&(var->a), temp);
 	temp->next = NULL;
 	if (!var->b || (var->b)->next == NULL)
 		return (1);
 	temp1 = var->b;
 	var->b = var->b->next;
-	ft_lstadd_back(&(var->b), temp1);
+	ft_add_back(&(var->b), temp1);
 	temp1->next = NULL;
 	ft_printf("rr\n");
 	ft_init_values_lst(var);
@@ -165,11 +180,13 @@ int	rr(t_var *var)
 
 t_list	*ft_lstbeforelast(t_list *lst)
 {
-	if (lst == NULL)
+	t_list	*temp;
+	temp = lst;
+	if (temp == NULL)
 		return (NULL);
-	while (lst->next->next)
-		lst = lst->next;
-	return (lst);
+	while (temp->next->next)
+		temp = temp->next;
+	return (temp);
 }
 
 int	rra(t_var *var)
@@ -180,7 +197,7 @@ int	rra(t_var *var)
 	if (!var->a || (var->a)->next == NULL)
 		return (1);
 	temp = ft_lstbeforelast(var->a);
-	last = ft_lstlast(var->a);
+	last = ft_last(var->a);
 	last->next = var->a;
 	var->a = last;
 	temp->next = NULL;
@@ -197,7 +214,7 @@ int	rrb(t_var *var)
 		if (!var->b || (var->b)->next == NULL)
 		return (1);
 	temp1 = ft_lstbeforelast(var->b);
-	last1 = ft_lstlast(var->b);
+	last1 = ft_last(var->b);
 	last1->next = var->b;
 	var->b = last1;
 	temp1->next = NULL;
@@ -216,14 +233,14 @@ int	rrr(t_var *var)
 	if (!var->a || (var->a)->next == NULL)
 		return (1);
 	temp = ft_lstbeforelast(var->a);
-	last = ft_lstlast(var->a);
+	last = ft_last(var->a);
 	last->next = var->a;
 	var->a = last;
 	temp->next = NULL;
 	if (!var->b || (var->b)->next == NULL)
 		return (1);
 	temp1 = ft_lstbeforelast(var->b);
-	last1 = ft_lstlast(var->b);
+	last1 = ft_last(var->b);
 	last1->next = var->b;
 	var->b = last1;
 	temp1->next = NULL;
