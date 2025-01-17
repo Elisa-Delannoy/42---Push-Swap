@@ -15,7 +15,6 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-
 t_list	*ft_last(t_list *lst)
 {
 	t_list	*temp;
@@ -25,60 +24,6 @@ t_list	*ft_last(t_list *lst)
 	while (temp->next)
 		temp = temp->next;
 	return (temp);
-}
-
-
-void	ft_sort_tab(t_var *var)
-{
-	int	j;
-	int	i;
-	int	temp;
-
-	j = 1;
-	while (j < (var->argc - 1))
-	{
-		i = j;
-		while (i > 0 && var->nbstock[i] < var->nbstock[i - 1])
-		{
-			temp = var->nbstock[i - 1];
-			var->nbstock[i - 1] = var->nbstock[i];
-			var->nbstock[i] = temp;
-			i--;
-		}
-		j++;
-	}
-}
-
-
-
-// int	ft_groups_max(t_var *var, int nb_groups, int nb_pos)
-// {
-// 	int groups;
-// 	int size;
-
-// 	size = var->argc - 1;
-// 	ft_sort_tab(var);
-
-// 	if (nb_groups * nb_pos > var->argc - 1)
-// 		groups = var->nbstock[((var->argc - 2))]; 
-// 	else
-// 		groups = var->nbstock[size / nb_groups * nb_pos];
-// 	// ft_printf("mediane ds mediane= %d\n", mediane);
-// 	return (groups);
-// }
-
-
-int	ft_mediane(t_var *var, int count)
-{
-	int mediane;
-
-	ft_sort_tab(var);
-	if ((var->argc + count - 1)/ 2 > var->argc - 1)
-		mediane = var->nbstock[((var->argc - 2))]; 
-	else
-		mediane = var->nbstock[((var->argc + count) - 1) / 2];
-	// ft_printf("mediane ds mediane= %d\n", mediane);
-	return (mediane);
 }
 
 void	ft_init_values_lst(t_var *var)
@@ -101,83 +46,6 @@ void	ft_init_values_lst(t_var *var)
 		var->scd_b = *(int *)var->b->next->content;
 	if (var->b && var->b->next && var->b->next->next)
 		var->thrd_b = *(int *)var->b->next->next->content;
-}
-
-void	ft_sort_3(t_var *var)
-{
-	ft_init_values_lst(var);
-	if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a < 
-		var->thrd_a && var->argc == 4)
-	{
-		sa(var);
-		ra(var);
-	}
-	else if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
-	 	> var->thrd_a && var->argc == 4)
-		rra(var);
-	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
-		 < var->thrd_a && var->argc == 4)
-		sa(var);
-	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
-		 > var->thrd_a && var->argc == 4)
-		ra(var);
-	else if (var->frst_a > var->scd_a && var->scd_a > var->thrd_a && 
-		var->argc == 4)
-	{
-		sa(var);
-		rra(var);
-	}
-}
-
-void	ft_sort_3_for_b(t_var *var)
-{
-	ft_init_values_lst(var);
-	if (var->frst_b < var->scd_b && var->scd_b > var->thrd_b && var->frst_b < 
-		var->thrd_b)
-	{
-		sb(var);
-		rb(var);
-	}
-	else if (var->frst_b < var->scd_b && var->scd_b > var->thrd_b && var->frst_b
-		 > var->thrd_b)
-		rrb(var);
-	else if (var->frst_b > var->scd_b && var->scd_b < var->thrd_b && var->frst_b
-		 < var->thrd_b)
-		sb(var);
-	else if (var->frst_b > var->scd_b && var->scd_b < var->thrd_b && var->frst_b
-		 > var->thrd_b)
-		rb(var);
-	else if (var->frst_b > var->scd_b && var->scd_b > var->thrd_b)
-	{
-		sb(var);
-		rrb(var);
-	}
-}
-
-void	ft_presort_b(t_var *var)
-{
-	int	med;
-
-	med = ft_mediane(var, 0);
-	// ft_printf("mediane = %d\n", mediane);
-	pb(var);
-	if (ft_lstsize(var->b) == 2 && (var->frst_b > var->scd_b))
-		sb(var);
-	else if (ft_lstsize(var->b) == 3)
-		ft_sort_3_for_b(var);
-	else if (ft_lstsize(var->b) > 3 && var->frst_b > med && var->frst_b > 
-		var->scd_b)
-		rb(var);
-	if (var->b && var->b->next && var->b->next->next && ((var->frst_b > var->scd_b
-		&& var->frst_b < var->thrd_b)))
-		sb(var);
-	else if (var->b && var->b->next && var->b->next->next && (var->frst_b > 
-		var->scd_b))
-	{
-		if((var->frst_b - var->scd_b > var->frst_b - var->thrd_b) && 
-			( var->scd_b - var->thrd_b > var->frst_b - var->thrd_b))
-			sb(var);
-	}
 }
 
 int	ft_max(t_var *var)
@@ -212,17 +80,130 @@ int	ft_min(t_var *var)
 	return (minimum);
 }
 
-void	ft_swap_last_first(t_var *var)
+void	ft_sort_3(t_var *var)
 {
-	rra(var);
-	sa(var);
-	ra(var);
+	ft_init_values_lst(var);
+	if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a < 
+		var->thrd_a && var->argc == 4)
+	{
+		sa(var);
+		ra(var);
+	}
+	else if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
+	 	> var->thrd_a && var->argc == 4)
+		rra(var);
+	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
+		 < var->thrd_a && var->argc == 4)
+		sa(var);
+	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
+		 > var->thrd_a && var->argc == 4)
+		ra(var);
+	else if (var->frst_a > var->scd_a && var->scd_a > var->thrd_a && 
+		var->argc == 4)
+	{
+		sa(var);
+		rra(var);
+	}
 }
 
-void	ft_sa_ra(t_var *var)
+void	ft_sort_tab(t_var *var)
 {
-	sa(var);
-	ra(var);
+	int	j;
+	int	i;
+	int	temp;
+
+	j = 1;
+	while (j < (var->argc - 1))
+	{
+		i = j;
+		while (i > 0 && var->nbstock[i] < var->nbstock[i - 1])
+		{
+			temp = var->nbstock[i - 1];
+			var->nbstock[i - 1] = var->nbstock[i];
+			var->nbstock[i] = temp;
+			i--;
+		}
+		j++;
+	}
+}
+
+int	ft_nb_groups(t_var *var)
+{
+	int	nb_gr;
+
+	nb_gr = 0;
+	if (var->argc - 1 <= 20)
+		nb_gr = 4;
+	else if (var->argc - 1 > 20 && var->argc - 1 <= 200)
+		nb_gr = 8;
+	else if (var->argc - 1 > 200)
+		nb_gr = 16;
+	// ft_printf("nb groups%d\n", nb_gr);
+	return (nb_gr);
+}
+
+int	ft_grps_max(t_var *var, int nb_pos)
+{
+	int groups;
+	int size;
+	// int i = 0;
+	size = var->argc - 1;
+	// ft_printf("size  %d\n", size);
+	// ft_printf("pos =  %d\n", nb_pos);
+	// ft_printf("nb group  %d\n", var->nb_groups);
+	// ft_printf("indice = %d\n", size / var->nb_groups * nb_pos);
+	// ft_sort_tab(var);
+	// while ( i < var->argc - 1)
+	// {
+	// 	ft_printf("nbstck  = %d\n", var->nbstock[i]);
+	// 	i++;
+	// }
+	if (nb_pos == 0)
+		groups = var->min;
+	else if ((size * nb_pos / var->nb_groups) > var->argc - 2)
+		groups = var->nbstock[((var->argc - 2))]; 
+	else
+		groups = var->nbstock[(size * nb_pos / var->nb_groups)];
+
+	// ft_printf("groups  %d\n", groups);
+	return (groups);
+}
+
+int	ft_count_nb_in_groups(t_var *var, int nb_pos)
+{
+	int	count;
+	int size;
+
+	size = var->argc - 1;
+	count = 0;
+	if (nb_pos == 1)
+	{
+		count = (size * nb_pos/ var->nb_groups) + 1;
+	}
+	else if (nb_pos == var->nb_groups)
+		count = (size - 1) - (size * (nb_pos - 1) / var->nb_groups);
+	else if ((size * nb_pos / var->nb_groups) > var->argc - 2)
+		count = (size - 1 - size * nb_pos / var->nb_groups);
+	else
+	{
+		count = (size * nb_pos / var->nb_groups) - (size * (nb_pos - 1) / var->nb_groups);
+	}
+	return (count);
+}
+
+// 15 10 3 9 4 12 1 6 8 7 11 13 2 5 14
+
+int	ft_mediane(t_var *var, int count)
+{
+	int mediane;
+
+	ft_sort_tab(var);
+	if ((var->argc + count - 1)/ 2 > var->argc - 1)
+		mediane = var->nbstock[((var->argc - 2))]; 
+	else
+		mediane = var->nbstock[((var->argc + count) - 1) / 2];
+	// ft_printf("mediane ds mediane= %d\n", mediane);
+	return (mediane);
 }
 
 int	ft_1m4(t_var *var, int count)
@@ -244,85 +225,6 @@ void	ft_chose_mediane(t_var *var)
 		var->med = ft_1m4(var, 0);
 	else
 		var->med = ft_mediane(var, 0);
-}
-
-void	ft_sort_3begin_a(t_var *var)
-{
-	ft_init_values_lst(var);
-	ft_chose_mediane(var);
-	var->c = 0;
-	while (ft_lstsize(var->a) > 3 && var->frst_a > var->med)
-	{
-		if (var->frst_a == var->max)
-			ra(var);
-		else
-			ft_presort_b(var);
-	}
-	ra(var);
-	while (ft_lstsize(var->a) > 3 && var->frst_a > var->med)
-	{
-		if (var->frst_a == ft_max(var))
-		{
-			ft_swap_last_first(var);
-			ra(var);
-		}
-		else
-			ft_presort_b(var);
-	}
-	if (var->a && var->a->next && *(int *)ft_last(var->a)->content > 
-		var->frst_a)
-		ft_swap_last_first(var);
-}
-
-void	ft_sort_a_frst_part_bis(t_var *var, int c)
-{
-	if (c == var->sz_a - 2)
-	{
-		if (var->frst_a == var->max || var->frst_a == var->min)
-			return;
-		else if (var->frst_a > var->last_a|| (var->frst_a < var->scd_a && 
-			var->scd_a != var->min))
-			return;
-		else
-			ft_presort_b(var);
-	}
-	else if ((var->frst_a == var->max) || var->frst_a == var->min)
-	{
-		ft_swap_last_first(var);
-		ra(var);
-	}
-	else
-		ft_presort_b(var);
-}
-
-void	ft_sort_a_frst_part(t_var *var)
-{
-	ft_init_values_lst(var);
-	var->sz_a = ft_lstsize(var->a);
-	var->c = - 1;
-	// ft_printf("size a%d\n", var->sz_a);
-	while (++(var->c) < var->sz_a - 1 && var->a &&var->a->next && 
-		var->a->next->next)
-	{
-		// ft_printf("first %d\n", var->frst_a);
-		// ft_printf("max%d\n", var->max);
-		if (var->sz_a < 20)
-			var->med = ft_mediane(var, 0);
-		else if (ft_lstsize(var->a) >= 20)
-			var->med = ft_1m4(var, var->c + 2);
-		// ft_printf("med %d\n", var->med);
-		// ft_printf("c %d\n", var->c);
-		ft_init_values_lst(var);
-		if (var->last_a < var->frst_a && var->frst_a > var->scd_a && var->last_a
-		< var->scd_a && var->scd_a <= var->med && var->frst_a != var->max)
-			ft_sa_ra(var);
-		else if (var->frst_a <= var->med && var->last_a < var->frst_a && 
-			((var->frst_a < var->scd_a) || (var->frst_a > var->scd_a && 
-			var->last_a > var->scd_a && var->frst_a != var->max)))
-			ra(var);
-		else
-			ft_sort_a_frst_part_bis(var, var->c);
-	}
 }
 
 int	ft_increase(t_var *var)
@@ -353,79 +255,99 @@ int	ft_best_way(t_var *var, int count)
 		return (3);
 }
 
-void	ft_push_minmax(t_var *var)
+
+void	ft_check_end_groups(t_var *var)
+{
+	// ft_printf("count up =%d\n", var->count_up);
+	// ft_printf("count down = %d\n", var->count_down);
+	// ft_printf("count_up %d\n" , ft_count_nb_in_groups(var, var->nb_pos_up));
+	// ft_printf("count_down %d\n" , ft_count_nb_in_groups(var, var->nb_pos_down));
+
+	if (ft_count_nb_in_groups(var, var->nb_pos_up) == var->count_up
+		 && var->nb_pos_up <= var->nb_groups)
+	{
+		var->nb_pos_up = var->nb_pos_up + 1;
+		var->count_up = 0;
+	}
+	if (ft_count_nb_in_groups(var, var->nb_pos_down) == var->count_down
+		 && var->nb_pos_down > 0)
+	{	
+		var->nb_pos_down = var->nb_pos_down - 1;
+		var->count_down = 0;
+	}
+	// ft_printf("max new gr up  %d\n", ft_grps_max(var, var->nb_pos_up));
+	// ft_printf("max new gr down  %d\n", ft_grps_max(var, var->nb_pos_down));
+}
+
+void	ft_create_up_b(t_var *var)
 {
 	ft_init_values_lst(var);
-	var->sz_a = ft_lstsize(var->a);
-	var->c = ft_increase(var);
-	while (var->a && var->sz_a > 0 && var->frst_a != var->min && var->frst_a != var->max)
+	ft_sort_tab(var);
+	var->count_up = 0;
+	var->count_down = 0;
+	var->nb_pos_up = var->nb_groups / 2 + 1;
+	// ft_printf("pos up %d\n", var->nb_pos_up);
+	var->nb_pos_down = var->nb_groups / 2;
+	// ft_printf("pos down %d\n", var->nb_pos_down);
+	while (ft_lstsize(var->a) > 3)
 	{
-		if (ft_best_way(var, var->c) == 2)
-			ra(var);
+
+			ft_printf("up min   %d\n", ft_grps_max(var, (var->nb_pos_up - 1)));
+			ft_printf("up max   %d\n", ft_grps_max(var, (var->nb_pos_up)));
+			ft_printf("down min   %d\n", ft_grps_max(var,  var->nb_pos_down - 1));
+			ft_printf("down max  %d\n", ft_grps_max(var,  var->nb_pos_down));
+	// 	ft_printf("first a  %d\n", var->frst_a);
+	// ft_printf("pos up %d\n", var->nb_pos_up);
+	// ft_printf("pos down  %d\n", var->nb_pos_down);
+	// ft_printf("pos down   %d\n", (var->nb_pos_up));
+	// ft_printf("first a   %d\n", (var->frst_a));
+		
+		if (var->frst_a <= ft_grps_max(var, var->nb_pos_up) && 
+			var->frst_a > ft_grps_max(var, var->nb_pos_up - 1))
+		{
+			if (var->frst_a == var->max)
+				ra(var);
+			else
+				pb(var);
+			var->count_up++;
+			ft_check_end_groups(var);
+		}
+		else if (var->frst_a <= ft_grps_max(var,  var->nb_pos_down) && 
+			var->frst_a > ft_grps_max(var, var->nb_pos_down - 1))
+		{
+			if (var->frst_a == var->min)
+				ra(var);
+			else
+			{
+				pb(var);
+				rb(var);
+			}
+			var->count_down++;
+			ft_check_end_groups(var);
+		}
 		else
-			rra(var);
-		var->sz_a--;
-	}
-	if (var->frst_a == var->min || var->frst_a == var->max)
-		pb(var);
-}
-
-
-
-
-int	ft_check_ok_min_max(t_var *var)
-{
-	ft_init_values_lst(var);
-	if ((var->a)->next && var->max == var->frst_a && var->min == var->scd_a)
-		return (1);
-	else if ((var->a)->next && var->max == var->scd_a && 
-		var->min == var->frst_a)
-	{
-		sa(var);
-		return (1);
-	}
-	if (ft_increase(var) == 0)
-		return (1);
-	return (0);
-}
-
-void	ft_sort_minmax(t_var *var)
-{
-	ft_push_minmax(var);
-	ft_push_minmax(var);
-	ft_init_values_lst(var);
-	var->c = ft_increase(var);
-	// ft_printf("increase %d\n",ft_increase(var));
-	if (ft_best_way(var, var->c) == 2)
-	{
-		// ft_printf("best way %d\n",ft_best_way(var, var->c));
-		ft_increase(var);
-		while (ft_increase(var) != 0)		
 			ra(var);
-	}
-	else if (ft_best_way(var, var->c) == 3)
+			
+		// ft_check_end_groups(var);
+		t_list	*temp;
+		temp = var->a;
+		while (temp)
 	{
-		ft_increase(var);
-		// ft_printf("best way %d\n",ft_best_way(var, var->c));
-		while (ft_increase(var) != 0)		
-			rra(var);
+		
+		ft_printf("content a = %d\n", *(int *)temp->content);
+		temp = temp->next;
+
 	}
-	pa(var);
-	if (var->b && *(int *)var->b->content == var->max)
-		pa(var);
-	if (var->b && *(int *)var->b->content == var->min)
-	{
-		ra(var);
-		pa(var);
+		
 	}
 }
-void	ft_create_b(t_var *var)
-{
-	ft_sort_3begin_a(var);
-	ft_sort_a_frst_part(var);
-	if (ft_check_ok_min_max(var) == 0)
-		ft_sort_minmax(var);
-}
+
+
+
+
+
+
+
 
 
 int	ft_count_way_for_a(t_var *var, int nb)
@@ -535,7 +457,6 @@ void	ft_push_A(t_var *var, int indice)
 		pa(var);
 }
 
-// 6 1 23 18 27 2 28 19 30 3 29 21 4 24 17 13 16 10 15 20 12 22 26 8 11 9 7 5 14 25
 
 void	ft_push_A_first_part(t_var *var, int indice)
 {
@@ -894,6 +815,7 @@ t_var	*ft_init_var(int argc, char **argv)
 	var->b = NULL;
 	var->min = ft_min(var);
 	var->max = ft_max(var);
+	var->nb_groups = ft_nb_groups(var);
 	// ft_printf("max = %d\n", var->max);
 	return (var);
 }
@@ -919,10 +841,16 @@ int	main(int argc, char **argv)
 		// 	ft_sort_3(&(var->a), argc);
 		if (argc > 6) /*a voir pr nb arg*/
 		{
-		ft_create_b(var);
+			// ft_grps_max(var, 0);
+			// ft_grps_max(var, 1);
+			// ft_grps_max(var, 2);
+			// ft_grps_max(var, 3);
+			// ft_grps_max(var, 4);
+			// ft_grps_max(var, 5);
+		ft_create_up_b(var);
 		// ft_sort_min_max(&a, &b, nbstock, argc);
 		// // ft_printf("best way max %d", ft_best_way(&a, -4));
-		ft_push_swap(var);
+		// ft_push_swap(var);
 		// ft_push_A_first_part(var);
 		// // ft_select_b_to_push(&a, &b, 0, 100);
 		// ft_print_and_free(&(var->a));
@@ -958,9 +886,9 @@ int	main(int argc, char **argv)
 		// ft_printf("a last = %d\n", *(int *)ft_last(var->a)->content);
 		// ft_printf("a debut= %d\n", *(int *)(var->a)->content);
 
-		// ft_print_and_free(&(var->a));
+		ft_print_and_free(&(var->a));
 		// ft_printf("b =\n");
-		// ft_print_and_free(&(var->b));
+		ft_print_and_free(&(var->b));
 		// ft_printf("b = %d\n", *(int *)var->b->content);
 		// ft_printf("a debut= %d\n", *(int *)(var->a)->content);
 		// ft_printf("a last = %d\n", *(int *)ft_last_a(var)->content);
@@ -970,393 +898,3 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
-
-
-
-		// ft_printf("count = %d\n", ft_count_way_for_a(a, *(int *)var->b->content));
-		// 	ft_printf("size = %d\n", ft_lstsize(var->a));
-		// 	ft_printf("bestway = %d\n", ft_best_way(a, ft_count_way_for_a(a, *(int *)var->b->content)));
-		// ft_printf("last ft = %d\n", *(int *)ft_lstlast(var->a)->content);
-		// ft_printf("last ft = %d\n", *(int *)ft_lstlast(var->a)->content);
-		// while (ft_lstsize(var->a) <= ft_lstsizevar->b)
-		// {
-		// if (*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content)
-		// 	pa(a,b);
-
-		// else
-		// {
-		// 	if (ft_push_with_A(a, b) == 2)
-		// 	{
-		// 	if (ft_best_way(a, ft_count_way_for_a(a, *(int *)var->b->content)) == 2)
-		// 	{
-
-		// 		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
-		// 		{
-		// 			// ft_printf("last ft = %d\n", *(int *)ft_lstlast(var->a)->content);
-		// 			// ft_printf("b = %d\n", *(int *)var->b->content);
-		// 			// ft_printf("a = %d\n", *(int *)(var->a)->content);
-		// 			ra(var);
-		// 			// ft_printf("last ft = %d\n", *(int *)ft_lstlast(var->a)->content);
-		// 			// ft_printf("b = %d\n", *(int *)var->b->content);
-		// 			// ft_printf("a = %d\n", *(int *)(var->a)->content);
-		// 		}
-		// 	}
-		// 	else if (ft_best_way(a, ft_count_way_for_a(a, *(int *)var->b->content)) == 3)
-		// 	{
-		// 		while (!(*(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content))
-		// 			rra(var);
-		// 	}
-		// 	}
-		// 	else
-		// 		rb(var);
-		// 	}
-		// }
-
-
-
-
-
-// int	ft_is_decreasing(t_list **a)
-// {
-// 	t_list	*temp;
-
-// 	temp = *a; 
-// 	while (temp->next)
-// 	{
-// 		// ft_printf("temp %d\n",(int *)(temp)->content );
-// 		// ft_printf("temp_>next %d\n",(int *)temp->next->content );
-// 		if (*(int *)temp->content < *(int *)temp->next->content)
-// 			return (1);
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-// }
-
-
-
-// int	ft_sort_min_max(t_list **a, t_list **b, int *var->nbstock, int var->argc)
-// {
-// 	int	best_way_max;
-// 	int	best_way_min;
-// 	int count;
-// 	int	check;
-	
-// 	ft_check_ok_min_max(a, b, var->nbstock, var->argc);
-// 	check = 0;
-// 	if (ft_min(var->nbstock, var->argc) == *(int *)(var->a)->content || ft_max(var->nbstock, var->argc) == *(int *)(var->a)->content)
-// 		check = 1;
-
-// 	else if (ft_min(var->nbstock, var->argc) == *(int *)ft_lstlast(var->a)->content || ft_max(var->nbstock, var->argc) == *(int *)ft_lstlast(var->a)->content)
-// 		check = 2;
-	
-// 	best_way_max = ft_best_way(a, ft_count_way(a, ft_max(var->nbstock, var->argc)));
-// 	best_way_min = ft_best_way(a, ft_count_way(a, ft_min(var->nbstock, var->argc)));
-
-// 	if (ft_is_increasing(var->a) !=0 )
-// 	{
-// 		if (best_way_max == 2 && best_way_min == 2)
-// 		{
-// 			while (*(int *)(var->a)->content != ft_min(var->nbstock, var->argc) && *(int *)(var->a)->content != ft_max(var->nbstock, var->argc))
-// 				ra(var);
-// 			if ((*(int *)(var->a)->next->content == ft_min(var->nbstock, var->argc) || *(int *)(var->a)->next->content == ft_max(var->nbstock, var->argc)) && ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) == 0)
-// 			{
-// 				if (*(int *)(var->a)->next->content == ft_max(var->nbstock, var->argc))
-// 					sa(var);
-// 			}
-			
-// 			else
-// 			{
-// 				if (check != 1)
-// 					pb(a, b);
-// 				while (*(int *)(var->a)->content != ft_min(var->nbstock, var->argc) && *(int *)(var->a)->content  != ft_max(var->nbstock, var->argc))
-// 					ra(var);
-// 				if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 					pb(a, b);
-// 			}
-			
-// 		}
-// 		else if (best_way_max == 3 && best_way_min == 3)
-// 		{
-// 			while (*(int *)(var->a)->content != ft_min(var->nbstock, var->argc) && *(int *)(var->a)->content  != ft_max(var->nbstock, var->argc))
-// 				rra(var);
-// 			if ((*(int *)ft_lstlast(var->a)->content == ft_min(var->nbstock, var->argc) || *(int *)ft_lstlast(var->a)->content == ft_max(var->nbstock, var->argc)) && ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) == 0)
-// 			{
-// 				if (*(int *)ft_lstlast(var->a)->content == ft_min(var->nbstock, var->argc))
-// 				{
-// 					rra(var);
-// 					sa(var);
-// 				}
-
-// 			}
-// 			else
-// 			{
-// 				if (check != 2)
-// 					pb(a, b);
-// 				while (*(int *)(var->a)->content != ft_min(var->nbstock, var->argc) && *(int *)(var->a)->content  != ft_max(var->nbstock, var->argc))
-// 					rra(var);
-// 				if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 					pb(a, b);
-// 			}
-// 		}
-// 		else
-// 		{
-// 			while (*(int *)(var->a)->content != ft_min(var->nbstock, var->argc) && *(int *)(var->a)->content != ft_max(var->nbstock, var->argc))
-// 				ra(var);
-// 			if ((*(int *)(var->a)->next->content == ft_min(var->nbstock, var->argc) || *(int *)(var->a)->next->content == ft_max(var->nbstock, var->argc)) && ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) == 0)
-// 			{
-// 				if (*(int *)(var->a)->next->content == ft_max(var->nbstock, var->argc))
-// 					sa(var);
-// 			}
-// 			else if (*(int *)(var->a)->content == ft_min(var->nbstock, var->argc))
-// 			{
-// 				if (check != 2 && check != 1)
-// 					pb(a, b);
-// 				if (ft_best_way(a, ft_count_way(a, ft_max(var->nbstock, var->argc))) == 2)
-// 				{
-// 					while (*(int *)(var->a)->content != ft_max(var->nbstock, var->argc))
-// 						ra(var);
-// 					if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 						pb(a, b);
-// 				}
-// 				else
-// 				{
-// 					while (*(int *)(var->a)->content  != ft_max(var->nbstock, var->argc))
-// 						rra(var);
-// 					if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 						pb(a, b);
-// 				}
-// 			}
-// 			else if (*(int *)(var->a)->content == ft_max(var->nbstock, var->argc))
-// 			{
-// 				if (check != 2 && check != 1)
-// 					pb(a, b);
-// 				if (ft_best_way(a, ft_count_way(a, ft_min(var->nbstock, var->argc))) == 2)
-// 				{
-// 					while (*(int *)(var->a)->content  != ft_min(var->nbstock, var->argc))
-// 						ra(var);
-// 					if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 						pb(a, b);
-// 				}
-// 				else
-// 				{
-// 					while (*(int *)(var->a)->content  != ft_min(var->nbstock, var->argc))
-// 						rra(var);
-// 					if (ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc)) != 0)
-// 						pb(a, b);
-// 				}
-// 			}
-// 		}	
-// 	}
-// 	if (*(int *)(var->a)->content == ft_min(var->nbstock, var->argc) && *(int *)(var->a)->next->content == ft_max(var->nbstock, var->argc) )
-// 		sa(var);
-// 	count = ft_is_increasing_withmax(a, ft_max(var->nbstock, var->argc), ft_min(var->nbstock, var->argc));
-// 	if (count == 0)
-// 		return (0);
-// 	else if (ft_best_way(a, count) == 2)
-// 	{
-// 		while (ft_is_increasing(var->a) != 0)		
-// 			ra(var);
-// 	}
-// 	else if (ft_best_way(a, count) == 3)
-// 	{
-// 		while (ft_is_increasing(var->a) != 0)		
-// 			rra(var);
-// 	}
-// 	pa(var);
-// 	if (*(int *)var->b->content == ft_max(var->nbstock, var->argc))
-// 		pa(var);
-// 	if (*(int *)var->b->content == ft_min(var->nbstock, var->argc))
-// 	{
-// 		ra(var);
-// 		pa(var);
-// 	}
-// 	return (0);
-// }
-
-
-// int	ft_is_increasing_withmax(t_list **a, int max, int min)
-// {
-// 	t_list	*temp;
-// 	int		count;
-
-// 	count = 1;
-// 	temp = *a;
-// 	if (temp->next && *(int *)temp->content == max)
-// 		temp = temp->next;
-// 	if (temp->next && temp->next->next && *(int *)temp->next->content == max 
-// 		&& *(int *)temp->content == min)
-// 		temp = temp->next->next;
-// 	while (temp->next)
-// 	{
-// 		if (*(int *)temp->content > *(int *)temp->next->content)
-// 		{
-// 			if (!temp->next->next && *(int *)temp->next->content == min)
-// 				return (0);
-// 			else
-// 				return (count);
-// 		}
-// 		count++;
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-// }
-
-// int	ft_is_increasing(t_list **a)
-// {
-// 	t_list	*temp;
-
-// 	temp = *a; 
-// 	while (temp->next)
-// 	{
-// 		if (*(int *)temp->content > *(int *)temp->next->content)
-// 			return (1);
-// 		temp = temp->next;
-// 	}
-// 	return (0);
-// }
-
-
-// int	ft_select_better_b_to_push(t_var *var, int indice, int count) /*METTRE 0  PR INDICE ET 100 PR COUNT DANS APPEL FONCTION*/
-// {
-// 	int	count_a;
-// 	int temp_indice;
-// 	int way;
-// 	int	i;
-
-// 	ft_init_values_lst(var);
-// 	var->temp = var->b;
-// 	count_a	= 0;
-// 	temp_indice = 0;
-// 	way = 0;
-// 	i = 0;
-// 	while (var->temp)
-// 	{
-		
-// 		// ft_printf("indice %d\n", indice);
-// 		if (indice > ft_lstsize(var->b) / 2)
-// 			i = ft_lstsize(var->b)- indice + 1;
-// 		else
-// 			i = indice;
-// 		// ft_printf("count way %d\n", ft_count_way_for_a(var, *(int *)temp->content));
-// 		// ft_printf("temp content %d\n", *(int *)temp->content);
-
-// 		// ft_printf("size a %d\n", ft_lstsize(var->a));
-// 		if (ft_count_way_end(var, *(int *)var->temp->content) > ft_lstsize(var->a) / 2)
-// 			var->count_a = ft_lstsize(var->a) - ft_count_way_for_a(var, *(int *)var->temp->content) + 1;
-// 		else
-// 			var->count_a = ft_count_way_end(var, *(int *)var->temp->content);
-// 		// ft_printf("count a %d\n", count_a);
-		
-// 		way = i + var->count_a;
-// 		// ft_printf("way %d\n", way);
-// 		// ft_printf("count %d\n", count);
-// 		// ft_printf("indice + count a %d\n", indice + count_a);
-// 		if (count > way)
-// 		{
-// 			temp_indice = indice;
-// 			// ft_printf("temp  indice %d\n", temp_indice);
-// 			count = way;
-			
-// 		}
-		
-// 		indice++;
-// 		var->temp = var->temp->next;	
-// 	}
-// 	// ft_printf("end %d\n", temp_indice);
-// 	return (temp_indice);
-// }
-
-// void	ft_push_swap(t_var *var)
-// {
-// 	// int count;
-// 	var->sz_b = ft_lstsize(var->b);
-// 	// int	c;
-// 	// while (var->b && var->sz_b > 0)
-// 	// {
-// 	// 	// ft_printf("sizeb %d\n",var->sz_b);
-// 	// 	ft_push_A_first_part(var);
-// 	// 	var->sz_b--;
-// 	// }
-// 	ft_push_end_b(var);
-// 	// int indice = ft_select_better_b_to_push(var, 0, 100);
-// 	// ft_printf("indice %d\n", indice);
-// 	// pa(var);
-// 	// indice = ft_select_better_b_to_push(var, 0, 100);
-// 	// ft_printf("indice %d\n", indice);
-
-	
-
-// 	// c = 0;
-// 	// count = ft_lstsize(var->b);
-// 	// ft_printf("c psb= %d\n", c);
-// 	// ft_printf("count psb = %d\n", count);
-// 	// while (ft_lstsize(var->a) <= ft_lstsizevar->b)
-// 	// while (count > 0)
-// 	// {
-// 		// ft_printf("c ps= %d\n", c);
-// 		// ft_printf("c = %d\n", c);
-// 		// ft_printf("b = %d\n", *(int *)var->b->content);
-// 		// ft_printf("b next = %d\n", *(int *)var->b->next ->content);
-// 		// ft_printf("mediane = %d\n", edianevar->nbstock, var->argc, 0));
-
-// 	// 	if (*(int *)var->b->content <= ft_mediane(var, 0) && *(int *)var->b->next->content > ft_mediane(var, 0))
-// 	// 		c = 0;
-// 	// 	// ft_printf("c ft= %d\n", c);
-// 	// 	if (var->b && var->a && var->a->next && *(int *)var->b->content < *(int *)(var->a)->content && *(int *)var->b->content > *(int *)ft_lstlast(var->a)->content)
-// 	// 		pa(var);
-// 	// 	else
-// 	// 		c = c + ft_push_with_A(var, c);
-// 	// 	count--;
-// 	// }
-// 	// ft_push_end_b(var);
-// 	// ft_printf("countway %d\n", ft_count_way(var, var->min));
-// 	// if  (ft_count_way(var, var->min) == 2)
-// 	// {
-// 	// 	ft_printf("countway %d", ft_count_way(var, var->min));
-// 	// 	while (*(int *)(var->a)->content != var->min)
-// 	// 		ra(var);
-// 	// }
-// 	// else
-// 	// {
-// 	// 	while (*(int *)(var->a)->content != var->min)
-// 	// 		rra(var);
-// 	// }
-
-// 	if (ft_increase(var) == 0)
-// 		return;
-// 	if (ft_best_way(var, ft_count_way(var, var->min)) == 2)
-// 	{
-// 		while (ft_increase(var) != 0)		
-// 			ra(var);
-// 	}
-// 	else if (ft_best_way(var, ft_count_way(var, var->min)) == 3)
-// 	{
-// 		// ft_printf("best way %d\n",ft_best_way(var, var->c));
-// 		while (ft_increase(var) != 0)		
-// 			rra(var);
-// 	}
-// }
-
-
-
-// void	ft_push_no_r(t_var *var, int indice)
-// {
-// 	if (indice > ft_lstsize(var->b) / 2)
-// 		indice = ft_lstsize(var->b) - indice;
-// 	while (indice > 0)
-// 	{
-// 		if (indice < ft_lstsize(var->b) / 2)
-// 			rb(var);
-// 		else
-// 			rrb(var);
-// 		indice--;
-// 	}
-// 	ft_printf("a = %d\n", *(int *)(var->a)->content);
-// 		ft_printf("b = %d\n", *(int *)var->b->content);
-// 		ft_printf("last = %d\n", *(int *)ft_last(var->a)->content);
-
-// 	way_pa = ft_best_way(var, ft_count_way_for_a(var, *(int *)var->b->content));
-// 	ft_printf("way pa %d\n",ft_count_way_for_a(var, *(int *)var->b->content));
-// 	ft_printf("way pa %d\n", way_pa);
-// 	ft_push_A_first_part(var);
-// }

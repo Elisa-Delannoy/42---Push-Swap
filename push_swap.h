@@ -38,6 +38,11 @@ typedef struct s_var
 	int		c;
 	int		count_a;
 	int		count_b;
+	int		nb_groups;
+	int		count_up;
+	int		count_down;
+	int		nb_pos_up;
+	int		nb_pos_down;
 
 }	t_var;
 
