@@ -32,11 +32,11 @@ void	ft_create_b(t_var *var)
 	ft_sort_tab(var);
 	while (ft_lstsize(var->a) > 3)
 	{
-		if (var->frst_a <= ft_grps_max(var, var->nb_pos_up) && 
-			var->frst_a > ft_grps_max(var, var->nb_pos_up - 1))
+		if (var->frst_a <= ft_grps_max(var, var->nb_pos_up)
+			&& var->frst_a > ft_grps_max(var, var->nb_pos_up - 1))
 			ft_if_pb_up(var);
-		else if (var->frst_a <= ft_grps_max(var,  var->nb_pos_down) && 
-			var->frst_a > ft_grps_max(var, var->nb_pos_down - 1))
+		else if (var->frst_a <= ft_grps_max(var, var->nb_pos_down)
+			&& var->frst_a > ft_grps_max(var, var->nb_pos_down - 1))
 			ft_if_pb_down(var);
 		else
 			ra(var);

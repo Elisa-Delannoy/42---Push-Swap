@@ -63,7 +63,7 @@ int		ft_increase(t_var *var);
 int		ft_simu_rb_rrb(t_var *var, int indice);
 void	ft_create_b(t_var *var);
 void	ft_sort_tab(t_var *var);
-int		ft_nb_groups(t_var *var):
+int		ft_nb_groups(t_var *var);
 int		ft_grps_max(t_var *var, int nb_pos);
 int		ft_count_nb_in_groups(t_var *var, int nb_pos);
 void	ft_check_end_groups(t_var *var);
@@ -71,15 +71,12 @@ void	ft_addlst(int nb, t_list **a);
 int		*ft_checkerror_and_stock(int argc, char **argv);
 int		ft_checknb(int nb, char *argv);
 int		ft_error(int *nbstock);
-
-int	ft_check_ra(t_var *var, int indice);
-int	ft_chck_rb(t_var *var, int indice);
-int ft_check_rr(t_var *var, int indice);
-int	ft_check_rra(t_var *var, int indice);
-int	ft_chck_rrb(t_var *var, int indice);
-int ft_check_rrr(t_var *var, int indice);
-
-
+int		ft_check_ra(t_var *var, int indice);
+int		ft_chck_rb(t_var *var, int indice);
+int		ft_check_rr(t_var *var, int indice);
+int		ft_check_rra(t_var *var, int indice);
+int		ft_chck_rrb(t_var *var, int indice);
+int		ft_check_rrr(t_var *var, int indice);
 int		sa(t_var *var);
 int		pa(t_var *var);
 int		ra(t_var *var);
@@ -91,6 +88,5 @@ int		rrb(t_var *var);
 int		ss(t_var *var);
 int		rr(t_var *var);
 int		rrr(t_var *var);
-// t_list	*ft_lstbeforelast(t_list *lst);
 
 #endif

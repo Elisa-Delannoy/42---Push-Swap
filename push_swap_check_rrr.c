@@ -32,16 +32,15 @@ int	ft_check_rra(t_var *var, int indice)
 	return (count_rra);
 }
 
-int ft_check_rrr(t_var *var, int indice)
+int	ft_check_rrr(t_var *var, int indice)
 {
 	int	count_rrb;
 	int	count_rra;
-	int count_rrr;
+	int	count_rrr;
 
 	count_rrb = ft_check_rrb(var, indice);
 	count_rra = ft_check_rra(var, indice);
 	count_rrr = 0;
-
 	if (count_rrb > 0 && count_rra > 0)
 	{
 		while (count_rra > 0 && count_rrb > 0)
@@ -56,22 +55,21 @@ int ft_check_rrr(t_var *var, int indice)
 
 void	ft_push_rrr_rrb_rra(t_var *var, int indice)
 {
-	int count_rrr;
-	int count_rra;
+	int	count_rrr;
+	int	count_rra;
 	int	count_rrb;
 
 	var->c = 0;
 	count_rrr = ft_check_rrr(var, indice);
 	count_rrb = ft_check_rrb(var, indice);
 	count_rra = ft_check_rra(var, indice);
-
 	while (var->c < count_rrr)
 	{
 		rrr(var);
 		var->c++;
 	}
 	while (count_rrb - count_rrr > 0)
-	{	
+	{
 		rrb(var);
 		count_rrb--;
 	}

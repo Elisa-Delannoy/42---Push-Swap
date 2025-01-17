@@ -54,4 +54,3 @@ int	rr(t_var *var)
 	ft_init_values_lst(var);
 	return (0);
 }
-

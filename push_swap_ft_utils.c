@@ -17,6 +17,7 @@
 t_list	*ft_last(t_list *lst)
 {
 	t_list	*temp;
+
 	temp = lst;
 	if (temp == NULL)
 		return (NULL);
@@ -75,6 +76,7 @@ void	ft_add_back(t_list **lst, t_list *new)
 t_list	*ft_lstbeforelast(t_list *lst)
 {
 	t_list	*temp;
+
 	temp = lst;
 	if (temp == NULL)
 		return (NULL);

@@ -25,7 +25,7 @@ int	rrb(t_var *var)
 	t_list	*temp1;
 	t_list	*last1;
 
-		if (!var->b || (var->b)->next == NULL)
+	if (!var->b || (var->b)->next == NULL)
 		return (1);
 	temp1 = ft_lstbeforelast(var->b);
 	last1 = ft_last(var->b);

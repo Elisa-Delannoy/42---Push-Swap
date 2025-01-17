@@ -36,14 +36,12 @@ int	ft_count_way_end(t_var *var, int nb)
 
 	var->temp = var->a;
 	count = 1;
-
-	if (var->temp && *(int *)var->temp->content > nb && 
-        *(int *)ft_last(var->temp)->content < nb)
+	if (var->temp && *(int *)var->temp->content > nb
+		&& *(int *)ft_last(var->temp)->content < nb)
 		return (0);
-			
-	while (var->temp->next && (!(nb > *(int *)(var->temp)->content && nb <
-		*(int *)(var->temp)->next->content) || 
-        (*(int *)var->temp->content == var->max)))
+	while (var->temp->next && (!(nb > *(int *)(var->temp)->content && nb
+			< *(int *)(var->temp)->next->content)
+			|| (*(int *)var->temp->content == var->max)))
 	{
 		var->temp = var->temp->next;
 		count++;
