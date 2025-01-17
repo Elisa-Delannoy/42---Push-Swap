@@ -20,7 +20,7 @@ FTPRINTF = $(FTPRINTF_DIR)/ftprintf
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror -I ./
 NAME = push_swap
-SRC = push_swap.c push_swap2.c push_swap_lst.c
+SRC = push_swap.c push_swap_main.c push_swap_lst.c
 
 OBJ = $(SRC:.c=.o)
 

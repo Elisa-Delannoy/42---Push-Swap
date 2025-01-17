@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "libft/libft.h"
 #include "printf/ft_printf.h"
 #include "push_swap.h"
@@ -65,7 +63,6 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 	return (nbstock);
 }
 
-
 void	ft_addlst(int nb, t_list **a)
 {
 	t_list	*newa;
@@ -79,13 +76,12 @@ void	ft_addlst(int nb, t_list **a)
 	ft_lstadd_back(a, newa);
 }
 
-void	ft_print_and_free(t_list **a)
+void	ft_free_a(t_list **a)
 {
 	t_list	*temp;
 
 	while (*a)
 	{
-		ft_printf("content a = %d\n", *((int *)(*a)->content));
 		temp = (*a)->next;
 		free((*a)->content);
 		free(*a);
