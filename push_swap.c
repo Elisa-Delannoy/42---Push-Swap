@@ -49,6 +49,25 @@ void	ft_sort_tab(t_var *var)
 	}
 }
 
+
+
+// int	ft_groups_max(t_var *var, int nb_groups, int nb_pos)
+// {
+// 	int groups;
+// 	int size;
+
+// 	size = var->argc - 1;
+// 	ft_sort_tab(var);
+
+// 	if (nb_groups * nb_pos > var->argc - 1)
+// 		groups = var->nbstock[((var->argc - 2))]; 
+// 	else
+// 		groups = var->nbstock[size / nb_groups * nb_pos];
+// 	// ft_printf("mediane ds mediane= %d\n", mediane);
+// 	return (groups);
+// }
+
+
 int	ft_mediane(t_var *var, int count)
 {
 	int mediane;
@@ -306,20 +325,6 @@ void	ft_sort_a_frst_part(t_var *var)
 	}
 }
 
-void	ft_push_minmax(t_var *var)
-{
-	ft_init_values_lst(var);
-	var->sz_a = ft_lstsize(var->a);
-	var->c = var->sz_a;
-	while (var->a && var->c > 0 && var->frst_a != var->min && var->frst_a != var->max)
-	{
-		ra(var);
-		(var->c)--;
-	}
-	if (var->frst_a == var->min || var->frst_a == var->max)
-		pb(var);
-}
-
 int	ft_increase(t_var *var)
 {
 	int		c;
@@ -338,7 +343,6 @@ int	ft_increase(t_var *var)
 	}
 	return (0);
 }
-
 int	ft_best_way(t_var *var, int count)
 {
 	ft_init_values_lst(var);
@@ -348,6 +352,25 @@ int	ft_best_way(t_var *var, int count)
 	else
 		return (3);
 }
+
+void	ft_push_minmax(t_var *var)
+{
+	ft_init_values_lst(var);
+	var->sz_a = ft_lstsize(var->a);
+	var->c = ft_increase(var);
+	while (var->a && var->sz_a > 0 && var->frst_a != var->min && var->frst_a != var->max)
+	{
+		if (ft_best_way(var, var->c) == 2)
+			ra(var);
+		else
+			rra(var);
+		var->sz_a--;
+	}
+	if (var->frst_a == var->min || var->frst_a == var->max)
+		pb(var);
+}
+
+
 
 
 int	ft_check_ok_min_max(t_var *var)
@@ -372,6 +395,7 @@ void	ft_sort_minmax(t_var *var)
 	ft_push_minmax(var);
 	ft_init_values_lst(var);
 	var->c = ft_increase(var);
+	// ft_printf("increase %d\n",ft_increase(var));
 	if (ft_best_way(var, var->c) == 2)
 	{
 		// ft_printf("best way %d\n",ft_best_way(var, var->c));
@@ -511,21 +535,21 @@ void	ft_push_A(t_var *var, int indice)
 		pa(var);
 }
 
-
+// 6 1 23 18 27 2 28 19 30 3 29 21 4 24 17 13 16 10 15 20 12 22 26 8 11 9 7 5 14 25
 
 void	ft_push_A_first_part(t_var *var, int indice)
 {
-	int	way_pa;
+	// int	way_pa;
 
 	var->c = 0;
 	var->sz_a = ft_lstsize(var->a);
-	way_pa = ft_best_way(var, ft_count_way_end(var, *(int *)var->b->content));
+	// way_pa = ft_best_way(var, ft_count_way_end(var, *(int *)var->b->content));
 	// ft_printf("pushA\n");
-	// if (var->b && *(int *)var->b->content < ft_1m4(var, 0))
-	// 	rb(var);
-	// else if (var->b && (*(int *)var->b->content > ft_3m4(var, 0)))
-	// 	rb(var);
-	// else
+	if (var->b && *(int *)var->b->content < ft_1m4(var, 0))
+		rb(var);
+	else if (var->b && (*(int *)var->b->content > ft_3m4(var, 0)))
+		rb(var);
+	else
 		ft_push_A(var, indice);
 	return;
 }
@@ -796,6 +820,36 @@ void	ft_push_end_b(t_var *var)
 		var->sz_b--;
 	}	
 }
+
+// void	ft_push_end_b(t_var *var)
+// {
+// 	int		indice;
+// 	var->sz_b = ft_lstsize(var->b);
+	
+// 	while (var->sz_a < var->sz_b / 2)
+// 	{
+// 		if (var->b && *(int *)var->b->content < ft_1m4(var, 0))
+// 			rb(var);
+// 		else if (var->b && (*(int *)var->b->content > ft_3m4(var, 0)))
+// 			rb(var);
+// 		else
+// 			ft_push_A_first_part(var, 0);
+// 	}
+	
+// 	while(var->b && var->sz_b > 0)
+// 	{
+// 		indice = ft_select_better_to_push(var);
+// 		// ft_printf("indice pushend %d\n", indice);
+
+// 		if (ft_check_rrr(var, indice) != 0)
+// 			ft_push_rrr_rrb_rra(var, indice);
+// 		else if (ft_check_rr(var, indice) != 0)
+// 			ft_push_rr_rb_ra(var, indice);
+// 		else
+// 			ft_push_A(var, indice);
+// 		var->sz_b--;
+// 	}	
+// }
 
 void	ft_push_swap(t_var *var)
 {
