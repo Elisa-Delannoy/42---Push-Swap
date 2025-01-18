@@ -16,7 +16,7 @@
 
 int	ft_error(int *nbstock)
 {
-	ft_printf("Error\n");
+	write(2, "Error\n", 7);
 	if (nbstock != NULL)
 		free (nbstock);
 	exit(1);
@@ -76,15 +76,15 @@ void	ft_addlst(int nb, t_list **a)
 	ft_lstadd_back(a, newa);
 }
 
-void	ft_free_a(t_list **a)
+void	ft_free_a(t_var *var)
 {
 	t_list	*temp;
 
-	while (*a)
+	while (var->a)
 	{
-		temp = (*a)->next;
-		free((*a)->content);
-		free(*a);
-		*a = temp;
+		temp = var->a->next;
+		free(var->a->content);
+		free(var->a);
+		var->a = temp;
 	}
 }

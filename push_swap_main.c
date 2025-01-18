@@ -15,12 +15,12 @@ void	ft_init_values_lst(t_var *var)
 		var->scd_a = *(int *)var->a->next->content;
 	if (var->a && var->a->next && var->a->next->next)
 		var->thrd_a = *(int *)var->a->next->next->content;
-	// if (var->b && var->b->next && var->b->next->next)
-	// {
-	// 	var->last_b = *(int *)ft_last(var->b)->content;
-	// 	var->frst_b = *(int *)var->b->content;
-	// }
-	// if (var->b && var->b->next && var->b->next->next)
+	if (var->b)
+	{
+		// var->last_b = *(int *)ft_last(var->b)->content;
+		var->frst_b = *(int *)var->b->content;
+	}
+	// if (var->b && var->b->next)
 	// 	var->scd_b = *(int *)var->b->next->content;
 	// if (var->b && var->b->next && var->b->next->next)
 	// 	var->thrd_b = *(int *)var->b->next->next->content;
@@ -82,14 +82,14 @@ t_var	*ft_init_var(int argc, char **argv)
 
 void	ft_argc(t_var *var)
 {
-	if (argc == 2)
-		return /*quoi ??*/
-	if (argc == 3 && ft_increase(var) != 0)
+	if (var->argc == 2)
+		return ;/*quoi ??*/
+	if (var->argc == 3 && ft_increase(var) != 0)
 		sa(var);
 	// else return quoi ?
-	if (argc == 4)
-		ft_sort_3(&(var->a), argc);
-	if (argc > 4) /*a voir pr nb arg*/
+	if (var->argc == 4)
+		ft_sort_3(var);
+	if (var->argc > 4) /*a voir pr nb arg*/
 		ft_push_swap(var);
 }
 
@@ -101,8 +101,8 @@ int	main(int argc, char **argv)
 	{
 		var = ft_init_var(argc, argv);
 		ft_argc(var);
-		ft_push_swap(var);
-		ft_free_a(var->a)
+		// ft_push_swap(var);
+		ft_free_a(var);
 		free (var->nbstock);
 		free(var);
 	}

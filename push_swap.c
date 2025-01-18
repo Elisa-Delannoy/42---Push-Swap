@@ -29,13 +29,13 @@ void	ft_push_a(t_var *var, int indice)
 			rrb(var);
 		var->c--;
 	}
-	var->way_pa = ft_best_way(var, ft_count_way_end(var, var->frst_b));
+	var->way = ft_best_way(var, ft_count_way_end(var, var->frst_b));
 	while (var->c < var->sz_a && var->b && var->a && !(var->frst_b
 			< var->frst_a && var->frst_b > var->last_a))
 	{
-		if (way_pa == 2)
+		if (var->way == 2)
 			ra(var);
-		else if (way_pa == 3)
+		else if (var->way == 3)
 			rra(var);
 		var->c++;
 	}
@@ -47,30 +47,37 @@ void	ft_push_a(t_var *var, int indice)
 void	ft_find_way(t_var *var)
 {
 	if (ft_chck_rb(var, var->count_b) > 0 && ft_check_ra(var, var->count_b) > 0)
-		way = ft_chck_rb(var, var->count_b) + ft_check_ra(var, var->count_b)
-			- ft_check_rr(var, var->count_b);
+		var->way = ft_chck_rb(var, var->count_b)
+			+ ft_check_ra(var, var->count_b) - ft_check_rr(var, var->count_b);
 	else if (ft_check_rrb(var, var->count_b) > 0
 		&& ft_check_rra(var, var->count_b) > 0)
-		way = ft_check_rrb(var, var->count_b) + ft_check_rra(var, var->count_b)
-			- ft_check_rrr(var, var->count_b);
+		var->way = ft_check_rrb(var, var->count_b)
+			+ ft_check_rra(var, var->count_b) - ft_check_rrr(var, var->count_b);
 	else
-		way = ft_chck_rb(var, var->count_b) + ft_check_ra(var, var->count_b)
-			+ ft_check_rrb(var, var->count_b) + ft_check_rra(var, var->count_b);
+		var->way = ft_chck_rb(var, var->count_b)
+			+ ft_check_ra(var, var->count_b) + ft_check_rrb(var, var->count_b)
+			+ ft_check_rra(var, var->count_b);
 }
 
 // verifier temp->next;
-int	ft_select_better_to_push(t_var *var, int temp_indice, int i, int way)
+int	ft_select_better_to_push(t_var *var)
 {
+	int	temp_indice;
+	int	i;
+
+	temp_indice = 0;
+	i = 100;
+	var->way = 100;
 	var->temp = var->b;
 	var->count_b = 0;
 	var->sz_b = ft_lstsize(var->b);
 	while (var->temp && var->temp->next && var->count_b < var->sz_b)
 	{
 		ft_find_way(var);
-		if (i > way)
+		if (i > var->way)
 		{
 			temp_indice = var->count_b;
-			i = way + 1;
+			i = var->way + 1;
 			if (i < 3)
 				return (temp_indice);
 		}
@@ -87,7 +94,7 @@ void	ft_push_swap(t_var *var)
 	while (var->b)
 	{
 		ft_init_values_lst(var);
-		var->indice = ft_select_better_to_push(var, 0, 100, 100);
+		var->indice = ft_select_better_to_push(var);
 		if (ft_check_rrr(var, var->indice) != 0)
 			ft_push_rrr_rrb_rra(var, var->indice);
 		else if (ft_check_rr(var, var->indice) != 0)

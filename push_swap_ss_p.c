@@ -99,7 +99,7 @@ int	pb(t_var *var)
 	var->a = (var->a)->next;
 	temp->next = var->b;
 	var->b = temp;
-	ft_init_values_lst(var);
 	ft_printf("pb\n");
+	ft_init_values_lst(var);
 	return (0);
 }

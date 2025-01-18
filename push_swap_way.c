@@ -48,3 +48,17 @@ int	ft_count_way_end(t_var *var, int nb)
 	}
 	return (count);
 }
+
+int	ft_count_way(t_var *var, int nb)
+{
+	int		count;
+
+	var->temp = var->a;
+	count = 1; 
+	while (var->temp && *(int *)var->temp->content != nb)
+	{
+		var->temp = var->temp->next;
+		count++;
+	}
+	return (count);
+}
