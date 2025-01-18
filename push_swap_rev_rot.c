@@ -14,7 +14,7 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	rra(t_var *var)
+int	rra(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*last;
@@ -27,11 +27,12 @@ int	rra(t_var *var)
 	var->a = last;
 	temp->next = NULL;
 	ft_init_values_lst(var);
-	ft_printf("rra\n");
+	if (option == 1)
+		ft_printf("rra\n");
 	return (0);
 }
 
-int	rrb(t_var *var)
+int	rrb(t_var *var, int option)
 {
 	t_list	*temp1;
 	t_list	*last1;
@@ -44,11 +45,12 @@ int	rrb(t_var *var)
 	var->b = last1;
 	temp1->next = NULL;
 	ft_init_values_lst(var);
-	ft_printf("rrb\n");
+	if (option == 1)
+		ft_printf("rrb\n");
 	return (0);
 }
 
-int	rrr(t_var *var)
+int	rrr(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*last;
@@ -70,6 +72,7 @@ int	rrr(t_var *var)
 	var->b = last1;
 	temp1->next = NULL;
 	ft_init_values_lst(var);
-	ft_printf("rrr\n");
+	if (option == 1)
+		ft_printf("rrr\n");
 	return (0);
 }

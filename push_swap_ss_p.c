@@ -14,7 +14,7 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	sa(t_var *var)
+int	sa(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*temp2;
@@ -27,11 +27,12 @@ int	sa(t_var *var)
 	temp2->next = temp;
 	var->a = temp2;
 	ft_init_values_lst(var);
-	ft_printf("sa\n");
+	if (option == 1)
+		ft_printf("sa\n");
 	return (0);
 }
 
-int	sb(t_var *var)
+int	sb(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*temp2;
@@ -44,11 +45,12 @@ int	sb(t_var *var)
 	temp2->next = temp;
 	var->b = temp2;
 	ft_init_values_lst(var);
-	ft_printf("sb\n");
+	if (option == 1)
+		ft_printf("sb\n");
 	return (0);
 }
 
-int	ss(t_var *var)
+int	ss(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*temp2;
@@ -70,11 +72,12 @@ int	ss(t_var *var)
 	temp4->next = temp3;
 	var->b = temp4;
 	ft_init_values_lst(var);
-	ft_printf("ss\n");
+	if (option == 1)
+		ft_printf("ss\n");
 	return (0);
 }
 
-int	pa(t_var *var)
+int	pa(t_var *var, int option)
 {
 	t_list	*temp;
 
@@ -85,11 +88,12 @@ int	pa(t_var *var)
 	temp->next = var->a;
 	var->a = temp;
 	ft_init_values_lst(var);
-	ft_printf("pa\n");
+	if (option == 1)
+		ft_printf("pa\n");
 	return (0);
 }
 
-int	pb(t_var *var)
+int	pb(t_var *var, int option)
 {
 	t_list	*temp;
 
@@ -99,7 +103,8 @@ int	pb(t_var *var)
 	var->a = (var->a)->next;
 	temp->next = var->b;
 	var->b = temp;
-	ft_printf("pb\n");
+	if (option == 1)
+		ft_printf("pb\n");
 	ft_init_values_lst(var);
 	return (0);
 }

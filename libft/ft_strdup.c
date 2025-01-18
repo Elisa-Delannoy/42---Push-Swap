@@ -22,14 +22,17 @@ char	*ft_strdup(const char *s)
 	char	*new;
 	int		i;
 
-	new = malloc((ft_strlen(s) + 1) * sizeof(char));
-	i = 0;
+	new = ft_calloc((ft_strlen(s) + 1), sizeof(char));
 	if (new == NULL)
 		return (NULL);
-	while (s[i])
+	i = 0;
+	if (s != NULL)
 	{
-		new[i] = s[i];
-		i++;
+		while (s[i])
+		{
+			new[i] = s[i];
+			i++;
+		}
 	}
 	new[i] = '\0';
 	return (new);

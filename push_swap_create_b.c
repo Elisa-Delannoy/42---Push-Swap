@@ -17,9 +17,9 @@
 void	ft_if_pb_up(t_var *var)
 {
 	if (var->frst_a == var->max)
-		ra(var);
+		ra(var, 1);
 	else
-		pb(var);
+		pb(var, 1);
 	var->count_up++;
 	ft_check_end_groups(var);
 }
@@ -27,11 +27,11 @@ void	ft_if_pb_up(t_var *var)
 void	ft_if_pb_down(t_var *var)
 {
 	if (var->frst_a == var->min)
-		ra(var);
+		ra(var, 1);
 	else
 	{
-		pb(var);
-		rb(var);
+		pb(var, 1);
+		rb(var, 1);
 	}
 	var->count_down++;
 	ft_check_end_groups(var);
@@ -50,6 +50,6 @@ void	ft_create_b(t_var *var)
 			&& var->frst_a > ft_grps_max(var, var->nb_pos_down - 1))
 			ft_if_pb_down(var);
 		else
-			ra(var);
+			ra(var, 1);
 	}
 }

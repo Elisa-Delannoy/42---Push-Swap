@@ -23,9 +23,9 @@ void	ft_push_a(t_var *var, int indice)
 	while (var->c > 0)
 	{
 		if (var->c < ft_lstsize(var->b) / 2)
-			rb(var);
+			rb(var, 1);
 		else
-			rrb(var);
+			rrb(var, 1);
 		var->c--;
 	}
 	var->way = ft_best_way(var, ft_count_way_end(var, var->frst_b));
@@ -33,14 +33,14 @@ void	ft_push_a(t_var *var, int indice)
 			< var->frst_a && var->frst_b > var->last_a))
 	{
 		if (var->way == 2)
-			ra(var);
+			ra(var, 1);
 		else if (var->way == 3)
-			rra(var);
+			rra(var, 1);
 		var->c++;
 	}
 	if (var->b && var->a && var->frst_b < var->frst_a && var->frst_b
 		> var->last_a)
-		pa(var);
+		pa(var, 1);
 }
 
 void	ft_find_way(t_var *var)
@@ -106,11 +106,11 @@ void	ft_push_swap(t_var *var)
 	if (ft_best_way(var, ft_count_way(var, var->min)) == 2)
 	{
 		while (ft_increase(var) != 0)
-			ra(var);
+			ra(var, 1);
 	}
 	else if (ft_best_way(var, ft_count_way(var, var->min)) == 3)
 	{
 		while (ft_increase(var) != 0)
-			rra(var);
+			rra(var, 1);
 	}
 }

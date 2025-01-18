@@ -14,7 +14,7 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	ra(t_var *var)
+int	ra(t_var *var, int option)
 {
 	t_list	*temp;
 
@@ -25,11 +25,12 @@ int	ra(t_var *var)
 	ft_add_back(&(var->a), temp);
 	temp->next = NULL;
 	ft_init_values_lst(var);
-	ft_printf("ra\n");
+	if (option == 1)
+		ft_printf("ra\n");
 	return (0);
 }
 
-int	rb(t_var *var)
+int	rb(t_var *var, int option)
 {
 	t_list	*temp;
 
@@ -40,11 +41,12 @@ int	rb(t_var *var)
 	ft_add_back(&(var->b), temp);
 	temp->next = NULL;
 	ft_init_values_lst(var);
-	ft_printf("rb\n");
+	if (option == 1)
+		ft_printf("rb\n");
 	return (0);
 }
 
-int	rr(t_var *var)
+int	rr(t_var *var, int option)
 {
 	t_list	*temp;
 	t_list	*temp1;
@@ -61,7 +63,8 @@ int	rr(t_var *var)
 	var->b = var->b->next;
 	ft_add_back(&(var->b), temp1);
 	temp1->next = NULL;
-	ft_printf("rr\n");
+	if (option == 1)
+		ft_printf("rr\n");
 	ft_init_values_lst(var);
 	return (0);
 }
@@ -72,21 +75,21 @@ void	ft_sort_3(t_var *var)
 	if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
 		< var->thrd_a)
 	{
-		sa(var);
-		ra(var);
+		sa(var, 1);
+		ra(var, 1);
 	}
 	else if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
 		> var->thrd_a)
-		rra(var);
+		rra(var, 1);
 	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
 		< var->thrd_a)
-		sa(var);
+		sa(var, 1);
 	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
 		> var->thrd_a)
-		ra(var);
+		ra(var, 1);
 	else if (var->frst_a > var->scd_a && var->scd_a > var->thrd_a)
 	{
-		sa(var);
-		rra(var);
+		sa(var, 1);
+		rra(var, 1);
 	}
 }

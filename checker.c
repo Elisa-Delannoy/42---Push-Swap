@@ -14,90 +14,104 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-void	ft_read_and_stock_instuction(t_var *var, t_list *instruct)
+void	ft_read_and_stock_instuction(t_var *var)
 {
 	char	*line;
 	t_list	*new_instruct;
 
-	instruct = NULL;
-	while (line != '\0')
+	line = get_next_line(0);
+	while (line != NULL)
 	{
-		line = get_next_line(0);
 		new_instruct = ft_lstnew(line);
-		ft_lstadd_back(instruct, new_instruct);
+		ft_lstadd_back(&(var->instruct), new_instruct);
+		line = get_next_line(0);
+	}
+	get_next_line(1);
+	// free(line);
+}
+
+int	ft_check_instruct(t_var *var)
+{
+	if (ft_strcmp((char *)var->instruct->content, "sa\n") == 0)
+		sa(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "sb\n") == 0)
+		sb(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "ss\n") == 0)
+		ss(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "pa\n") == 0)
+		pa(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "pb\n") == 0)
+		pb(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "ra\n") == 0)
+		ra(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "rb\n") == 0)
+		rb(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "rr\n") == 0)
+		rr(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "rra\n") == 0)
+		rra(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "rrb\n") == 0)
+		rrb(var, 0);
+	else if (ft_strcmp((char *)var->instruct->content, "rrr\n") == 0)
+		rrr(var, 0);
+	else
+		return (1);
+	return (0);
+}
+
+void	ft_free_instruct(t_var *var)
+{
+	t_list	*temp;
+
+	while (var->instruct)
+	{
+		temp = var->instruct->next;
+		free(var->instruct->content);
+		free(var->instruct);
+		var->instruct = temp;
 	}
 }
 
-int	ft_check_instruct(t_var *var, t_list *instruct)
+void	ft_execute_and_print(t_var *var, char **argv, int previous_argc)
 {
-	if (*(char *)instruct->content == "sa\n")
-		sa(var);
-	else if (*(char *)instruct->content == "sb\n")
-		sb(var);
-	else if (*(char *)instruct->content == "ss\n")
-		ss(var);
-	else if (*(char *)instruct->content == "pa\n")
-		pa(var);
-	else if (*(char *)instruct->content == "pb\n")
-		pb(var);
-	else if (*(char *)instruct->content == "ra\n")
-		ra(var);
-	else if (*(char *)instruct->content == "rb\n")
-		rb(var);
-	else if (*(char *)instruct->content == "rr\n")
-		rr(var);
-	else if (*(char *)instruct->content == "rra\n")
-		rra(var);
-	else if (*(char *)instruct->content == "rrb\n")
-		rrb(var);
-	else if (*(char *)instruct->content == "rrr\n")
-		rrr(var);
-	else
-		return (1);
-}
-
-void	ft_execute(t_var *var, t_list *instruct)
-{
-	while (instruct)
+	while (var->instruct)
 	{
-		if (ft_check_instruct == 1)
+		if (ft_check_instruct(var) == 1)
 		{
-			ft_free_instruct(instruct);
+			ft_free_instruct(var);
+			ft_free_a(var);
+			free(var);
+			free(var->nbstock);
+			ft_free_argv(var->argc, argv, previous_argc);
 			write (2, "Error\n", 6);
 			return ;
 		}
-		instruct = instruct->next;
+		var->instruct = var->instruct->next;
 	}
-	if (ft_increase(var->a) == 0 && !var->b)
+	if (ft_increase(var) == 0 && !var->b)
 		ft_printf("OK");
 	else
 		ft_printf("KO");
 }
 
-void	ft_free_instruct(t_list *instruct)
-{
-	t_list	*temp;
-
-	while (instruct)
-	{
-		temp = instruct->next;
-		free(instruct->content);
-		free(instruct);
-		instruct = temp;
-	}
-}
-
-int	main(int argc, char **argv)
+t_var	*ft_init_var_bonus(int argc, int *nbstock)
 {
 	t_var	*var;
-	t_list	*instruct;
+	int		i;
 
-	if (argc > 1)
+	i = 0;
+	var = malloc(sizeof(t_var));
+	if (!var)
+		return (NULL);
+	var->argc = argc;
+	var->nbstock = nbstock;
+	var->a = NULL;
+	while (i < (argc - 1))
 	{
-		var = ft_init_var(argc, argv);
-		instruct = NULL;
-		ft_read_instruction(var, instruct);
-		ft_execute(var, instruct);
-	
+		ft_addlst(var->nbstock[i], &(var->a));
+		i++;
 	}
+	var->instruct = NULL;
+	var->b = NULL;
+	return (var);
 }

@@ -77,18 +77,18 @@ void	ft_push_rrr_rrb_rra(t_var *var, int indice)
 	count_rra = ft_check_rra(var, indice);
 	while (var->c < count_rrr)
 	{
-		rrr(var);
+		rrr(var, 1);
 		var->c++;
 	}
 	while (count_rrb - count_rrr > 0)
 	{
-		rrb(var);
+		rrb(var, 1);
 		count_rrb--;
 	}
 	while (count_rra - count_rrr > 0)
 	{
-		rra(var);
+		rra(var, 1);
 		count_rra--;
 	}
-	pa(var);
+	pa(var, 1);
 }

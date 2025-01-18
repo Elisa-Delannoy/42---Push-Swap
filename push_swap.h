@@ -13,13 +13,26 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 30
+# endif
+
+# if BUFFER_SIZE > 1000000
+#  undef BUFFER_SIZE 
+#  define BUFFER_SIZE 1000000
+# endif
+
 # include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stddef.h>
 
 typedef struct s_var
 {
 	t_list	*a;
 	t_list	*b;
 	t_list	*temp;
+	t_list	*instruct;
 	int		argc;
 	int		*nbstock;
 	int		min;
@@ -75,16 +88,25 @@ int		ft_check_rrr(t_var *var, int indice);
 void	ft_push_rr_rb_ra(t_var *var, int indice);
 void	ft_push_rrr_rrb_rra(t_var *var, int indice);
 void	ft_free_argv(int argc, char **argv, int previous_argc);
-int		sa(t_var *var);
-int		pa(t_var *var);
-int		ra(t_var *var);
-int		rra(t_var *var);
-int		sb(t_var *var);
-int		pb(t_var *var);
-int		rb(t_var *var);
-int		rrb(t_var *var);
-int		ss(t_var *var);
-int		rr(t_var *var);
-int		rrr(t_var *var);
+t_var	*ft_init_var(int argc, int *nbstock);
+int		sa(t_var *var, int option);
+int		pa(t_var *var, int option);
+int		ra(t_var *var, int option);
+int		rra(t_var *var, int option);
+int		sb(t_var *var, int option);
+int		pb(t_var *var, int option);
+int		rb(t_var *var, int option);
+int		rrb(t_var *var, int option);
+int		ss(t_var *var, int option);
+int		rr(t_var *var, int option);
+int		rrr(t_var *var, int option);
+char	*ft_temp(char **newbuffer, char *buffer, int i);
+char	*ft_read(int fd, char *buffer, char **newbuffer);
+char	*get_next_line(int fd);
+int		ft_argc_2(char **argv, int argc);
+void	ft_read_and_stock_instuction(t_var *var);
+void	ft_free_instruct(t_var *var);
+void	ft_execute_and_print(t_var *var, char **argv, int previous_argc);
+t_var	*ft_init_var_bonus(int argc, int *nbstock);
 
 #endif

@@ -23,9 +23,16 @@ NAME = push_swap
 SRC = push_swap.c push_swap_main.c push_swap_lst.c push_swap_check_rr.c \
 	push_swap_check_rrr.c push_swap_create_b.c push_swap_ft_utils.c \
 	push_swap_groups.c push_swap_rev_rot.c push_swap_rotate.c push_swap_ss_p.c \
-	push_swap_way.c \
+	push_swap_way.c push_swap_init.c \
+
+SRCBONUS = checker.c get_next_line.c main_checker.c push_swap_way.c \
+	push_swap_init.c push_swap.c push_swap_lst.c push_swap_check_rr.c \
+	push_swap_check_rrr.c push_swap_create_b.c push_swap_ft_utils.c \
+	push_swap_groups.c push_swap_rev_rot.c push_swap_rotate.c push_swap_ss_p.c \
 
 OBJ = $(SRC:.c=.o)
+
+OBJBONUS = $(SRCBONUS:.c=.o) 
 
 all : $(NAME)
 	@echo "\033[32mCompilation successful !\033[0m"
@@ -44,12 +51,14 @@ $(NAME) : $(OBJ) $(LIBFT) $(FTPRINTF)
 %.o: %.c
 	@echo "Compilating $@"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	
+
+bonus : $(OBJBONUS)
+	@$(CC) $(CFLAGS) $(OBJBONUS) -o checker $(LIBFT) $(FTPRINTF)
 
 clean : 
 	@$(MAKE) -s clean -C $(LIBFT_DIR)
 	@$(MAKE) -s clean -C $(FTPRINTF_DIR)
-	@rm -f $(OBJ)
+	@rm -f $(OBJ) $(OBJBONUS)
 	@echo "\033[32mClean ok\033[0m"
 
 fclean : clean
