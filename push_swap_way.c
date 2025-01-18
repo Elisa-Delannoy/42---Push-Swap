@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_way.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/18 14:01:26 by edelanno          #+#    #+#             */
+/*   Updated: 2025/01/18 14:01:27 by edelanno         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "printf/ft_printf.h"
@@ -54,7 +65,7 @@ int	ft_count_way(t_var *var, int nb)
 	int		count;
 
 	var->temp = var->a;
-	count = 1; 
+	count = 1;
 	while (var->temp && *(int *)var->temp->content != nb)
 	{
 		var->temp = var->temp->next;

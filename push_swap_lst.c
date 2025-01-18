@@ -14,12 +14,15 @@
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-int	ft_error(int *nbstock)
+int	ft_error(int *nbstock, int argc, char **argv, int previous_argc)
 {
-	write(2, "Error\n", 7);
+	write(2, "Error\n", 6);
 	if (nbstock != NULL)
+	{
 		free (nbstock);
-	exit(1);
+		ft_free_argv(argc, argv, previous_argc);
+		exit(1);
+	}
 	return (0);
 }
 
@@ -37,7 +40,7 @@ int	ft_checknb(int nb, char *argv)
 	return (0);
 }
 
-int	*ft_checkerror_and_stock(int argc, char **argv)
+int	*ft_checkerror_and_stock(int argc, char **argv, int previous_argc)
 {
 	int		i;
 	int		nb;
@@ -51,13 +54,13 @@ int	*ft_checkerror_and_stock(int argc, char **argv)
 	{
 		nb = ft_atoi(argv[i]);
 		if (ft_checknb(nb, argv[i]) == 1)
-			ft_error(nbstock);
+			ft_error(nbstock, argc, argv, previous_argc);
 		nbstock[i - 1] = nb;
 		nb = i - 2;
 		while (nb >= 0)
 		{
 			if (nbstock[i - 1] - nbstock[nb--] == 0)
-				ft_error(nbstock);
+				ft_error(nbstock, argc, argv, previous_argc);
 		}
 	}
 	return (nbstock);

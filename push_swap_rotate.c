@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_rotate.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/18 14:00:58 by edelanno          #+#    #+#             */
+/*   Updated: 2025/01/18 14:00:59 by edelanno         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "printf/ft_printf.h"
@@ -53,4 +64,29 @@ int	rr(t_var *var)
 	ft_printf("rr\n");
 	ft_init_values_lst(var);
 	return (0);
+}
+
+void	ft_sort_3(t_var *var)
+{
+	ft_init_values_lst(var);
+	if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
+		< var->thrd_a)
+	{
+		sa(var);
+		ra(var);
+	}
+	else if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
+		> var->thrd_a)
+		rra(var);
+	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
+		< var->thrd_a)
+		sa(var);
+	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
+		> var->thrd_a)
+		ra(var);
+	else if (var->frst_a > var->scd_a && var->scd_a > var->thrd_a)
+	{
+		sa(var);
+		rra(var);
+	}
 }

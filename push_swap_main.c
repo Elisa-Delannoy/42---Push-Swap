@@ -1,9 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_main.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: edelanno <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/18 14:00:05 by edelanno          #+#    #+#             */
+/*   Updated: 2025/01/18 14:00:06 by edelanno         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "printf/ft_printf.h"
 #include "push_swap.h"
 
-// si ne fonctionne plus remettre ftlstlast
 void	ft_init_values_lst(t_var *var)
 {
 	if (var->a)
@@ -17,41 +27,13 @@ void	ft_init_values_lst(t_var *var)
 		var->thrd_a = *(int *)var->a->next->next->content;
 	if (var->b)
 	{
-		// var->last_b = *(int *)ft_last(var->b)->content;
 		var->frst_b = *(int *)var->b->content;
 	}
-	// if (var->b && var->b->next)
-	// 	var->scd_b = *(int *)var->b->next->content;
-	// if (var->b && var->b->next && var->b->next->next)
-	// 	var->thrd_b = *(int *)var->b->next->next->content;
 }
 
-void	ft_sort_3(t_var *var)
-{
-	ft_init_values_lst(var);
-	if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
-		< var->thrd_a)
-	{
-		sa(var);
-		ra(var);
-	}
-	else if (var->frst_a < var->scd_a && var->scd_a > var->thrd_a && var->frst_a
-		> var->thrd_a)
-		rra(var);
-	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
-		< var->thrd_a)
-		sa(var);
-	else if (var->frst_a > var->scd_a && var->scd_a < var->thrd_a && var->frst_a
-		> var->thrd_a)
-		ra(var);
-	else if (var->frst_a > var->scd_a && var->scd_a > var->thrd_a)
-	{
-		sa(var);
-		rra(var);
-	}
-}
 
-t_var	*ft_init_var(int argc, char **argv)
+
+t_var	*ft_init_var(int argc, int **nbstock)
 {
 	t_var	*var;
 	int		i;
@@ -62,7 +44,7 @@ t_var	*ft_init_var(int argc, char **argv)
 		return (NULL);
 	var->argc = argc;
 	var->nbstock = NULL;
-	var->nbstock = ft_checkerror_and_stock(argc, argv);
+	var->nbstock = *nbstock;
 	var->a = NULL;
 	while (i < (argc - 1))
 	{
@@ -80,31 +62,61 @@ t_var	*ft_init_var(int argc, char **argv)
 	return (var);
 }
 
-void	ft_argc(t_var *var)
+int	ft_argc_2(char **argv, int argc)
 {
-	if (var->argc == 2)
-		return ;/*quoi ??*/
-	if (var->argc == 3 && ft_increase(var) != 0)
-		sa(var);
-	// else return quoi ?
-	if (var->argc == 4)
-		ft_sort_3(var);
-	if (var->argc > 4) /*a voir pr nb arg*/
-		ft_push_swap(var);
+	char	**tab;
+	int		i;
+	
+	i = 0;
+	tab = ft_split(argv[1], ' ');
+	while (tab[i])
+	{
+		argv[i + 1] = tab[i];
+		i++;
+	}
+	free (tab);
+	argc = i + 1;
+	return (argc);
+}
+
+void	ft_free_argv(int argc, char **argv, int previous_argc)
+{
+	int i;
+
+	i = 1;
+	if (previous_argc != argc)
+	{
+		while (i < argc)
+		{
+			free (argv[i]);
+			i++;
+		}
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_var	*var;
+	int		previous_argc;
+	int		*nbstock;
 
-	if (argc > 1)
+	previous_argc = argc;
+	if (argc == 2)
+		argc = ft_argc_2(argv, argc);
+	nbstock = ft_checkerror_and_stock(argc, argv, previous_argc);
+	if (argc > 2)
 	{
-		var = ft_init_var(argc, argv);
-		ft_argc(var);
-		// ft_push_swap(var);
+		var = ft_init_var(argc, &nbstock);
+		if (var->argc == 3 && ft_increase(var) != 0)
+			sa(var);
+		if (var->argc == 4)
+			ft_sort_3(var);
+		if (var->argc > 4)
+			ft_push_swap(var);
 		ft_free_a(var);
 		free (var->nbstock);
 		free(var);
+		ft_free_argv(argc, argv, previous_argc);
 	}
 	return (0);
 }
