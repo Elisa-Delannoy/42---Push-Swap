@@ -26,13 +26,17 @@ int	main(int argc, char **argv)
 	if (argc > 2)
 	{
 		nbstock = ft_checkerror_and_stock(argc, argv, previous_argc);
-		var = ft_init_var_bonus(argc, nbstock);
-		ft_read_and_stock_instuction(var);
-		ft_execute_and_print(var, argv, previous_argc);
-		ft_free_instruct(var);
-		free(var);
-		free(var->nbstock);
 		ft_free_argv(argc, argv, previous_argc);
-		ft_free_a(var);
+		var = ft_init_var_bonus(argc, nbstock);
+		free(var->nbstock);
+		ft_read_and_stock_instuction(var);
+		if (ft_execute_and_print(var) == 0)
+		{
+			ft_free_a(var);
+			ft_lstclear(&var->instruct, free);
+			// ft_free_instruct(var);
+			free(var);
+		}	
 	}
+	return (0);
 }

@@ -24,10 +24,11 @@ void	ft_read_and_stock_instuction(t_var *var)
 	{
 		new_instruct = ft_lstnew(line);
 		ft_lstadd_back(&(var->instruct), new_instruct);
+		// free (line);
+		// line = NULL;
 		line = get_next_line(0);
 	}
 	get_next_line(1);
-	// free(line);
 }
 
 int	ft_check_instruct(t_var *var)
@@ -70,9 +71,10 @@ void	ft_free_instruct(t_var *var)
 		free(var->instruct);
 		var->instruct = temp;
 	}
+	var->instruct = NULL;
 }
 
-void	ft_execute_and_print(t_var *var, char **argv, int previous_argc)
+int	ft_execute_and_print(t_var *var)
 {
 	while (var->instruct)
 	{
@@ -81,10 +83,8 @@ void	ft_execute_and_print(t_var *var, char **argv, int previous_argc)
 			ft_free_instruct(var);
 			ft_free_a(var);
 			free(var);
-			free(var->nbstock);
-			ft_free_argv(var->argc, argv, previous_argc);
 			write (2, "Error\n", 6);
-			return ;
+			return (1) ;
 		}
 		var->instruct = var->instruct->next;
 	}
@@ -92,6 +92,7 @@ void	ft_execute_and_print(t_var *var, char **argv, int previous_argc)
 		ft_printf("OK");
 	else
 		ft_printf("KO");
+	return (0);
 }
 
 t_var	*ft_init_var_bonus(int argc, int *nbstock)

@@ -106,7 +106,7 @@ char	*get_next_line(int fd);
 int		ft_argc_2(char **argv, int argc);
 void	ft_read_and_stock_instuction(t_var *var);
 void	ft_free_instruct(t_var *var);
-void	ft_execute_and_print(t_var *var, char **argv, int previous_argc);
+int		ft_execute_and_print(t_var *var);
 t_var	*ft_init_var_bonus(int argc, int *nbstock);
 
 #endif
