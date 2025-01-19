@@ -58,7 +58,6 @@ void	ft_find_way(t_var *var)
 			+ ft_check_rra(var, var->count_b);
 }
 
-// verifier temp->next;
 int	ft_select_better_to_push(t_var *var)
 {
 	int	temp_indice;

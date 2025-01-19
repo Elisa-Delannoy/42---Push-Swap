@@ -79,7 +79,7 @@ char	*get_next_line(int fd)
 	newbuffer = ft_read(fd, buffer, &newbuffer);
 	if (newbuffer == NULL)
 		return (NULL);
-	content = ft_calloc ((ft_strlen(newbuffer) + 1), sizeof(char));
+	content = ft_calloc((ft_strlen(newbuffer) + 1), sizeof(char));
 	if (content == NULL)
 		return (free(newbuffer), NULL);
 	i = -1;

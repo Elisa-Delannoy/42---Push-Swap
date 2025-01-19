@@ -39,9 +39,18 @@ void	ft_if_pb_down(t_var *var)
 
 void	ft_create_b(t_var *var)
 {
+	if (ft_increase(var) == 0)
+		return ;
 	ft_init_values_lst(var);
 	ft_sort_tab(var);
-	while (ft_lstsize(var->a) > 3)
+	while (ft_lstsize(var->a) > 3 && var->argc <= 6)
+	{
+		if (var->frst_a != var->min && var->frst_a != var->max)
+			pb(var, 1);
+		else
+			ra(var, 1);
+	}
+	while (ft_lstsize(var->a) > 3 && var->argc > 6)
 	{
 		if (var->frst_a <= ft_grps_max(var, var->nb_pos_up)
 			&& var->frst_a > ft_grps_max(var, var->nb_pos_up - 1))

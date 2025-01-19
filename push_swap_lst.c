@@ -81,7 +81,6 @@ void	ft_addlst(int nb, t_list **a)
 
 void	ft_free_a(t_var *var)
 {
-	ft_init_values_lst(var);
 	t_list	*temp;
 
 	while (var->a)
