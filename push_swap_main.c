@@ -21,10 +21,12 @@ int	main(int argc, char **argv)
 	int		*nbstock;
 
 	previous_argc = argc;
+	if (argc == 1)
+		return (42);
 	if (argc == 2)
 		argc = ft_argc_2(argv, argc);
 	nbstock = ft_checkerror_and_stock(argc, argv, previous_argc);
-	if (argc > 2)
+	if (argc >= 2)
 	{
 		var = ft_init_var(argc, nbstock);
 		if (var->argc == 3 && ft_increase(var) != 0)

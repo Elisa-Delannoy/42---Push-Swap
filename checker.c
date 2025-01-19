@@ -17,18 +17,18 @@
 void	ft_read_and_stock_instuction(t_var *var)
 {
 	char	*line;
-	t_list	*new_instruct;
+	// t_list	*new_instruct;
 
 	line = get_next_line(0);
 	while (line != NULL)
 	{
-		new_instruct = ft_lstnew(line);
-		ft_lstadd_back(&(var->instruct), new_instruct);
+		// new_instruct = ;
+		ft_lstadd_back(&(var->instruct), ft_lstnew(line));
 		// free (line);
 		// line = NULL;
 		line = get_next_line(0);
 	}
-	get_next_line(1);
+	get_next_line(42);
 }
 
 int	ft_check_instruct(t_var *var)

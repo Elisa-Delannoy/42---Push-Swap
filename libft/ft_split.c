@@ -39,7 +39,7 @@ char	**ft_split(char const *s, char c)
 	size_t	start;
 	size_t	end;
 
-	tab = (char **) malloc ((ft_countnbstring(s, c) + 1) * sizeof(char *));
+	tab = (char **) ft_calloc ((ft_countnbstring(s, c) + 1), sizeof(char *));
 	if (tab == NULL)
 		return (NULL);
 	i = 0;

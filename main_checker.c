@@ -32,11 +32,11 @@ int	main(int argc, char **argv)
 		ft_read_and_stock_instuction(var);
 		if (ft_execute_and_print(var) == 0)
 		{
-			ft_free_a(var);
 			ft_lstclear(&var->instruct, free);
+			ft_free_a(var);
 			// ft_free_instruct(var);
 			free(var);
-		}	
+		}
 	}
 	return (0);
 }

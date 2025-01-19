@@ -67,6 +67,12 @@ int	ft_argc_2(char **argv, int argc)
 
 	i = 0;
 	tab = ft_split(argv[1], ' ');
+	if (tab[i] == NULL)
+	{
+		free(tab);
+		write(2, "Error\n", 6);
+		exit(1);
+	}
 	while (tab[i])
 	{
 		argv[i + 1] = tab[i];
@@ -82,7 +88,7 @@ void	ft_free_argv(int argc, char **argv, int previous_argc)
 	int	i;
 
 	i = 1;
-	if (previous_argc != argc)
+	if (previous_argc != argc || argc == 2)
 	{
 		while (i < argc)
 		{
