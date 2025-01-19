@@ -64,6 +64,6 @@ clean :
 fclean : clean
 	@$(MAKE) -s fclean -C $(LIBFT_DIR)
 	@$(MAKE) -s fclean -C $(FTPRINTF_DIR)
-	@rm -f $(NAME)
+	@rm -f $(NAME) checker
 
 re : fclean all

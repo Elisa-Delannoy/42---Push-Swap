@@ -22,7 +22,7 @@ void	ft_push_a(t_var *var, int indice)
 		var->c = indice;
 	while (var->c > 0)
 	{
-		if (var->c < ft_lstsize(var->b) / 2)
+		if (indice < ft_lstsize(var->b) / 2)
 			rb(var, 1);
 		else
 			rrb(var, 1);
